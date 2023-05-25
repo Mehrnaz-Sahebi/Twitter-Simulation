@@ -1,3 +1,5 @@
+package User;
+
 import java.util.ArrayList;
 
 public class User {
@@ -15,7 +17,7 @@ public class User {
     ArrayList<User> followings;
     ArrayList<User> followers;
     ArrayList<User> blockList;
-    ArrayList<Tweet> tweets;
+//    ArrayList<Tweet> tweets;
     //methods
     public void tweet(){}
     public void reTweet(){}

@@ -1,3 +1,5 @@
+import User.User;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 
