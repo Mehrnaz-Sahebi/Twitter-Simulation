@@ -19,7 +19,6 @@ public class TableOfUsers extends AbstractTable {
     private static final String COLUMN_LASTNAME = "last_name";
         private static final String COLUMN_PHONE_NUMBER = "phone_number";
     private static final String COLUMN_EMAIL = "email";
-//    private static final String COLUMN_COUNTRY = "region";
 
 
     @Override
@@ -106,20 +105,6 @@ public class TableOfUsers extends AbstractTable {
 
         PreparedStatement statement = getConnection().prepareStatement(query);
         statement.setString(1, userName.trim());
-        ResultSet set = statement.executeQuery();
-
-        boolean exists = set.next();
-        set.close();
-        statement.close();
-        return exists;
-    }
-    public synchronized boolean nameExists(String firstName, String lastName) throws SQLException {
-        String query = "SELECT " + COLUMN_USERNAME + " FROM " + TABLE_NAME + " WHERE " +
-                COLUMN_FIRSTNAME + "=? LIMIT 1" + COLUMN_LASTNAME + "=? LIMIT 1";
-
-        PreparedStatement statement = getConnection().prepareStatement(query);
-        statement.setString(1, firstName.trim());
-        statement.setString(2, lastName.trim());
         ResultSet set = statement.executeQuery();
 
         boolean exists = set.next();

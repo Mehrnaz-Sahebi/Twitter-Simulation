@@ -25,6 +25,10 @@ public class FakeUser {
         this.phoneNumber = phoneNumber;
     }
 
+    public String getBirthDate() {
+        return birthDate;
+    }
+
     public String getFirstName() {
         return firstName;
     }

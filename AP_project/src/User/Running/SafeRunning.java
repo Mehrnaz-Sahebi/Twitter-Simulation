@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class SafeRunning {
-    public interface SafeRun{
+    public static interface SafeRun{
         void run() throws SQLException, IOException;
     }
     public static boolean safe(SafeRun runnable){

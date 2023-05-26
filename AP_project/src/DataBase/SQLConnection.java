@@ -4,6 +4,8 @@ package DataBase;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
 import User.Running.SafeRunning;
 
 public class SQLConnection {
@@ -32,9 +34,9 @@ public class SQLConnection {
     }
 
     public void connect() throws SQLException {
-        if (connection != null) return;
-
-        connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb", "root", "Ma@12345");//password of your database
+        if (connection == null) {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb", "root", "Ma@12345");//password of your database
+        }
         if (connection != null) {
             createTables();
         }
@@ -61,4 +63,13 @@ public class SQLConnection {
     public static TableOfUsers getUsers() {
         return getInstance().users;
     }
+
+    final ArrayList<UserInfoTable> specialUserTable = new ArrayList<>();
+    public UserInfoTable createUserTables() {
+        UserInfoTable userTable = new UserInfoTable();
+        specialUserTable.add(userTable);
+        userTable.createTable();
+        return userTable;
+    }
+
 }
