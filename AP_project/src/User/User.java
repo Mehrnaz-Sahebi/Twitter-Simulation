@@ -18,7 +18,7 @@ public class User implements Serializable {
     ArrayList<User> followings;
     ArrayList<User> followers;
     ArrayList<User> blockList;
-//    ArrayList<Tweet> tweets;
+//    ArrayList<Common.Tweet> tweets;
     //methods
     public void tweet(){}
     public void reTweet(){}

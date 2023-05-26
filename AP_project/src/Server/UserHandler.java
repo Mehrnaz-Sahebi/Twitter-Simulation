@@ -5,6 +5,7 @@ import DataBase.TableOfUsers;
 import User.FakeUser;
 import User.SocketModel;
 import User.Api;
+import Common.Tweet;
 
 import java.sql.SQLException;
 
@@ -49,10 +50,12 @@ public class UserHandler implements UserPages {
     }
 
     @Override
-    public SocketModel addTweet() {
-
+    public SocketModel addTweet(Tweet tweet) {
+        return TweetsFileConnection.addTweet(tweet);
     }
-
+    public SocketModel tweetShowPage(){
+    return null;
+    }
     @Override
     public void searchInUsers() {
 

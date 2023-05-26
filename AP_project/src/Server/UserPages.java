@@ -1,5 +1,6 @@
 package Server;
 
+import Common.Tweet;
 import User.SocketModel;
 
 import java.sql.SQLException;
@@ -11,9 +12,11 @@ public interface UserPages {
     SocketModel signUpPage(String username, String firstName, String lastName, String email, String phoneNumber, String password, String birthDate) throws SQLException;
 
     public void homePage();
-    public SocketModel addTweet();
+
+    SocketModel addTweet(Tweet tweet);
+
     public void searchInUsers();//for follow or block or unfollow
     public void userInfoPage();
     public void showTimeLine();
-
+    public SocketModel tweetShowPage();
 }
