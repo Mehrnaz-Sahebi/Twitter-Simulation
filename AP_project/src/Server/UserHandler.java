@@ -1,4 +1,5 @@
 package Server;
+
 import DataBase.SQLConnection;
 import DataBase.TableOfUsers;
 import DataBase.UserInfoTable;
@@ -6,12 +7,17 @@ import User.FakeUser;
 import User.Running.SafeRunning;
 import User.SocketModel;
 import User.Api;
+<<<<<<< HEAD
 import User.Running.Validate;
 import Common.Tweet;
 import java.io.IOException;
+=======
+import Common.Tweet;
+
+>>>>>>> fa5af0753254ec148910ebcb95c1d645961e36ac
 import java.sql.SQLException;
 
-public class UserHandler implements UserPages{
+public class UserHandler implements UserPages {
 
     @Override
     public <T> SocketModel signInPage(String userName, String password) throws SQLException {
@@ -86,10 +92,12 @@ public class UserHandler implements UserPages{
     }
 
     @Override
-    public void addTweet() {
-
+    public SocketModel addTweet(Tweet tweet) {
+        return TweetsFileConnection.addTweet(tweet);
     }
-
+    public SocketModel tweetShowPage(){
+    return null;
+    }
     @Override
     public void searchInUsers() {
 

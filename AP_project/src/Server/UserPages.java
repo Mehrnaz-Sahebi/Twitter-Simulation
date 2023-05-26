@@ -1,6 +1,10 @@
 package Server;
 
+<<<<<<< HEAD
 import DataBase.UserInfoTable;
+=======
+import Common.Tweet;
+>>>>>>> fa5af0753254ec148910ebcb95c1d645961e36ac
 import User.SocketModel;
 import Common.Tweet;
 import java.sql.SQLException;
@@ -16,9 +20,11 @@ public interface UserPages {
     SocketModel addTweet(Tweet tweet);
     public SocketModel tweetShowPage();
     public void homePage();
-    public void addTweet();
+
+    SocketModel addTweet(Tweet tweet);
+
     public void searchInUsers();//for follow or block or unfollow
     public void userInfoPage();
     public void showTimeLine();
-
+    public SocketModel tweetShowPage();
 }
