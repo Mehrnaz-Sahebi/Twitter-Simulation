@@ -8,6 +8,7 @@ public class SocketModel implements Serializable {
     public Object data;
 
     public SocketModel(Api eventType, Object data) {
+
         this(eventType, null, data);
     }
 

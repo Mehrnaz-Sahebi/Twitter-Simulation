@@ -1,5 +1,4 @@
 package Server;
-import
 public enum ResponseOrErrorType {
     SUCCESSFUL,
     DUPLICATE_USERNAME,

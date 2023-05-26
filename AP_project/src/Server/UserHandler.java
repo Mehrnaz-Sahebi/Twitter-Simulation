@@ -1,4 +1,5 @@
 package Server;
+
 import DataBase.SQLConnection;
 import User.FakeUser;
 import User.SocketModel;
@@ -6,7 +7,7 @@ import User.Api;
 
 import java.sql.SQLException;
 
-public class UserHandler implements UserPages{
+public class UserHandler implements UserPages {
 
     @Override
     public SocketModel signInPage(String userName, String password) {
@@ -39,7 +40,7 @@ public class UserHandler implements UserPages{
     }
 
     @Override
-    public void addTweet() {
+    public SocketModel addTweet() {
 
     }
 

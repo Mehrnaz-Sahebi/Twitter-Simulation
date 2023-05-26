@@ -11,7 +11,7 @@ public interface UserPages {
     SocketModel signUpPage(String username, String firstName, String lastName, String email, String phoneNumber, String password, String birthDate) throws SQLException;
 
     public void homePage();
-    public void addTweet();
+    public SocketModel addTweet();
     public void searchInUsers();//for follow or block or unfollow
     public void userInfoPage();
     public void showTimeLine();
