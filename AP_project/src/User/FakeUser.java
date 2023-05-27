@@ -3,6 +3,9 @@ package User;
 public class FakeUser {
     private String username, password, firstName, lastName, email, phoneNumber, birthDate;
 
+    public FakeUser() {
+    }
+
     public FakeUser(String username, String password) {
         this.username = username;
         this.password = password;
@@ -22,6 +25,10 @@ public class FakeUser {
         this.phoneNumber = phoneNumber;
     }
 
+    public String getBirthDate() {
+        return birthDate;
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -38,6 +45,14 @@ public class FakeUser {
         this.username = username;
     }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -47,6 +62,9 @@ public class FakeUser {
     }
 
 
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
 
     public String getEmail() {
         return email;

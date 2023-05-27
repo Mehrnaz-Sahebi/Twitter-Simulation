@@ -1,22 +1,21 @@
 package DataBase;
 
-import java.io.File;
+//import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
+import User.Running.SafeRunning;
 
 public class SQLConnection {
 
-    private static final File DB_FILE = new File("database.db");
+//    private static final File DB_FILE = new File("database.db");
     private static SQLConnection instance = null;
 
     public static SQLConnection getInstance() {
         if (instance == null) {
-            synchronized (DB_FILE) {
-                if (instance == null) {
-                    instance = new SQLConnection();
-                }
-            }
+            instance = new SQLConnection();
         }
 
         return instance;
@@ -35,9 +34,9 @@ public class SQLConnection {
     }
 
     public void connect() throws SQLException {
-        if (connection != null) return;
-
-        connection = DriverManager.getConnection("jdbc:sqlite:" + DB_FILE.getAbsolutePath());
+        if (connection == null) {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb", "root", "Ma@12345");//password of your database
+        }
         if (connection != null) {
             createTables();
         }
@@ -45,7 +44,7 @@ public class SQLConnection {
 
     public void close() {
         if (connection != null) {
-            safe(connection::close);
+            SafeRunning.safe(connection::close);
             instance = null;
         }
     }
@@ -64,4 +63,13 @@ public class SQLConnection {
     public static TableOfUsers getUsers() {
         return getInstance().users;
     }
+
+    final ArrayList<UserInfoTable> specialUserTable = new ArrayList<>();
+    public UserInfoTable createUserTables() {
+        UserInfoTable userTable = new UserInfoTable();
+        specialUserTable.add(userTable);
+        userTable.createTable();
+        return userTable;
+    }
+
 }

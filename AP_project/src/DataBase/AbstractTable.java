@@ -3,6 +3,8 @@ package DataBase;
 import java.sql.Connection;
 import java.sql.Statement;
 
+import static User.Running.SafeRunning.safe;
+
 
 public abstract class AbstractTable {
 
@@ -13,7 +15,6 @@ public abstract class AbstractTable {
     }
 
     protected boolean executeUpdate(String query) {
-
         return safe(() -> {
             Statement statement = getConnection().createStatement();
             statement.executeUpdate(query);

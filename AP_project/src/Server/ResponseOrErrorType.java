@@ -1,5 +1,4 @@
 package Server;
-import
 public enum ResponseOrErrorType {
     SUCCESSFUL,
     DUPLICATE_USERNAME,
@@ -9,6 +8,7 @@ public enum ResponseOrErrorType {
     DUPLICATE_PHONENUMBER,
     USER_NOTFOUND,
     INVALID_PASS,
-
+    ALREADY_EXISTS,
+    UNSUCCESSFUL,
 
 }
