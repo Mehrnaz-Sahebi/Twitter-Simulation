@@ -21,8 +21,6 @@ public class UserInfoTable extends AbstractTable {
     private static final String COLUMN_FOLLOWERS = "followers";
     private static final String COLUMN_FOLLOWINGS = "followings";
     private static final String COLUMN_BLOCKLIST = "blocklist";
-
-
     @Override
     public void createTable(String username) {
         TABLE_NAME = username;

@@ -68,5 +68,9 @@ public class SQLConnection {
         userTable.createTable(username);
         return userTable;
     }
-
+    final FollowTable followTable = new FollowTable();
+    public FollowTable createFollowTables() {
+        followTable.createTable();
+        return followTable;
+    }
 }

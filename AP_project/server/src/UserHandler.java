@@ -83,7 +83,7 @@ public class UserHandler implements UserPages {
     }
 
     @Override
-    public void goToTheUsersProfile(String userName) {
+    public void goToTheUsersProfile(String userName) {///////////////////////////////////////////////////////////////////////
 
     }
 

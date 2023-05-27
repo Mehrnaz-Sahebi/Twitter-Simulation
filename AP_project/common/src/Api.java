@@ -5,4 +5,5 @@ public enum Api {
     TYPE_USER_LEFT ,
     TYPE_MESSAGE,
     TYPE_WRITING_TWEET,
+    TYPE_ADDING_USER_TO_FILE,
 }

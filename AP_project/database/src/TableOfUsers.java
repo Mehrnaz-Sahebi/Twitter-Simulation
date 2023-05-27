@@ -133,9 +133,9 @@ public class TableOfUsers extends AbstractTable {
         return exists;
     }
     public synchronized HashSet<String> searchInUsers(String searchKey) throws SQLException {
-        String query1 = "SELECT " + COLUMN_USERNAME + " FROM " + TABLE_NAME +  " WHERE " + COLUMN_USERNAME + " LIKE " + "%" + searchKey + "%" ;
-        String query2 = "SELECT " + COLUMN_USERNAME + " FROM " + TABLE_NAME +  " WHERE " + COLUMN_FIRSTNAME + " LIKE " + "%" + searchKey + "%" ;
-        String query3 = "SELECT " + COLUMN_USERNAME + " FROM " + TABLE_NAME +  " WHERE " + COLUMN_LASTNAME + " LIKE " + "%" + searchKey + "%" ;
+        String query1 = "SELECT " + COLUMN_USERNAME + " FROM " + TABLE_NAME +  " WHERE " + COLUMN_USERNAME + " LIKE " + "'%" + searchKey + "%'" ;
+        String query2 = "SELECT " + COLUMN_USERNAME + " FROM " + TABLE_NAME +  " WHERE " + COLUMN_FIRSTNAME + " LIKE " + "'%" + searchKey + "%'" ;
+        String query3 = "SELECT " + COLUMN_USERNAME + " FROM " + TABLE_NAME +  " WHERE " + COLUMN_LASTNAME + " LIKE " + "'%" + searchKey + "%'" ;
         PreparedStatement statement1 = getConnection().prepareStatement(query1);
         PreparedStatement statement2 = getConnection().prepareStatement(query2);
         PreparedStatement statement3 = getConnection().prepareStatement(query3);
@@ -143,7 +143,6 @@ public class TableOfUsers extends AbstractTable {
         ResultSet set2 = statement2.executeQuery();
         ResultSet set3 = statement3.executeQuery();
         HashSet<String> userNames = new HashSet<>();
-        boolean exists1 = set1.next();
         while (set1.next()){
             userNames.add(set1.getString(COLUMN_USERNAME));
         }
