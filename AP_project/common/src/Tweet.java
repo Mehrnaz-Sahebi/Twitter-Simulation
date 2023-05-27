@@ -118,6 +118,9 @@ public class Tweet implements Serializable {
 
     public void getLiked(String username) {
         likes.add(username);
+        if(likes.size()>10){
+            favStar = true;
+        }
     }
 
     public void recievesAReply(Reply reply) {

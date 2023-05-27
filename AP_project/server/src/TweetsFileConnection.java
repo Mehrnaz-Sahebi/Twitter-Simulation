@@ -1,7 +1,8 @@
 
 
 import java.io.*;
-import java.util.HashSet;
+import java.sql.SQLException;
+import java.util.*;
 
 public class TweetsFileConnection {
     public static synchronized SocketModel addTweet(Tweet tweet) {
@@ -182,7 +183,61 @@ public class TweetsFileConnection {
         }
         return true;
     }
+    public static synchronized HashSet<Tweet> findFollowingsTweets(String username) throws Exception {
+        FollowTable followTable = new FollowTable();
+        HashSet<Tweet> tweets = new HashSet<Tweet>();
 
+            for (String followingUsername: followTable.getFollowings(username)) {
+                HashSet<Tweet> followingsTweets = TweetsFileConnection.findTweetWithUsername(followingUsername);
+                for (Tweet loopTweet:followingsTweets) {
+                    tweets.add(loopTweet);
+                }
+            }
+        return tweets;
+    }
+    public static synchronized HashSet<Tweet> findBlockingsTweets(String username) throws Exception {
+        BlockTable blockTable = new BlockTable();
+        HashSet<Tweet> tweets = new HashSet<Tweet>();
+
+            for (String blockingUsername: blockTable.getBlockings(username)) {
+                HashSet<Tweet> blockingsTweets = TweetsFileConnection.findTweetWithUsername(blockingUsername);
+                for (Tweet loopTweet:blockingsTweets) {
+                    tweets.add(loopTweet);
+                }
+            }
+        return tweets;
+    }
+    public static synchronized ArrayList<Tweet> makeATimeLine(String username) throws Exception{
+        HashSet<Tweet> tweets = new HashSet<Tweet>();
+        HashSet<Tweet> favestarTweets = TweetsFileConnection.findFaveStarredTweets();
+        HashSet<Tweet> followingsTweets = TweetsFileConnection.findFollowingsTweets(username);
+        HashSet<Tweet> blockingsTweets = TweetsFileConnection.findBlockingsTweets(username);
+        for (Tweet loopTweet:favestarTweets) {
+            tweets.add(loopTweet);
+        }
+        for (Tweet loopTweet:followingsTweets) {
+            tweets.add(loopTweet);
+        }
+        ArrayList<Date> dates = new ArrayList<Date>();
+        for (Tweet loopTweet:tweets) {
+            for (Tweet blockTweet:blockingsTweets) {
+                if(loopTweet.equals(blockTweet)){
+                    tweets.remove(loopTweet);
+                }
+            }
+            dates.add(loopTweet.getDate());
+        }
+        Collections.sort(dates);
+        ArrayList<Tweet> sortedTweets = new ArrayList<Tweet>();
+        for (Date loopDate : dates) {
+            for (Tweet loopTweet:tweets) {
+                if (dates.equals(loopTweet.getDate())){
+                    sortedTweets.add(loopTweet);
+                }
+            }
+        }
+        return sortedTweets;
+    }
 }
 
 
