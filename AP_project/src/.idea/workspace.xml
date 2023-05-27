@@ -4,16 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="712f5de1-5741-46e3-a587-121d05078f8a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/DataBase/SQLConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/DataBase/SQLConnection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataBase/TableOfUsers.java" beforeDir="false" afterPath="$PROJECT_DIR$/DataBase/TableOfUsers.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataBase/UserInfoTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/DataBase/UserInfoTable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/UserHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/UserHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/UserPages.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/UserPages.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/FakeUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/User/FakeUser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Running/SafeRunning.java" beforeDir="false" afterPath="$PROJECT_DIR$/User/Running/SafeRunning.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Running/Validate.java" beforeDir="false" afterPath="$PROJECT_DIR$/User/Running/Validate.java" afterDir="false" />
-    </list>
+    <list default="true" id="712f5de1-5741-46e3-a587-121d05078f8a" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -37,28 +28,43 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="Server" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="AP_project" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="AP_project" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -70,6 +76,7 @@
       <updated>1685086374865</updated>
       <workItem from="1685086376639" duration="3476000" />
       <workItem from="1685089964473" duration="17970000" />
+      <workItem from="1685177252082" duration="58000" />
     </task>
     <servers />
   </component>
