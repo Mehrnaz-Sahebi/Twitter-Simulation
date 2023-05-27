@@ -17,7 +17,8 @@ public interface UserPages {
 
     SocketModel addTweet(Tweet tweet);
 
-    public void searchInUsers();//for follow or block or unfollow
+    public void searchInUsers(String key) throws SQLException;//for follow or block or unfollow
+    public void goToTheUsersProfile(String userName);
     public void userInfoPage();
     public void showTimeLine();
     public SocketModel tweetShowPage();

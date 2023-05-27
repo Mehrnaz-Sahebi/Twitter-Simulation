@@ -36,7 +36,7 @@ public class UserHandler implements UserPages {
             return new SocketModel(Api.TYPE_SIGNUP, ResponseOrErrorType.DUPLICATE_PHONENUMBER, false);
         }
         if (SQLConnection.getUsers().insert(userModule)) {
-            UserInfoTable userTab = SQLConnection.getInstance().createUserTables();
+            UserInfoTable userTab = SQLConnection.getInstance().createUserTables(username);
             userTab.insert(userModule);
             return new SocketModel(Api.TYPE_SIGNUP, ResponseOrErrorType.SUCCESSFUL, true);
         } else {
@@ -76,7 +76,14 @@ public class UserHandler implements UserPages {
 
     }
     @Override
-    public void searchInUsers() {
+    public void searchInUsers(String key) throws SQLException {
+        TableOfUsers out = SQLConnection.getUsers();
+        out.searchInUsers(key);
+        //write the hashset to the client
+    }
+
+    @Override
+    public void goToTheUsersProfile(String userName) {
 
     }
 

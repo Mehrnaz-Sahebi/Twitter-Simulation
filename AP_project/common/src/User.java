@@ -4,7 +4,9 @@ import java.util.ArrayList;
 public class User implements Serializable {
 
     private String username;
-    private String firstNameAndLastName;//first name and last name are seperated by a space
+    private String firstName;
+    private String lastName;
+
     private String email;
     private String phoneNumber;
     private String password;

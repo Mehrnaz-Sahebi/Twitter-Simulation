@@ -1,4 +1,4 @@
-import Common.*;
+
 
 import java.io.*;
 import java.util.HashSet;
@@ -8,7 +8,7 @@ public class TweetsFileConnection {
         File file = new File("./lib//tweets.bin");
         HashSet<Tweet> tweets = new HashSet<Tweet>();
         if (!file.exists()) {
-            try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("./lib//tweets.bin"))) {
+            try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("././lib//tweets.bin"))) {
                 outputStream.writeObject(tweet);
                 outputStream.flush();
             } catch (IOException e) {
@@ -16,7 +16,7 @@ public class TweetsFileConnection {
             }
         } else {
             while (true) {
-                try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("./lib//tweets.bin"))) {
+                try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("././lib//tweets.bin"))) {
                     tweets.add((Tweet) inputStream.readObject());
                 } catch (EOFException e) {
                     break;
@@ -25,7 +25,7 @@ public class TweetsFileConnection {
                 }
             }
             tweets.add(tweet);
-            try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("./lib//tweets.bin"))) {
+            try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("././lib//tweets.bin"))) {
                 for (Tweet loopTweet : tweets) {
                     outputStream.writeObject(loopTweet);
                 }
@@ -40,7 +40,7 @@ public class TweetsFileConnection {
     public static synchronized HashSet<Tweet> findTweetWithUsername(String username) throws Exception {
         HashSet<Tweet> tweetsWithUsername = new HashSet<Tweet>();
         while (true) {
-            try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("./lib//tweets.bin"))) {
+            try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("././lib//tweets.bin"))) {
                 Tweet currentTweet = (Tweet) inputStream.readObject();
                 if (currentTweet.getAuthorUsername().equals(username)) {
                     tweetsWithUsername.add(currentTweet);
@@ -70,7 +70,7 @@ public class TweetsFileConnection {
     public static synchronized boolean tweetGetLiked(Tweet tweet, String likerUsername) {
         HashSet<Tweet> tweets = new HashSet<Tweet>();
         while (true) {
-            try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("./lib//tweets.bin"))) {
+            try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("././lib//tweets.bin"))) {
                 tweets.add((Tweet) inputStream.readObject());
             } catch (EOFException e) {
                 break;
@@ -84,7 +84,7 @@ public class TweetsFileConnection {
                 break;
             }
         }
-        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("./lib//tweets.bin"))) {
+        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("././lib//tweets.bin"))) {
             for (Tweet loopTweet : tweets) {
                 outputStream.writeObject(loopTweet);
             }
@@ -97,7 +97,7 @@ public class TweetsFileConnection {
     public static synchronized boolean tweetRecievesAReply(Tweet tweet, Tweet reply) {
         HashSet<Tweet> tweets = new HashSet<Tweet>();
         while (true) {
-            try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("./lib//tweets.bin"))) {
+            try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("././lib//tweets.bin"))) {
                 tweets.add((Tweet) inputStream.readObject());
             } catch (EOFException e) {
                 break;
@@ -114,7 +114,7 @@ public class TweetsFileConnection {
             }
         }
         tweets.add(newReply);
-        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("./lib//tweets.bin"))) {
+        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("././lib//tweets.bin"))) {
             for (Tweet loopTweet : tweets) {
                 outputStream.writeObject(loopTweet);
             }
@@ -127,7 +127,7 @@ public class TweetsFileConnection {
     public static synchronized boolean tweetGetRetweeted(Tweet tweet , String retweeterUsername) {
         HashSet<Tweet> tweets = new HashSet<Tweet>();
         while (true) {
-            try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("./lib//tweets.bin"))) {
+            try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("././lib//tweets.bin"))) {
                 tweets.add((Tweet) inputStream.readObject());
             } catch (EOFException e) {
                 break;
@@ -143,7 +143,7 @@ public class TweetsFileConnection {
         }
         Retweet newRetweet = new Retweet(tweet,retweeterUsername);
         tweets.add(newRetweet);
-        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("./lib//tweets.bin"))) {
+        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("././lib//tweets.bin"))) {
             for (Tweet loopTweet : tweets) {
                 outputStream.writeObject(loopTweet);
             }
@@ -156,7 +156,7 @@ public class TweetsFileConnection {
     public static synchronized boolean tweetGetsQuoted(Tweet originalTweet, String quote, String username, String photo ) {
         HashSet<Tweet> tweets = new HashSet<Tweet>();
         while (true) {
-            try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("./lib//tweets.bin"))) {
+            try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("././lib//tweets.bin"))) {
                 tweets.add((Tweet) inputStream.readObject());
             } catch (EOFException e) {
                 break;
@@ -172,7 +172,7 @@ public class TweetsFileConnection {
             }
         }
         tweets.add(quoteTweet);
-        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("./lib//tweets.bin"))) {
+        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("././lib//tweets.bin"))) {
             for (Tweet loopTweet : tweets) {
                 outputStream.writeObject(loopTweet);
             }

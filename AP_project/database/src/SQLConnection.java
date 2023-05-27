@@ -1,7 +1,5 @@
 //import java.io.File;
 
-import User.Running.SafeRunning;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -64,10 +62,10 @@ public class SQLConnection {
     }
 
     final ArrayList<UserInfoTable> specialUserTable = new ArrayList<>();
-    public UserInfoTable createUserTables() {
+    public UserInfoTable createUserTables(String username) {
         UserInfoTable userTable = new UserInfoTable();
         specialUserTable.add(userTable);
-        userTable.createTable();
+        userTable.createTable(username);
         return userTable;
     }
 

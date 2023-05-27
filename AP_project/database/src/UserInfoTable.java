@@ -3,7 +3,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class UserInfoTable extends AbstractTable {
-    private static final String TABLE_NAME = "user_profile";
+    private static String TABLE_NAME ;
     private static final String COLUMN_ID = "id";
     private static final String COLUMN_USERNAME = "username";
     private static final String COLUMN_PASSWORD = "password";
@@ -24,8 +24,9 @@ public class UserInfoTable extends AbstractTable {
 
 
     @Override
-    public void createTable() {
-        executeUpdate("CREATE TABLE IF NOT EXISTS " + TABLE_NAME +
+    public void createTable(String username) {
+        TABLE_NAME = username;
+        executeUpdate("CREATE TABLE IF NOT EXISTS " + username +
                 "(" +
                 COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 COLUMN_USERNAME + " string," +
@@ -41,8 +42,8 @@ public class UserInfoTable extends AbstractTable {
                 COLUMN_BIRTHDATE + " string, " +
                 COLUMN_LOCATION + " string" +
                 COLUMN_WEBSITE + " string," +
-                COLUMN_FOLLOWERS + " string," +
-                COLUMN_FOLLOWINGS + " string," +
+                COLUMN_FOLLOWERS + " int," +
+                COLUMN_FOLLOWINGS + " int," +
                 COLUMN_BLOCKLIST + " string," +
                 ")");
     }

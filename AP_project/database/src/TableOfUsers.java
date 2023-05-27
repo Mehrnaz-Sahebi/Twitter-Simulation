@@ -1,6 +1,7 @@
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashSet;
 
 public class TableOfUsers extends AbstractTable {
 
@@ -10,7 +11,7 @@ public class TableOfUsers extends AbstractTable {
     private static final String COLUMN_PASSWORD = "password";
     private static final String COLUMN_FIRSTNAME = "first_name";
     private static final String COLUMN_LASTNAME = "last_name";
-        private static final String COLUMN_PHONE_NUMBER = "phone_number";
+    private static final String COLUMN_PHONE_NUMBER = "phone_number";
     private static final String COLUMN_EMAIL = "email";
 
 
@@ -130,6 +131,35 @@ public class TableOfUsers extends AbstractTable {
         set.close();
         statement.close();
         return exists;
+    }
+    public synchronized HashSet<String> searchInUsers(String searchKey) throws SQLException {
+        String query1 = "SELECT " + COLUMN_USERNAME + " FROM " + TABLE_NAME +  " WHERE " + COLUMN_USERNAME + " LIKE " + "%" + searchKey + "%" ;
+        String query2 = "SELECT " + COLUMN_USERNAME + " FROM " + TABLE_NAME +  " WHERE " + COLUMN_FIRSTNAME + " LIKE " + "%" + searchKey + "%" ;
+        String query3 = "SELECT " + COLUMN_USERNAME + " FROM " + TABLE_NAME +  " WHERE " + COLUMN_LASTNAME + " LIKE " + "%" + searchKey + "%" ;
+        PreparedStatement statement1 = getConnection().prepareStatement(query1);
+        PreparedStatement statement2 = getConnection().prepareStatement(query2);
+        PreparedStatement statement3 = getConnection().prepareStatement(query3);
+        ResultSet set1 = statement1.executeQuery();
+        ResultSet set2 = statement2.executeQuery();
+        ResultSet set3 = statement3.executeQuery();
+        HashSet<String> userNames = new HashSet<>();
+        boolean exists1 = set1.next();
+        while (set1.next()){
+            userNames.add(set1.getString(COLUMN_USERNAME));
+        }
+        while (set2.next()){
+            userNames.add(set2.getString(COLUMN_USERNAME));
+        }
+        while (set3.next()){
+            userNames.add(set3.getString(COLUMN_USERNAME));
+        }
+        set1.close();
+        set2.close();
+        set3.close();
+        statement1.close();
+        statement2.close();
+        statement3.close();
+        return userNames;
     }
 }
 
