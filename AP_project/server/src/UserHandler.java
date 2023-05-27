@@ -1,5 +1,6 @@
 
 
+import java.sql.Date;
 import java.sql.SQLException;
 
 public class UserHandler implements UserPages {
@@ -15,9 +16,11 @@ public class UserHandler implements UserPages {
         }
     }
 
+
+
     @Override
-    public SocketModel signUpPage(String username, String firstName, String lastName, String email, String phoneNumber, String password, String birthDate) throws SQLException {
-        boolean isValidFormat = Validate.validateDateFormat(birthDate);
+    public SocketModel signUpPage(String username, String firstName, String lastName, String email, String phoneNumber, String password, Date birthDate) throws SQLException {
+        //boolean isValidFormat = Validate.validateDateFormat(birthDate);
         boolean isValidEmail = Validate.validateEmail(email);
 //        if (!isValidFormat){
             //ask again for birthdate

@@ -1,5 +1,8 @@
+import java.util.Date;
+
 public class FakeUser {
-    private String username, password, firstName, lastName, email, phoneNumber, birthDate;
+    private String username, password, firstName, lastName, email, phoneNumber;
+    private Date birthDate;
 
     public FakeUser() {
     }
@@ -9,7 +12,7 @@ public class FakeUser {
         this.password = password;
     }
 
-    public FakeUser(String username, String password, String firstName, String lastName, String email, String phoneNumber, String birthDate) {
+    public FakeUser(String username, String password, String firstName, String lastName, String email, String phoneNumber, Date birthDate) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
@@ -23,7 +26,7 @@ public class FakeUser {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getBirthDate() {
+    public Date getBirthDate() {
         return birthDate;
     }
 

@@ -57,6 +57,7 @@ public class TableOfUsers extends AbstractTable {
             statement.setString(4, userModel.getLastName().trim());
             statement.setString(5, userModel.getPhoneNumber().trim());
             statement.setString(6, userModel.getEmail().trim());
+            SQLConnection.getInstance().createUserTables(userModel.getUsername());
             statement.executeUpdate();
             statement.close();
         });
@@ -159,6 +160,31 @@ public class TableOfUsers extends AbstractTable {
         statement2.close();
         statement3.close();
         return userNames;
+    }
+    public User getUserFromDatabase(String username) throws SQLException {
+        String query = "SELECT * FROM '"+username+"' WHERE " + COLUMN_USERNAME + " = '"+username+"'" ;
+        PreparedStatement statement = getConnection().prepareStatement(query);
+        ResultSet set = statement.executeQuery();
+        User user = new User(set.getString("username"),
+                set.getString("password"),
+                set.getString("first_name"),
+                set.getString("last_name"),
+                set.getString("email"),
+                set.getString("phone_number"),
+                set.getString("avatar"),
+                set.getString("header"),
+                set.getString("country"),
+                set.getDate("birthdate"),
+                set.getDate("signUpDate"),
+                set.getDate("lastModifiedDate"),
+                set.getString("bio"),
+                set.getString("location"),
+                set.getString("website"));
+        FollowTable followTable = new FollowTable();
+        user.setFollowers(followTable.getFollowers(username));
+        user.setFollowings(followTable.getFollowings(username));
+        user.setBlackList(new BlockTable().getBlockings(username));
+        return user;
     }
 }
 

@@ -1,5 +1,6 @@
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -10,6 +11,12 @@ public class Validate {
             if (arg == null || arg.isBlank()) {
                 return false;
             }
+        }
+        return true;
+    }
+    public static boolean dateNotBlank(Date date){
+        if(date == null ){
+            return false;
         }
         return true;
     }

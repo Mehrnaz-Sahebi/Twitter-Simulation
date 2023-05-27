@@ -15,6 +15,8 @@ public class UserInfoTable extends AbstractTable {
     private static final String COLUMN_HEADER = "header";
     private static final String COLUMN_REGION = "country";
     private static final String COLUMN_BIRTHDATE = "birthdate";
+    private static final String COLUMN_SIGNUPDATE ="signUpDate";///
+    private static final String COLUMN_LASTMODIFIEDDATE ="lastModifiedDate";///
     private static final String COLUMN_BIO = "bio";
     private static final String COLUMN_LOCATION = "location";
     private static final String COLUMN_WEBSITE = "website";
@@ -24,22 +26,21 @@ public class UserInfoTable extends AbstractTable {
         executeUpdate("CREATE TABLE IF NOT EXISTS '"+username+"'" +
                 "(" +
                 COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                COLUMN_USERNAME + " string," +
-                COLUMN_PASSWORD + " string," +
-                COLUMN_FIRSTNAME + " string," +
-                COLUMN_LASTNAME + " string," +
-                COLUMN_EMAIL + " string, " +
-                COLUMN_PHONE_NUMBER + " string" +
-                COLUMN_AVATAR + " string," +
-                COLUMN_HEADER + " string," +
-                COLUMN_BIO + " string," +
-                COLUMN_REGION + " string," +
-                COLUMN_BIRTHDATE + " string, " +
-                COLUMN_LOCATION + " string" +
-                COLUMN_WEBSITE + " string," +
-                COLUMN_FOLLOWERS + " int," +
-                COLUMN_FOLLOWINGS + " int," +
-                COLUMN_BLOCKLIST + " string," +
+                COLUMN_USERNAME + " TEXT, " +
+                COLUMN_PASSWORD + " TEXT, " +
+                COLUMN_FIRSTNAME + " TEXT, " +
+                COLUMN_LASTNAME + " TEXT, " +
+                COLUMN_EMAIL + " TEXT, " +
+                COLUMN_PHONE_NUMBER + " TEXT, " +
+                COLUMN_AVATAR + " TEXT, " +
+                COLUMN_HEADER + " TEXT, " +
+                COLUMN_BIO + " TEXT, " +
+                COLUMN_REGION + " TEXT, " +
+                COLUMN_BIRTHDATE + " DATE, " +
+                COLUMN_SIGNUPDATE + " DATE, " +
+                COLUMN_LASTMODIFIEDDATE + " DATE, " +
+                COLUMN_LOCATION + " TEXT, " +
+                COLUMN_WEBSITE + " TEXT, " +
                 ")");
     }
     public synchronized boolean insert(FakeUser userModel) {
@@ -49,9 +50,8 @@ public class UserInfoTable extends AbstractTable {
                 userModel.getFirstName(),
                 userModel.getLastName(),
                 userModel.getEmail(),//check whether email or phone number, one of the should be non-empty/////
-                userModel.getBirthDate(),
                 userModel.getPhoneNumber()//-->
-        )) {
+        )&& Validate.dateNotBlank(userModel.getBirthDate())) {
             return false;
         }
 
@@ -72,7 +72,7 @@ public class UserInfoTable extends AbstractTable {
             statement.setString(3, userModel.getFirstName().trim());
             statement.setString(4, userModel.getLastName().trim());
             statement.setString(5, userModel.getPhoneNumber().trim());
-            statement.setString(6, userModel.getBirthDate().trim());
+            statement.setDate(6,new java.sql.Date(userModel.getBirthDate().getTime()));
             statement.setString(7, userModel.getEmail().trim());
             statement.executeUpdate();
             statement.close();
