@@ -3,9 +3,9 @@ package Server;
 import Common.QuoteTweet;
 import Common.Reply;
 import Common.Retweet;
-import User.Api;
+import Common.Api;
 import Common.Tweet;
-import User.SocketModel;
+import Common.SocketModel;
 
 import java.io.*;
 import java.util.ArrayList;

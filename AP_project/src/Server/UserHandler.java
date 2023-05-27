@@ -1,20 +1,15 @@
 package Server;
 
+import Common.Running.Validate;
 import DataBase.SQLConnection;
 import DataBase.TableOfUsers;
 import DataBase.UserInfoTable;
-import User.FakeUser;
-import User.Running.SafeRunning;
-import User.SocketModel;
-import User.Api;
-<<<<<<< HEAD
-import User.Running.Validate;
-import Common.Tweet;
-import java.io.IOException;
-=======
-import Common.Tweet;
 
->>>>>>> fa5af0753254ec148910ebcb95c1d645961e36ac
+import Common.Tweet;
+import Common.SocketModel;
+import Common.Api;
+import Common.FakeUser;
+
 import java.sql.SQLException;
 
 public class UserHandler implements UserPages {

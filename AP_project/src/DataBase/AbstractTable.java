@@ -3,7 +3,7 @@ package DataBase;
 import java.sql.Connection;
 import java.sql.Statement;
 
-import static User.Running.SafeRunning.safe;
+import static Common.Running.SafeRunning.safe;
 
 
 public abstract class AbstractTable {

@@ -1,4 +1,4 @@
-package User;
+package Common;
 
 public class FakeUser {
     private String username, password, firstName, lastName, email, phoneNumber, birthDate;

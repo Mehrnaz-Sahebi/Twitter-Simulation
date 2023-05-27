@@ -1,10 +1,10 @@
 package DataBase;
 
 import Server.ResponseOrErrorType;
-import User.FakeUser;
-import User.Running.SafeRunning;
-import User.Running.Validate;
-import User.User;
+import Common.FakeUser;
+import Common.Running.SafeRunning;
+import Common.Running.Validate;
+import Common.User;
 
 import java.sql.*;
 

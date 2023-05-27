@@ -1,4 +1,4 @@
-package User;
+package Common;
 
 import Server.ResponseOrErrorType;
 

@@ -1,4 +1,4 @@
-package User;
+package Common;
 
 public enum Api {
     TYPE_SIGNUP ,
