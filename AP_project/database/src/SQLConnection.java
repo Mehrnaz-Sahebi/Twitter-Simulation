@@ -69,8 +69,13 @@ public class SQLConnection {
         return userTable;
     }
     final FollowTable followTable = new FollowTable();
-    public FollowTable createFollowTables() {
+    public FollowTable createFollowTable() {
         followTable.createTable();
         return followTable;
+    }
+    final BlockTable blockTable = new BlockTable();
+    public BlockTable createBlockTable() {
+        blockTable.createTable();
+        return blockTable;
     }
 }

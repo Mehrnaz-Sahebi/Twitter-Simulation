@@ -55,7 +55,4 @@ public class FollowTable extends AbstractTable{
         set.close();
         statement.close();
     }
-
-
-
 }

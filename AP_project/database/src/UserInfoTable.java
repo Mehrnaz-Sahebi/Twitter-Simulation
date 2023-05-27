@@ -18,13 +18,10 @@ public class UserInfoTable extends AbstractTable {
     private static final String COLUMN_BIO = "bio";
     private static final String COLUMN_LOCATION = "location";
     private static final String COLUMN_WEBSITE = "website";
-    private static final String COLUMN_FOLLOWERS = "followers";
-    private static final String COLUMN_FOLLOWINGS = "followings";
-    private static final String COLUMN_BLOCKLIST = "blocklist";
     @Override
     public void createTable(String username) {
         TABLE_NAME = username;
-        executeUpdate("CREATE TABLE IF NOT EXISTS " + username +
+        executeUpdate("CREATE TABLE IF NOT EXISTS '"+username+"'" +
                 "(" +
                 COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 COLUMN_USERNAME + " string," +

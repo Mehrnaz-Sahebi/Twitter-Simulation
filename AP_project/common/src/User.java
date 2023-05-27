@@ -47,4 +47,17 @@ public class User implements Serializable {
             table.firstUnfollowsSecend(username, followingUsername);
         });
     }
+    public void block(String blockingUsername){
+        SafeRunning.safe(()-> {
+            BlockTable table = SQLConnection.getInstance().blockTable;
+            table.firstBlocksSecend(username, blockingUsername);
+        });
+    }
+
+    public void unblock(String blockingUsername){
+        SafeRunning.safe(()-> {
+            BlockTable table = SQLConnection.getInstance().followTable;
+            table.firstUnblockSecend(username, blockingUsername);
+        });
+    }
 }
