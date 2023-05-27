@@ -25,7 +25,26 @@ public class User implements Serializable {
     private HashSet<String> blackList;
 
     //methods
-    public void tweet(){}
-    public void reTweet(){}
-    public void reply(){}
+    public void tweet(Tweet tweet){
+        TweetsFileConnection.addTweet(tweet);
+    }
+    public void reTweet(Tweet tweet){
+        TweetsFileConnection.tweetGetRetweeted(tweet,username);
+    }
+    public void reply(Tweet tweet,Tweet reply){
+        TweetsFileConnection.tweetRecievesAReply(tweet,reply);
+    }
+    public void follow(String followingUsername){
+        SafeRunning.safe(()-> {
+            FollowTable table = SQLConnection.getInstance().followTable;
+            table.firstFollowsSecend(username, followingUsername);
+        });
+    }
+
+    public void unfollow(String followingUsername){
+        SafeRunning.safe(()-> {
+            FollowTable table = SQLConnection.getInstance().followTable;
+            table.firstUnfollowsSecend(username, followingUsername);
+        });
+    }
 }
