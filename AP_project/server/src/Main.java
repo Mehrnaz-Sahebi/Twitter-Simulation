@@ -5,7 +5,7 @@ import java.net.Socket;
 public class Main {
 
     public static void main(String[] args) {
-        try (ServerSocket socketServer = new ServerSocket()) {
+        try (ServerSocket socketServer = new ServerSocket(8080)) {
             SQLConnection.getInstance().connect();
 
             while (true) {

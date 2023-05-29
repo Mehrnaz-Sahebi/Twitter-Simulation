@@ -51,21 +51,19 @@ public class SQLConnection {
     }
 
     // TABLES
-    final TableOfUsers users = new TableOfUsers();
+    final UsersTable users = new UsersTable();
 
     private void createTables() {
         users.createTable();
     }
 
-    public static TableOfUsers getUsers() {
+    public static UsersTable getUsers() {
         return getInstance().users;
     }
 
-    final ArrayList<UserInfoTable> specialUserTable = new ArrayList<>();
-    public UserInfoTable createUserTables(String username) {
-        UserInfoTable userTable = new UserInfoTable();
-        specialUserTable.add(userTable);
-        userTable.createTable(username);
+    public UsersTable createUserTables() {
+        UsersTable userTable = new UsersTable();
+        userTable.createTable();
         return userTable;
     }
     final FollowTable followTable = new FollowTable();
