@@ -1,32 +1,32 @@
 import java.util.Date;
 
-public class FakeUser {
+public class UserToBeSigned {
     private String username, password, firstName, lastName, email, phoneNumber;
-    private Date birthDate;
+    private java.sql.Date birthDate;
 
-    public FakeUser() {
+    public UserToBeSigned() {
     }
 
-    public FakeUser(String username, String password) {
+    public UserToBeSigned(String username, String password) {
         this.username = username;
         this.password = password;
     }
 
-    public FakeUser(String username, String password, String firstName, String lastName, String email, String phoneNumber, Date birthDate) {
+    public UserToBeSigned(String username, String password, String firstName, String lastName, String email, String phoneNumber, Date birthDate) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.birthDate = birthDate;
+        this.birthDate = (java.sql.Date) birthDate;
     }
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
-    public Date getBirthDate() {
+    public java.sql.Date getBirthDate() {
         return birthDate;
     }
 

@@ -1,6 +1,4 @@
-
 import java.io.*;
-import java.sql.SQLException;
 import java.util.*;
 
 public class TweetsFileConnection {

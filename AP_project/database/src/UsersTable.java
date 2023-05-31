@@ -1,6 +1,8 @@
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashSet;
 
@@ -45,17 +47,18 @@ public class UsersTable extends AbstractTable {
                 ")");
     }
 
-    public synchronized boolean insert(FakeUser userModel) {
+    public synchronized boolean insert(UserToBeSigned userModel) {
         if (!Validate.NotBlank(  //if the info is empty, so returns false
                 userModel.getUsername(),
                 userModel.getPassword(),
                 userModel.getFirstName(),
-                userModel.getLastName(),
-                userModel.getEmail()//check whether email or phone number, one of the should be non-empty/////
+                userModel.getLastName()
         )) {
             return false;
         }
 
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        LocalDateTime now = LocalDateTime.now();
         return SafeRunning.safe(() -> {
             String query = "INSERT INTO "  + TABLE_NAME +
                     "(" +
@@ -86,8 +89,8 @@ public class UsersTable extends AbstractTable {
             statement.setString(7,null);
             statement.setString(8,null);
             statement.setString(9,null);
-            statement.setDate(10,null);
-            statement.setDate(11,null);
+            statement.setDate(10,userModel.getBirthDate());
+            statement.setDate(11, java.sql.Date.valueOf(dtf.format(now)));//doubtful
             statement.setDate(12,null);
             statement.setString(13,null);
             statement.setString(14,null);
@@ -191,35 +194,34 @@ public class UsersTable extends AbstractTable {
         ResultSet set = statement.executeQuery();
         set.close();
     }
-    public <T> T select(FakeUser userModel) throws SQLException, SQLException {
+    public <T> T select(UserToBeSigned userModel) throws SQLException, SQLException {
         String query = "SELECT " + COLUMN_FIRSTNAME + "," + COLUMN_LASTNAME + "," + COLUMN_EMAIL +
                 " FROM " + TABLE_NAME + " WHERE " +
                 COLUMN_USERNAME + "=?";
 
         PreparedStatement statement = getConnection().prepareStatement(query);
         statement.setString(1, userModel.getUsername().trim());
-//            statement.setString(2, userModel.getPassword().trim());
         ResultSet set = statement.executeQuery();
-        FakeUser out = null;
-        if (set.getString(COLUMN_PASSWORD).equals(userModel.getPassword())){
-            if (set.next()) {
-                out = new FakeUser();
-                out.setUsername(userModel.getUsername());
-                out.setFirstName(set.getString(COLUMN_FIRSTNAME));
-                out.setLastName(set.getString(COLUMN_LASTNAME));
-                out.setEmail(set.getString(COLUMN_EMAIL));
-            }
+        UserToBeSigned out = null;
+        if (set.next()){
+            if (set.getString(COLUMN_PASSWORD).equals(userModel.getPassword())){
+                if (set.next()) {
+                    out = new UserToBeSigned();
+                    out.setUsername(userModel.getUsername());
+                    out.setFirstName(set.getString(COLUMN_FIRSTNAME));
+                    out.setLastName(set.getString(COLUMN_LASTNAME));
+                    out.setEmail(set.getString(COLUMN_EMAIL));
+                }
 
-            set.close();
-            statement.close();
-        }else {
+                set.close();
+                statement.close();
+            }else {
                 return (T)ResponseOrErrorType.INVALID_PASS;
+            }
+        }else {
+            return (T)ResponseOrErrorType.USER_NOTFOUND;
         }
         return (T) out;
-//        return  SafeRunning.safe(() -> {
-//
-//
-//        }, null);
     }
 
     public synchronized boolean userNameExists(String userName) throws SQLException {

@@ -34,9 +34,7 @@ public class SQLConnection {
         if (connection == null) {
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb", "root", "Ma@12345");//password of your database
         }
-        if (connection != null) {
-            createTables();
-        }
+        createTables();
     }
 
     public void close() {
@@ -59,12 +57,6 @@ public class SQLConnection {
 
     public static UsersTable getUsers() {
         return getInstance().users;
-    }
-
-    public UsersTable createUserTables() {
-        UsersTable userTable = new UsersTable();
-        userTable.createTable();
-        return userTable;
     }
     final FollowTable followTable = new FollowTable();
     public FollowTable createFollowTable() {

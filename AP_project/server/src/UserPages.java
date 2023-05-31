@@ -2,13 +2,14 @@
 
 import java.sql.Date;
 import java.sql.SQLException;
+import java.text.ParseException;
 
 public interface UserPages {
 
     public <T> SocketModel signInPage(String userName, String password) throws SQLException;//sign in and sign up should be shown, if the sign up is successful, then the home page is the same.
 
 
-    SocketModel signUpPage(String username, String firstName, String lastName, String email, String phoneNumber, String password, Date birthDate) throws SQLException;
+    SocketModel signUpPage(String username, String firstName, String lastName, String email, String phoneNumber, String password, String passRepitition, String birthDate) throws SQLException, ParseException;
 
     public void setProfileAvatar(String pathAvatar);
     public void setProfileHeader(String pathHeader);

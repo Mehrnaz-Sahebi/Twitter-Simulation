@@ -1,33 +1,52 @@
-
-
-import java.sql.Date;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 public class UserHandler implements UserPages {
 
     @Override
     public <T> SocketModel signInPage(String userName, String password) throws SQLException {
-        T out = SQLConnection.getUsers().select(new FakeUser(userName, password));
+        T out = SQLConnection.getUsers().select(new UserToBeSigned(userName, password));
 
-        if (out == null) {
-            return new SocketModel(Api.TYPE_SIGNIN, (ResponseOrErrorType) out, null);
+        if (out instanceof UserToBeSigned) {
+            return new SocketModel(Api.TYPE_SIGNIN, (UserToBeSigned)out);
         } else {
-            return new SocketModel(Api.TYPE_SIGNIN, (FakeUser)out);
+            return new SocketModel(Api.TYPE_SIGNIN, (ResponseOrErrorType) out, null);
         }
     }
 
 
 
     @Override
-    public SocketModel signUpPage(String username, String firstName, String lastName, String email, String phoneNumber, String password, Date birthDate) throws SQLException {
-        //boolean isValidFormat = Validate.validateDateFormat(birthDate);
-        boolean isValidEmail = Validate.validateEmail(email);
-//        if (!isValidFormat){
-            //ask again for birthdate
-//        }
-//        if (//valid format of email){
-//    }
-        FakeUser userModule = new FakeUser(username, password, firstName, lastName, email, phoneNumber, birthDate);
+    public SocketModel signUpPage(String username, String firstName, String lastName, String email, String phoneNumber, String password, String passRepitition, String birthDate) throws SQLException, ParseException {
+        //TODO show the countries list
+
+        Date date = new SimpleDateFormat("dd/MM/yyyy").parse(birthDate);//casting the str to Date class
+        ResponseOrErrorType isValidDateFormat = Validate.validateDateFormat(birthDate);
+        ResponseOrErrorType isValidEmail = Validate.validateEmail(email);
+        ResponseOrErrorType isValidPass = Validate.validPass(password);
+        boolean isEqualRepeatedPass = password.equals(passRepitition);
+
+        //checkTheFormatAndAllowedConditions
+        if (isValidDateFormat != ResponseOrErrorType.INVALID_DATEFORMAT){
+            //TODO send response for client and come back
+        }
+        if (isValidEmail != ResponseOrErrorType.INVALID_EMAIL){
+            //TODO send response for client and come back
+        }
+        if (isValidPass != ResponseOrErrorType.INVALID_PASS){
+            //TODO send response for client and come back
+        }
+        if (!isEqualRepeatedPass){
+            //TODO send response for client and come back
+        }
+        if (email.isBlank() && phoneNumber.isBlank()){
+            //TODO send response that enter at least one of these items
+        }
+        UserToBeSigned userModule = new UserToBeSigned(username, password, firstName, lastName, email, phoneNumber, date);
         UsersTable table = SQLConnection.getUsers();
         if (table.userNameExists(username)){
             return new SocketModel(Api.TYPE_SIGNUP, ResponseOrErrorType.DUPLICATE_USERNAME, false);
@@ -38,9 +57,7 @@ public class UserHandler implements UserPages {
         if (table.phoneNumberExists(phoneNumber)){
             return new SocketModel(Api.TYPE_SIGNUP, ResponseOrErrorType.DUPLICATE_PHONENUMBER, false);
         }
-        if (SQLConnection.getUsers().insert(userModule)) {
-            UsersTable userTab = SQLConnection.getInstance().createUserTables();
-            userTab.insert(userModule);
+        if (table.insert(userModule)) {
             return new SocketModel(Api.TYPE_SIGNUP, ResponseOrErrorType.SUCCESSFUL, true);
         } else {
             return new SocketModel(Api.TYPE_SIGNUP, ResponseOrErrorType.UNSUCCESSFUL, false);
