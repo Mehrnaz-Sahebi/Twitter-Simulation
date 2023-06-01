@@ -24,7 +24,7 @@ public class UserHandler implements UserPages {
     public SocketModel signUpPage(String username, String firstName, String lastName, String email, String phoneNumber, String password, String passRepitition, String birthDate) throws SQLException, ParseException {
         //TODO show the countries list
 
-        Date date = new SimpleDateFormat("dd/MM/yyyy").parse(birthDate);//casting the str to Date class
+        Date date = new SimpleDateFormat("yyyy/MM/dd").parse(birthDate);//casting the str to Date class
         ResponseOrErrorType isValidDateFormat = Validate.validateDateFormat(birthDate);
         ResponseOrErrorType isValidEmail = Validate.validateEmail(email);
         ResponseOrErrorType isValidPass = Validate.validPass(password);
@@ -65,25 +65,108 @@ public class UserHandler implements UserPages {
     }
 
     @Override
-    public void setProfileAvatar(String pathAvatar) {
-        SafeRunning.safe(() -> {
-            user.setProfileHeader(pathAvatar);//user is doing? JSON seb tokens
-        });
+    public ResponseOrErrorType setProfileAvatar(String JWT, String pathAvatar) {
+        if(SafeRunning.safe(() -> {
+            SQLConnection.getUsers().updateAvatar(JWT, pathAvatar);
+        })){
+            return ResponseOrErrorType.SUCCESSFUL;
+        }else {
+            return ResponseOrErrorType.UNSUCCESSFUL;
+        }
     }
 
     @Override
-    public void setProfileHeader(String pathHeader) {
-        SafeRunning.safe(() -> {
-            user.setProfileHeader(pathHeader);
-        });
+    public ResponseOrErrorType setProfileHeader(String JWT, String pathHeader) {
+        if (SafeRunning.safe(() -> {
+            SQLConnection.getUsers().updateHeader(JWT, pathHeader);
+        })){
+            return ResponseOrErrorType.SUCCESSFUL;
+        }else {
+            return ResponseOrErrorType.UNSUCCESSFUL;
+        }
     }
 
     @Override
-    public void setProfileBio(String bio) {
-        SafeRunning.safe(() -> {
-            user.setProfileBio(bio);
-        });
+    public ResponseOrErrorType setProfileBio(String JWT, String bio) {
+        final int MAX_LENGTH = 160;
+        if (bio.length() > MAX_LENGTH){
+            return ResponseOrErrorType.OUT_OF_BOUND_LENGTH;
+        }
+        if (SafeRunning.safe(() -> {
+            SQLConnection.getUsers().updateBio(JWT, bio);
+        })){
+            return ResponseOrErrorType.SUCCESSFUL;
+        }else {
+            return ResponseOrErrorType.UNSUCCESSFUL;
+        }
+
     }
+
+    @Override
+    public ResponseOrErrorType setLocation(String JWT, String location) {
+        if (SafeRunning.safe(() -> {
+            SQLConnection.getUsers().updateLocation(JWT, location);
+        })){
+            return ResponseOrErrorType.SUCCESSFUL;
+        }else {
+            return ResponseOrErrorType.UNSUCCESSFUL;
+        }
+    }
+
+    @Override
+    public ResponseOrErrorType setWebsite(String JWT, String website) {
+        ResponseOrErrorType isValidLink = Validate.validateWebsite(website);
+        if (isValidLink == ResponseOrErrorType.INVALID_LINK){
+            //TODO handle it
+        }
+        if (SafeRunning.safe(() -> {
+            SQLConnection.getUsers().updateWebsite(JWT, website);
+        })){
+            return ResponseOrErrorType.SUCCESSFUL;
+        }else {
+            return ResponseOrErrorType.UNSUCCESSFUL;
+        }
+    }
+
+    @Override
+    public ResponseOrErrorType follow(String JWTusername, String followingUsername){
+        UsersTable out = SQLConnection.getUsers();
+        User currentUser = null;
+        try {
+            currentUser = out.getUserFromDatabase(JWTusername);
+            currentUser.follow(followingUsername);
+        } catch (SQLException e) {
+            return ResponseOrErrorType.UNSUCCESSFUL;
+        }
+        return ResponseOrErrorType.SUCCESSFUL;
+    }
+
+    @Override
+    public ResponseOrErrorType unfollow(String JWTusername, String unfollowingUsername){
+        UsersTable out = SQLConnection.getUsers();
+        User currentUser = null;
+        try {
+            currentUser = out.getUserFromDatabase(JWTusername);
+            currentUser.unfollow(unfollowingUsername);
+        } catch (SQLException e) {
+            return ResponseOrErrorType.UNSUCCESSFUL;
+        }
+        return ResponseOrErrorType.SUCCESSFUL;
+    }
+
+    @Override
+    public ResponseOrErrorType block(String JWTusername, String blockingUsername){
+        UsersTable out = SQLConnection.getUsers();
+        User currentUser = null;
+        try {
+            currentUser = out.getUserFromDatabase(JWTusername);
+            currentUser.block(blockingUsername);
+        } catch (SQLException e) {
+            return ResponseOrErrorType.UNSUCCESSFUL;
+        }
+        return ResponseOrErrorType.SUCCESSFUL;
+    }
+
     @Override
     public SocketModel addTweet(Tweet tweet) {
         return TweetsFileConnection.addTweet(tweet);
@@ -103,8 +186,10 @@ public class UserHandler implements UserPages {
     }
 
     @Override
-    public void goToTheUsersProfile(String userName) {///////////////////////////////////////////////////////////////////////
-
+    public void goToTheUsersProfile(String userName) throws SQLException {///////////////////////////////////////////////////////////////////////
+        UsersTable out = SQLConnection.getUsers();
+        User profileUser = out.getUserFromDatabase(userName);
+        //TODO show the profile in the scenebuilder
     }
 
     @Override

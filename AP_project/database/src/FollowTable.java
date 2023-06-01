@@ -41,14 +41,14 @@ public class FollowTable extends AbstractTable{
         statement.close();
         return userNames;
     }
-    public synchronized void firstUnfollowsSecend(String follower, String following) throws SQLException {
+    public synchronized void firstUnfollowsSecond(String follower, String following) throws SQLException {
         String query = "DELETE FROM " + TABLE_NAME +  " WHERE " + COLUMN_FOLLOWER + " = '"+follower+"'" + " AND "+ COLUMN_FOLLOWING + " = '"+following+"'" ;
         PreparedStatement statement = getConnection().prepareStatement(query);
         ResultSet set = statement.executeQuery();
         set.close();
         statement.close();
     }
-    public synchronized void firstFollowsSecend(String follower, String following) throws SQLException {
+    public synchronized void firstFollowsSecond(String follower, String following) throws SQLException {
         String query = "INSERT INTO " + TABLE_NAME +  " VALUES " + " ( '"+follower+"'" + " , '"+following+"')" ;
         PreparedStatement statement = getConnection().prepareStatement(query);
         ResultSet set = statement.executeQuery();

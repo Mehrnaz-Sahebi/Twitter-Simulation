@@ -165,12 +165,14 @@ public class UsersTable extends AbstractTable {
         ResultSet set = statement.executeQuery();
         set.close();
     }
-    public synchronized void updateSignUp(String username, Date newSignUpDate) throws SQLException{
-        String query = "UPDATE " + TABLE_NAME + " SET " + COLUMN_SIGNUPDATE + " = '"+newSignUpDate+"'" + " WHERE "+ COLUMN_USERNAME + " = '"+username+"'";
-        PreparedStatement statement = getConnection().prepareStatement(query);
-        ResultSet set = statement.executeQuery();
-        set.close();
-    }public synchronized void updateLastModifiedDate(String username, Date newLastModifiedDate) throws SQLException{
+    // I think this is useless that I saved the sign up date in the table creation
+//    public synchronized void updateSignUp(String username, Date newSignUpDate) throws SQLException{
+//        String query = "UPDATE " + TABLE_NAME + " SET " + COLUMN_SIGNUPDATE + " = '"+newSignUpDate+"'" + " WHERE "+ COLUMN_USERNAME + " = '"+username+"'";
+//        PreparedStatement statement = getConnection().prepareStatement(query);
+//        ResultSet set = statement.executeQuery();
+//        set.close();
+//    }
+    public synchronized void updateLastModifiedDate(String username, Date newLastModifiedDate) throws SQLException{
         String query = "UPDATE " + TABLE_NAME + " SET " + COLUMN_LASTMODIFIEDDATE + " = '"+newLastModifiedDate+"'" + " WHERE "+ COLUMN_USERNAME + " = '"+username+"'";
         PreparedStatement statement = getConnection().prepareStatement(query);
         ResultSet set = statement.executeQuery();
@@ -194,7 +196,7 @@ public class UsersTable extends AbstractTable {
         ResultSet set = statement.executeQuery();
         set.close();
     }
-    public <T> T select(UserToBeSigned userModel) throws SQLException, SQLException {
+    public <T> T select(UserToBeSigned userModel) throws SQLException {
         String query = "SELECT " + COLUMN_FIRSTNAME + "," + COLUMN_LASTNAME + "," + COLUMN_EMAIL +
                 " FROM " + TABLE_NAME + " WHERE " +
                 COLUMN_USERNAME + "=?";

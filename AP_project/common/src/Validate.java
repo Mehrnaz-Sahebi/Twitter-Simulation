@@ -57,4 +57,16 @@ public class Validate {
             return ResponseOrErrorType.SUCCESSFUL;
         }
     }
+    public  static ResponseOrErrorType validateWebsite(String link){
+        if (link == null || link.isEmpty())
+            return ResponseOrErrorType.INVALID_EMAIL;
+        String  regex = "^((https?|ftp|smtp):\\/\\/)?(www.)?[a-z0-9]+\\.[a-z]+(\\/[a-zA-Z0-9#]+\\/?)*$";
+        Pattern linkPat = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = linkPat.matcher(link);
+        if (matcher.find()){
+            return ResponseOrErrorType.SUCCESSFUL;
+        }else {
+            return ResponseOrErrorType.INVALID_LINK;
+        }
+    }
 }

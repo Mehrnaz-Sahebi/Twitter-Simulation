@@ -199,14 +199,14 @@ public class User implements Serializable {
     public void follow(String followingUsername){
         SafeRunning.safe(()-> {
             FollowTable table = SQLConnection.getInstance().followTable;
-            table.firstFollowsSecend(username, followingUsername);
+            table.firstFollowsSecond(username, followingUsername);
         });
     }
 
     public void unfollow(String followingUsername){
         SafeRunning.safe(()-> {
             FollowTable table = SQLConnection.getInstance().followTable;
-            table.firstUnfollowsSecend(username, followingUsername);
+            table.firstUnfollowsSecond(username, followingUsername);
         });
     }
     public void block(String blockingUsername){

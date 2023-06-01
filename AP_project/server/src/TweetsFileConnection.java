@@ -181,7 +181,7 @@ public class TweetsFileConnection {
         return true;
     }
     public static synchronized HashSet<Tweet> findFollowingsTweets(String username) throws Exception {
-        FollowTable followTable = new FollowTable();
+        FollowTable followTable = SQLConnection.getFollowTable();
         HashSet<Tweet> tweets = new HashSet<Tweet>();
 
             for (String followingUsername: followTable.getFollowings(username)) {
@@ -193,7 +193,7 @@ public class TweetsFileConnection {
         return tweets;
     }
     public static synchronized HashSet<Tweet> findBlockingsTweets(String username) throws Exception {
-        BlockTable blockTable = new BlockTable();
+        BlockTable blockTable = SQLConnection.getBlockTable();
         HashSet<Tweet> tweets = new HashSet<Tweet>();
 
             for (String blockingUsername: blockTable.getBlockings(username)) {

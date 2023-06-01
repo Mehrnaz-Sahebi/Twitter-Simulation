@@ -58,14 +58,23 @@ public class SQLConnection {
     public static UsersTable getUsers() {
         return getInstance().users;
     }
-    final FollowTable followTable = new FollowTable();
+    static final FollowTable followTable = new FollowTable();
     public FollowTable createFollowTable() {
         followTable.createTable();
         return followTable;
     }
-    final BlockTable blockTable = new BlockTable();
+
+    public static FollowTable getFollowTable() {
+        return followTable;
+    }
+
+    static final BlockTable blockTable = new BlockTable();
     public BlockTable createBlockTable() {
         blockTable.createTable();
+        return blockTable;
+    }
+
+    public static BlockTable getBlockTable() {
         return blockTable;
     }
 }
