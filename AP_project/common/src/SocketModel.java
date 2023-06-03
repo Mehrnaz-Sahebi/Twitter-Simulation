@@ -18,6 +18,10 @@ public class SocketModel implements Serializable {
         this.message = message;
     }
 
+    public void setMessage(ResponseOrErrorType message) {
+        this.message = message;
+    }
+
     @SuppressWarnings("unchecked")
     public <T> T get() {
         return (T) data;

@@ -14,9 +14,9 @@ public class ConsoleImpl implements DesignFlow {
 
         int cmd = ConsoleUtil.waitForCommand(1, 2);
         if (cmd == 1) {
-            openLoginForm();
+            openLoginForm(socket);
         } else {
-            openSignupForm();
+            openSignupForm(socket);
         }
     }
 
@@ -29,6 +29,7 @@ public class ConsoleImpl implements DesignFlow {
 
         ConsoleUtil.printCommandHint("Enter password: ");
         user.setPassword(ConsoleUtil.waitForString());
+
         SendMessage.write(socket, new SocketModel(Api.TYPE_SIGNIN, user));
 
 //        SocketApi.getInstance().writeAndListen(

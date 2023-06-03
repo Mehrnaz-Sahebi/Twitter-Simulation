@@ -10,7 +10,7 @@ public class Listener implements Runnable{
 
     private Socket socket;
     private final Hashtable<Integer, LinkedList<Listener>> listeners = new Hashtable<>();
-    private ObjectOutputStream writer;
+//    private ObjectOutputStream writer;
     private ObjectInputStream reader;
     private boolean connected;
     private static Listener instance;
@@ -29,16 +29,14 @@ public class Listener implements Runnable{
     @Override
     public synchronized void run() {
         try {
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-            Scanner scanner = new Scanner(System.in);
-//            System.out.println("Enter your name:");
-            while (true) {
-                String sendingMessage = scanner.nextLine();
-                objectOutputStream.writeObject(sendingMessage);
-                objectOutputStream.flush();
+            SocketModel model = (SocketModel) reader.readObject();
+            if (model.message == ResponseOrErrorType.SUCCESSFUL){
+
             }
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
     }
