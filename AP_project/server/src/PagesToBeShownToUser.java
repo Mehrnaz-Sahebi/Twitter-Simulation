@@ -1,7 +1,7 @@
 import java.sql.SQLException;
 import java.text.ParseException;
 
-public interface UserPages {
+public interface PagesToBeShownToUser {
 
     public <T> SocketModel signInPage(String userName, String password) throws SQLException;//sign in and sign up should be shown, if the sign up is successful, then the home page is the same.
 

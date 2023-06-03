@@ -3,7 +3,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class UserHandler implements UserPages {
+public class UserHandler implements PagesToBeShownToUser {
 
     @Override
     public <T> SocketModel signInPage(String userName, String password) throws SQLException {

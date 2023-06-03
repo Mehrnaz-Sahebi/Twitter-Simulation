@@ -1,4 +1,3 @@
-//import java.io.File;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -30,7 +29,7 @@ public class SQLConnection {
     private SQLConnection() {
     }
 
-    public void connect() throws SQLException {
+    public void connect() throws SQLException, ClassNotFoundException {
         if (connection == null) {
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb", "root", "Ma@12345");//password of your database
         }

@@ -27,7 +27,7 @@ public class UsersTable extends AbstractTable {
     private static final String COLUMN_WEBSITE = "website";
     @Override
     public void createTable() {
-        executeUpdate("CREATE TABLE IF NOT EXISTS " +TABLE_NAME+ " (" +
+        executeUpdate("CREATE TABLE " +TABLE_NAME+ " (" +
                 COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 COLUMN_USERNAME + " TEXT, " +
                 COLUMN_PASSWORD + " TEXT, " +

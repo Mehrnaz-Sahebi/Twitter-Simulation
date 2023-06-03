@@ -5,36 +5,26 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Main {
 
     public static void main(String[] args) throws IOException {
+        ExecutorService executorService = Executors.newCachedThreadPool();
+        try (ServerSocket socketServer = new ServerSocket(8080)) {
+            SQLConnection.getInstance().connect();
 
-        HttpServer server = HttpServer.create(new InetSocketAddress("localhost", 8080), 0);
-        //Create an HTTP Context and set it's path
-        HttpContext context = server.createContext("/");
+            while (true) {
+                Socket socket = socketServer.accept();
 
-        //Create a Request Handler for the Server
-        context.setHandler(new RequestHandler());
-        server.start();
+            }
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-
-//        try (ServerSocket socketServer = new ServerSocket(8080)) {
-//            SQLConnection.getInstance().connect();
-//
-//            while (true) {
-//                SafeRunning.safe(() -> {
-//                    Socket socket = socketServer.accept();
-////                    new UserThread(socket).start();
-//                });
-//            }
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-
-//        SQLConnection.closeConnection();
-//        System.out.println("Server closed");
+        SQLConnection.closeConnection();
+        System.out.println("Server closed");
     }
 }

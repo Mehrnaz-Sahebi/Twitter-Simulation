@@ -8,6 +8,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="common" />
-    <orderEntry type="module" module-name="console_action" />
+    <orderEntry type="module" module-name="client" />
   </component>
 </module>
