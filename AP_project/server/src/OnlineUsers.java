@@ -8,14 +8,14 @@ public class OnlineUsers {
         return onlineUsers.containsKey(userModel.getUsername());
     }
 
-    public static synchronized void addOnlineUser(ClientHandler user) {
-        onlineUsers.put(user.getUserModel().getUsername(), user);
-        notify(user, new SocketModel(Api.TYPE_USER_JOINED, user.getUserModel()));
+    public static synchronized void addOnlineUser(ClientHandler clientuser, UserToBeSigned user) {
+        onlineUsers.put(user.getUsername(), clientuser);
+        notify(clientuser, new SocketModel(Api.TYPE_USER_JOINED, user));
     }
 
-    public static synchronized void removeOnlineUser(ClientHandler user) {
-        onlineUsers.remove(user.getUserModel().getUsername());
-        notify(user, new SocketModel(Api.TYPE_USER_LEFT, user.getUserModel()));
+    public static synchronized void removeOnlineUser(ClientHandler clientuser, UserToBeSigned user) {
+        onlineUsers.remove(user.getUsername());
+        notify(clientuser, new SocketModel(Api.TYPE_USER_LEFT, user));
     }
 
     public static synchronized void notify(ClientHandler sender, SocketModel model) {

@@ -26,6 +26,7 @@ public class UserToBeSigned {
         this.phoneNumber = phoneNumber;
     }
 
+
     public java.sql.Date getBirthDate() {
         return birthDate;
     }
@@ -52,6 +53,10 @@ public class UserToBeSigned {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public void setBirthDate(java.sql.Date birthDate) {
+        this.birthDate = birthDate;
     }
 
     public String getPassword() {

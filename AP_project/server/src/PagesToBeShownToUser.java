@@ -16,17 +16,15 @@ public class PagesToBeShownToUser {
     }
 
 
-    public static SocketModel signUpPage(UserToBeSigned userModule) throws SQLException, ParseException {
-
-        UserToBeSigned userModule = new UserToBeSigned(username, password, firstName, lastName, email, phoneNumber, date);
+    public static SocketModel signUpPage(UserToBeSigned userModule) throws SQLException {
         UsersTable table = SQLConnection.getUsers();
-        if (table.userNameExists(username)){
+        if (table.userNameExists(userModule.getUsername())){
             return new SocketModel(Api.TYPE_SIGNUP, ResponseOrErrorType.DUPLICATE_USERNAME, false);
         }
-        if (table.emailExists(email)){
+        if (table.emailExists(userModule.getEmail())){
             return new SocketModel(Api.TYPE_SIGNUP, ResponseOrErrorType.DUPLICATE_EMAIL, false);
         }
-        if (table.phoneNumberExists(phoneNumber)){
+        if (table.phoneNumberExists(userModule.getPhoneNumber())){
             return new SocketModel(Api.TYPE_SIGNUP, ResponseOrErrorType.DUPLICATE_PHONENUMBER, false);
         }
         if (table.insert(userModule)) {

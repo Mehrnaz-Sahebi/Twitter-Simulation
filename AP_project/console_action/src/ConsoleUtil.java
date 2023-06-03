@@ -85,6 +85,27 @@ public class ConsoleUtil {
             case USER_NOTFOUND -> {
                 printColored(36, " User not found"); //cyan color
             }
+            case DUPLICATE_USERNAME -> {
+                printColored(36, " duplicate username"); //cyan color
+            }
+            case DUPLICATE_EMAIL -> {
+                printColored(36, " duplicate email"); //cyan color
+            }
+            case DUPLICATE_PHONENUMBER -> {
+                printColored(36, " duplicate phone number"); //cyan color
+            }
+            case UNSUCCESSFUL -> {
+                printColored(36, " Unsuccessful because of different DB probs"); //cyan color
+            }
+//            case USER_NOTFOUND -> {
+//                printColored(36, " User not found"); //cyan color
+//            }
+//            case USER_NOTFOUND -> {
+//                printColored(36, " User not found"); //cyan color
+//            }
+//            case USER_NOTFOUND -> {
+//                printColored(36, " User not found"); //cyan color
+//            }
         }
 
     }

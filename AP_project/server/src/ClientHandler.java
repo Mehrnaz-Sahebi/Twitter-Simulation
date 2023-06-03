@@ -35,7 +35,7 @@ public class ClientHandler implements Runnable{
                             }else {
                                 socketModel.setMessage(ResponseOrErrorType.SUCCESSFUL);
                                 write(socketModel);
-                                OnlineUsers.addOnlineUser(this);
+                                OnlineUsers.addOnlineUser(this, user);
                             }
                         }else{
                             model.setMessage(ResponseOrErrorType.ALREADY_ONLINE);
@@ -46,7 +46,7 @@ public class ClientHandler implements Runnable{
                         UserToBeSigned user = (UserToBeSigned) model.get();
                         SocketModel res = PagesToBeShownToUser.signUpPage(user);
                         if (res.get()) {
-                            logIn(user);
+                            OnlineUsers.addOnlineUser(this, user);
                         }
                         write(res);
                     }

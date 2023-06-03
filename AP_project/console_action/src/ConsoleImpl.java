@@ -1,4 +1,5 @@
 import java.net.Socket;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -8,7 +9,7 @@ public class ConsoleImpl{
         System.err.println("Failed to connect!");
     }
 
-    public static void openAccountMenu(Socket socket) {
+    public static void openAccountMenu(Socket socket) throws ParseException {
         ConsoleUtil.printCommandHint("1. Login");
         ConsoleUtil.printCommandHint("2. Signup");
 
@@ -45,7 +46,7 @@ public class ConsoleImpl{
 //        );
     }
 
-    public static void openSignupForm(Socket socket) {
+    public static void openSignupForm(Socket socket) throws ParseException {
         ConsoleUtil.printCommandHint("Creating new account...");
 
         UserToBeSigned user = new UserToBeSigned();
@@ -80,28 +81,35 @@ public class ConsoleImpl{
         }
         user.setEmail(email);
 
-        ConsoleUtil.printCommandHint("Enter your birthDate: ");
+        ConsoleUtil.printCommandHint("Enter your phone number : ");
+        String phNumber = ConsoleUtil.waitForString();
+        user.setPhoneNumber(phNumber);
 
+        ConsoleUtil.printCommandHint("Enter your birthDate: ");
+        String birthDate = ConsoleUtil.waitForString();
+        while (Validate.validateDateFormat(birthDate) != ResponseOrErrorType.SUCCESSFUL){
+            birthDate = ConsoleUtil.waitForString();
+        }
+        Date date = new SimpleDateFormat("yyyy/MM/dd").parse(birthDate);//casting the str to Date class
+        user.setBirthDate((java.sql.Date) date);
         //TODO show the countries list
 
-        Date date = new SimpleDateFormat("yyyy/MM/dd").parse(birthDate);//casting the str to Date class
-        ResponseOrErrorType isValidDateFormat = Validate.validateDateFormat(birthDate);
-        ResponseOrErrorType isValidEmail = ;
 
         //checkTheFormatAndAllowedConditions
-        if (isValidDateFormat != ResponseOrErrorType.INVALID_DATEFORMAT){
-            //TODO send response for client and come back
-        }
-        if (isValidEmail != ResponseOrErrorType.INVALID_EMAIL){
-            //TODO send response for client and come back
-        }
-        if (isValidPass != ResponseOrErrorType.INVALID_PASS){
-            //TODO send response for client and come back
-        }
-        if (!isEqualRepeatedPass){
-            //TODO send response for client and come back
-        }
-        if (email.isBlank() && phoneNumber.isBlank()){
+//        if (isValidDateFormat != ResponseOrErrorType.INVALID_DATEFORMAT){
+//            //TODO send response for client and come back
+//        }
+//        if (isValidEmail != ResponseOrErrorType.INVALID_EMAIL){
+//            //TODO send response for client and come back
+//        }
+//        if (isValidPass != ResponseOrErrorType.INVALID_PASS){
+//            //TODO send response for client and come back
+//        }
+//        if (!isEqualRepeatedPass){
+//            //TODO send response for client and come back
+//        }
+        if (email.isBlank() //&& phoneNumber.isBlank()
+         ){
             //TODO send response that enter at least one of these items
         }
 
@@ -109,17 +117,17 @@ public class ConsoleImpl{
     }
 
 
-    public static void openChatPage(UserToBeSigned user) {
-        ConsoleUtil.printHello(user);
-
-        new Thread(() -> {
-            String msg;
-            while (!"exit".equalsIgnoreCase(msg = ConsoleUtil.waitForString())) {
-                SocketApi.getInstance().write(
-                        new SocketModel(Api.TYPE_MESSAGE, msg)
-                );
-            }
-            System.exit(0);
-        }).start();
-    }
+//    public static void openChatPage(UserToBeSigned user) {
+//        ConsoleUtil.printHello(user);
+//
+//        new Thread(() -> {
+//            String msg;
+//            while (!"exit".equalsIgnoreCase(msg = ConsoleUtil.waitForString())) {
+////                SocketApi.getInstance().write(
+////                        new SocketModel(Api.TYPE_MESSAGE, msg)
+////                );
+//            }
+//            System.exit(0);
+//        }).start();
+//    }
 }
