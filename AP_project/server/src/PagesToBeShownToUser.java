@@ -16,31 +16,8 @@ public class PagesToBeShownToUser {
     }
 
 
-    public static SocketModel signUpPage(String username, String firstName, String lastName, String email, String phoneNumber, String password, String passRepitition, String birthDate) throws SQLException, ParseException {
-        //TODO show the countries list
+    public static SocketModel signUpPage(UserToBeSigned userModule) throws SQLException, ParseException {
 
-        Date date = new SimpleDateFormat("yyyy/MM/dd").parse(birthDate);//casting the str to Date class
-        ResponseOrErrorType isValidDateFormat = Validate.validateDateFormat(birthDate);
-        ResponseOrErrorType isValidEmail = Validate.validateEmail(email);
-        ResponseOrErrorType isValidPass = Validate.validPass(password);
-        boolean isEqualRepeatedPass = password.equals(passRepitition);
-
-        //checkTheFormatAndAllowedConditions
-        if (isValidDateFormat != ResponseOrErrorType.INVALID_DATEFORMAT){
-            //TODO send response for client and come back
-        }
-        if (isValidEmail != ResponseOrErrorType.INVALID_EMAIL){
-            //TODO send response for client and come back
-        }
-        if (isValidPass != ResponseOrErrorType.INVALID_PASS){
-            //TODO send response for client and come back
-        }
-        if (!isEqualRepeatedPass){
-            //TODO send response for client and come back
-        }
-        if (email.isBlank() && phoneNumber.isBlank()){
-            //TODO send response that enter at least one of these items
-        }
         UserToBeSigned userModule = new UserToBeSigned(username, password, firstName, lastName, email, phoneNumber, date);
         UsersTable table = SQLConnection.getUsers();
         if (table.userNameExists(username)){

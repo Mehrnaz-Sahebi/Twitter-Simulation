@@ -52,7 +52,7 @@ public class ConsoleUtil {
     }
 
     public static void printHello(UserToBeSigned user) {
-        printColored(33, "Hello " + user.getFirstName() + user.getLastName() );
+//        printColored(33, "Hello " + user.getFirstName() + user.getLastName() );
         printColored(33, "Your Email: " + user.getEmail());
         printColored(33, "WELCOME TO CHAT!");
     }
@@ -65,8 +65,27 @@ public class ConsoleUtil {
         printColored(31, user.getUsername() + " Left! (" + user.getFirstName() + user.getLastName() + ")");
     }
 
+
+    public static void printLoginMessage(UserToBeSigned user) {
+        printColored(35, " Welcome! (" + user.getFirstName() + user.getLastName() + ")"); //pink color
+    }
 //    public static void printMessage(MessageModel messageModel) {
 //        printColored(34, messageModel.getSender().getUsername() +
 //                ":\u001B[0m " + messageModel.getText());
 //    }
+
+    public static void printErrorMSg(SocketModel socketuser) {
+        switch (socketuser.message){
+            case ALREADY_ONLINE -> {
+                printColored(36, " This account is already online!"); //cyan color
+            }
+            case INVALID_PASS -> {
+                printColored(36, " Invalid password"); //cyan color
+            }
+            case USER_NOTFOUND -> {
+                printColored(36, " User not found"); //cyan color
+            }
+        }
+
+    }
 }

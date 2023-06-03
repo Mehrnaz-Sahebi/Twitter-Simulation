@@ -26,7 +26,7 @@ public class ClientHandler implements Runnable{
             while (socketBetweenClientServer.isConnected()){
                 SocketModel model = (SocketModel) objectInputStream.readObject();
                 switch (model.eventType){
-                    case Api.TYPE_SIGNIN ->{
+                    case TYPE_SIGNIN ->{
                         UserToBeSigned user = (UserToBeSigned) model.get();
                         if (verifyLogIn(user)){
                             SocketModel socketModel = PagesToBeShownToUser.signInPage(user);
@@ -35,21 +35,25 @@ public class ClientHandler implements Runnable{
                             }else {
                                 socketModel.setMessage(ResponseOrErrorType.SUCCESSFUL);
                                 write(socketModel);
+                                OnlineUsers.addOnlineUser(this);
                             }
                         }else{
                             model.setMessage(ResponseOrErrorType.ALREADY_ONLINE);
                             write(model);
                         }
                     }
-                    case Api.TYPE_SIGNUP :
+                    case TYPE_SIGNUP ->{
+                        UserToBeSigned user = (UserToBeSigned) model.get();
+                        SocketModel res = PagesToBeShownToUser.signUpPage(user);
+                        if (res.get()) {
+                            logIn(user);
+                        }
+                        write(res);
+                    }
                 }
             }
 
-        }catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (SQLException e) {
+        }catch (IOException | ClassNotFoundException | SQLException e) {
             throw new RuntimeException(e);
         }
     }

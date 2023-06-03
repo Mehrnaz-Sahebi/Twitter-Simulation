@@ -31,7 +31,11 @@ public class Listener implements Runnable{
         try {
             SocketModel model = (SocketModel) reader.readObject();
             if (model.message == ResponseOrErrorType.SUCCESSFUL){
-
+                ConsoleUtil.printLoginMessage((UserToBeSigned) model.data);
+                ConsoleImpl.openChatPage((UserToBeSigned) model.data);
+            }else {
+                ConsoleUtil.printErrorMSg(model);
+                ConsoleImpl.openAccountMenu(socket);
             }
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);

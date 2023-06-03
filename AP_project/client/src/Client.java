@@ -21,8 +21,7 @@ public class Client {
         }
     }
     public static void start(Socket socket){
-        DesignFlow showTheDesign = new ConsoleImpl();
-        showTheDesign.openAccountMenu(socket);
+        ConsoleImpl.openAccountMenu(socket);
 
 
     }
