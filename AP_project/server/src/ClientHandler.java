@@ -8,17 +8,18 @@ import java.util.ArrayList;
 public class ClientHandler implements Runnable{
     static ArrayList<ClientHandler> clientHandlers = new ArrayList<>();
     Socket socketBetweenClientServer;
-    ObjectInputStream objectInputStream;
-    ObjectOutputStream objectOutputStream;
+    ObjectInputStream objectInputStream = null;
+    ObjectOutputStream objectOutputStream = null;
     public ClientHandler(Socket client) {
+        this.socketBetweenClientServer = client;
+
         try {
-            this.socketBetweenClientServer = client;
-            objectOutputStream = new ObjectOutputStream(client.getOutputStream());
             objectInputStream = new ObjectInputStream(client.getInputStream());
-            clientHandlers.add(this);
-        }catch (IOException exception){
-//            closeEveryThing();
+            objectOutputStream = new ObjectOutputStream(client.getOutputStream());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
+        clientHandlers.add(this);
     }
     @Override
     public void run() {
@@ -62,10 +63,11 @@ public class ClientHandler implements Runnable{
         return !OnlineUsers.isOnline(user);
     }
 
-    public synchronized void write(SocketModel model) {
+    public void write(SocketModel model) {
         if (model == null) return;
         try {
             objectOutputStream.writeObject(model);
+            objectOutputStream.flush();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

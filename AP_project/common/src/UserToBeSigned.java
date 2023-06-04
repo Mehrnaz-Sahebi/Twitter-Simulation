@@ -1,8 +1,9 @@
+import java.io.Serializable;
 import java.util.Date;
 
-public class UserToBeSigned {
+public class UserToBeSigned implements Serializable {
     private String username, password, firstName, lastName, email, phoneNumber;
-    private java.sql.Date birthDate;
+    private Date birthDate;
 
     public UserToBeSigned() {
     }
@@ -27,7 +28,7 @@ public class UserToBeSigned {
     }
 
 
-    public java.sql.Date getBirthDate() {
+    public Date getBirthDate() {
         return birthDate;
     }
 
@@ -55,7 +56,7 @@ public class UserToBeSigned {
         this.lastName = lastName;
     }
 
-    public void setBirthDate(java.sql.Date birthDate) {
+    public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
     }
 

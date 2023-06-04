@@ -1,4 +1,6 @@
-public enum ResponseOrErrorType {
+import java.io.Serializable;
+
+public enum ResponseOrErrorType implements Serializable {
     SUCCESSFUL,
     DUPLICATE_USERNAME,
     DUPLICATE_ACCOUNTNAME,

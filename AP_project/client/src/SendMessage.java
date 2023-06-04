@@ -23,10 +23,10 @@ public class SendMessage{
 //
 //    }
 
-    public static void write(Socket socket, SocketModel model){
+    public static void write(Socket socket, SocketModel model, ObjectOutputStream writer){
         try {
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-            objectOutputStream.writeObject(model);
+            writer.writeObject(model);
+            writer.flush();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

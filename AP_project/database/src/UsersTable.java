@@ -25,25 +25,31 @@ public class UsersTable extends AbstractTable {
     private static final String COLUMN_BIO = "bio";
     private static final String COLUMN_LOCATION = "location";
     private static final String COLUMN_WEBSITE = "website";
+//  "CREATE TABLE REGISTRATION " +
+//          "(id INTEGER not NULL, " +
+//          " first VARCHAR(255), " +
+//          " last VARCHAR(255), " +
+//          " age INTEGER, " +
+//          " PRIMARY KEY ( id ))"
     @Override
     public void createTable() {
-        executeUpdate("CREATE TABLE " +TABLE_NAME+ " (" +
-                COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                COLUMN_USERNAME + " TEXT, " +
-                COLUMN_PASSWORD + " TEXT, " +
-                COLUMN_FIRSTNAME + " TEXT, " +
-                COLUMN_LASTNAME + " TEXT, " +
-                COLUMN_EMAIL + " TEXT, " +
-                COLUMN_PHONE_NUMBER + " TEXT, " +
-                COLUMN_AVATAR + " TEXT, " +
-                COLUMN_HEADER + " TEXT, " +
-                COLUMN_BIO + " TEXT, " +
-                COLUMN_REGION + " TEXT, " +
-                COLUMN_BIRTHDATE + " DATE, " +
-                COLUMN_SIGNUPDATE + " DATE, " +
-                COLUMN_LASTMODIFIEDDATE + " DATE, " +
-                COLUMN_LOCATION + " TEXT, " +
-                COLUMN_WEBSITE + " TEXT, " +
+        executeUpdate(  "CREATE TABLE " +TABLE_NAME+ " (" +
+                COLUMN_ID + " INTEGER, " +
+                COLUMN_USERNAME + " VARCHAR(20), " +
+                COLUMN_PASSWORD + " VARCHAR(20),  " +
+                COLUMN_FIRSTNAME + " VARCHAR(20),  " +
+                COLUMN_LASTNAME + " VARCHAR(20),  " +
+                COLUMN_EMAIL + " VARCHAR(20),  " +
+                COLUMN_PHONE_NUMBER + " VARCHAR(20),  " +
+                COLUMN_AVATAR + " VARCHAR(20),  " +
+                COLUMN_HEADER + " VARCHAR(20),  " +
+                COLUMN_BIO + " VARCHAR(20),  " +
+                COLUMN_REGION + " VARCHAR(20),  " +
+                COLUMN_BIRTHDATE + " VARCHAR(20),  " +
+                COLUMN_SIGNUPDATE + " VARCHAR(20),  " +
+                COLUMN_LASTMODIFIEDDATE + " VARCHAR(20),  " +
+                COLUMN_LOCATION + " VARCHAR(20),  " +
+                COLUMN_WEBSITE + " VARCHAR(20)" +
                 ")");
     }
 
@@ -89,9 +95,9 @@ public class UsersTable extends AbstractTable {
             statement.setString(7,null);
             statement.setString(8,null);
             statement.setString(9,null);
-            statement.setDate(10,userModel.getBirthDate());
-            statement.setDate(11, java.sql.Date.valueOf(dtf.format(now)));//doubtful
-            statement.setDate(12,null);
+//            statement.setDate(10,userModel.getBirthDate()); // commented because we have errors
+//            statement.setDate(11, java.sql.Date.valueOf(dtf.format(now)));//doubtful
+//            statement.setDate(12,null);
             statement.setString(13,null);
             statement.setString(14,null);
             statement.setString(15,null);
