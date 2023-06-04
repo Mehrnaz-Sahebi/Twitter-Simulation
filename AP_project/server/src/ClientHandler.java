@@ -49,6 +49,8 @@ public class ClientHandler implements Runnable{
                         if (res.get()) {
                             OnlineUsers.addOnlineUser(this, user);
                         }
+                        res.data = null;
+                        res.data = user;
                         write(res);
                     }
                 }
