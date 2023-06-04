@@ -10,19 +10,19 @@ public class ConsoleImpl{
         System.err.println("Failed to connect!");
     }
 
-    public static void openAccountMenu(Socket socket, ObjectOutputStream writer) throws ParseException {
+    public static SocketModel openAccountMenu(Socket socket, ObjectOutputStream writer) throws ParseException {
         ConsoleUtil.printCommandHint("1. Login");
         ConsoleUtil.printCommandHint("2. Signup");
 
         int cmd = ConsoleUtil.waitForCommand(1, 2);
         if (cmd == 1) {
-            openLoginForm(socket, writer);
+            return openLoginForm(socket, writer);
         } else {
-            openSignupForm(socket, writer);
+            return openSignupForm(socket, writer);
         }
     }
 
-    public static void openLoginForm(Socket socket, ObjectOutputStream writer) {
+    public static SocketModel openLoginForm(Socket socket, ObjectOutputStream writer) {
         UserToBeSigned user = new UserToBeSigned();
 
         ConsoleUtil.printCommandHint("Enter username: ");
@@ -31,7 +31,8 @@ public class ConsoleImpl{
         ConsoleUtil.printCommandHint("Enter password: ");
         user.setPassword(ConsoleUtil.waitForString());
 
-        SendMessage.write(socket, new SocketModel(Api.TYPE_SIGNIN, user), writer);
+        return new SocketModel(Api.TYPE_SIGNIN, user);
+//        SendMessage.write(socket, new SocketModel(Api.TYPE_SIGNIN, user), writer);
 
 //        SocketApi.getInstance().writeAndListen(
 //                new SocketModel(Api.TYPE_SIGNIN, user),
@@ -47,7 +48,7 @@ public class ConsoleImpl{
 //        );
     }
 
-    public static void openSignupForm(Socket socket, ObjectOutputStream writer) throws ParseException {
+    public static SocketModel openSignupForm(Socket socket, ObjectOutputStream writer) throws ParseException {
         ConsoleUtil.printCommandHint("Creating new account...");
 
         UserToBeSigned user = new UserToBeSigned();
@@ -117,8 +118,8 @@ public class ConsoleImpl{
          ){
             //TODO send response that enter at least one of these items
         }
-
-        SendMessage.write(socket, new SocketModel(Api.TYPE_SIGNUP, user), writer);
+        return new SocketModel(Api.TYPE_SIGNUP, user);
+//        SendMessage.write(socket, new SocketModel(Api.TYPE_SIGNUP, user), writer);
     }
 
 

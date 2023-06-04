@@ -33,7 +33,7 @@ public class UsersTable extends AbstractTable {
 //          " PRIMARY KEY ( id ))"
     @Override
     public void createTable() {
-        executeUpdate(  "CREATE TABLE " +TABLE_NAME+ " (" +
+        executeUpdate(  "CREATE TABLE IF NOT EXISTS " +TABLE_NAME+ " (" +
                 COLUMN_ID + " INTEGER, " +
                 COLUMN_USERNAME + " VARCHAR(20), " +
                 COLUMN_PASSWORD + " VARCHAR(20),  " +
