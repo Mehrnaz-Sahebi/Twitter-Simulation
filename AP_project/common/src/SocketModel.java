@@ -18,8 +18,17 @@ public class SocketModel implements Serializable {
         this.message = message;
     }
 
+    public SocketModel(Api eventType, ResponseOrErrorType message) {
+        this.eventType = eventType;
+        this.message = message;
+    }
+
     public void setMessage(ResponseOrErrorType message) {
         this.message = message;
+    }
+
+    public void setEventType(Api eventType) {
+        this.eventType = eventType;
     }
 
     @SuppressWarnings("unchecked")

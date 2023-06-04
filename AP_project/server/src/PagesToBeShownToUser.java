@@ -2,6 +2,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
 
 public class PagesToBeShownToUser {
 
@@ -28,15 +29,29 @@ public class PagesToBeShownToUser {
             return new SocketModel(Api.TYPE_SIGNUP, ResponseOrErrorType.DUPLICATE_PHONENUMBER, false);
         }
         if (table.insert(userModule)) {
+            userModule.setUserDbId(table.getUserFromDatabase(userModule.getUsername()).getDatabaseId());
             return new SocketModel(Api.TYPE_SIGNUP, ResponseOrErrorType.SUCCESSFUL, true);
         } else {
             return new SocketModel(Api.TYPE_SIGNUP, ResponseOrErrorType.UNSUCCESSFUL, false);
         }
     }
 
-    public static ResponseOrErrorType setProfileAvatar(String JWT, String pathAvatar) {
+    public static ResponseOrErrorType updateProfile(User thisUser) {
         if(SafeRunning.safe(() -> {
-            SQLConnection.getUsers().updateAvatar(JWT, pathAvatar);
+            UsersTable out = SQLConnection.getUsers();
+            out.updateUsername(thisUser.getDatabaseId(), thisUser.getUsername());
+            out.updateHeader(thisUser.getDatabaseId(), thisUser.getHeader());
+            out.updateBio(thisUser.getDatabaseId(), thisUser.getBio());
+            out.updateWebsite(thisUser.getDatabaseId(), thisUser.getWebsite());
+            out.updateAvatar(thisUser.getDatabaseId(), thisUser.getAvatar());
+            out.updateLocation(thisUser.getDatabaseId(), thisUser.getLocation());
+            out.updateBirthDate(thisUser.getDatabaseId(), thisUser.getBirthDate());
+            out.updateFirstName(thisUser.getDatabaseId(), thisUser.getFirstName());
+            out.updateLastName(thisUser.getDatabaseId(), thisUser.getLastName());
+            out.updateEmail(thisUser.getDatabaseId(), thisUser.getEmail());
+            out.updatePassword(thisUser.getDatabaseId(), thisUser.getPassword());
+            out.updatePhoneNumber(thisUser.getDatabaseId(), thisUser.getPhoneNumber());
+            out.updateRegion(thisUser.getDatabaseId(), thisUser.getRegionOrCountry());
         })){
             return ResponseOrErrorType.SUCCESSFUL;
         }else {
@@ -44,54 +59,54 @@ public class PagesToBeShownToUser {
         }
     }
 
-    public static ResponseOrErrorType setProfileHeader(String JWT, String pathHeader) {
-        if (SafeRunning.safe(() -> {
-            SQLConnection.getUsers().updateHeader(JWT, pathHeader);
-        })){
-            return ResponseOrErrorType.SUCCESSFUL;
-        }else {
-            return ResponseOrErrorType.UNSUCCESSFUL;
-        }
-    }
+//    public static ResponseOrErrorType setProfileHeader(String JWT, String pathHeader) {
+//        if (SafeRunning.safe(() -> {
+//            SQLConnection.getUsers()
+//        })){
+//            return ResponseOrErrorType.SUCCESSFUL;
+//        }else {
+//            return ResponseOrErrorType.UNSUCCESSFUL;
+//        }
+//    }
 
-    public static ResponseOrErrorType setProfileBio(String JWT, String bio) {
-        final int MAX_LENGTH = 160;
-        if (bio.length() > MAX_LENGTH){
-            return ResponseOrErrorType.OUT_OF_BOUND_LENGTH;
-        }
-        if (SafeRunning.safe(() -> {
-            SQLConnection.getUsers().updateBio(JWT, bio);
-        })){
-            return ResponseOrErrorType.SUCCESSFUL;
-        }else {
-            return ResponseOrErrorType.UNSUCCESSFUL;
-        }
+//    public static ResponseOrErrorType setProfileBio(String JWT, String bio) {
+//        final int MAX_LENGTH = 160;
+//        if (bio.length() > MAX_LENGTH){
+//            return ResponseOrErrorType.OUT_OF_BOUND_LENGTH;
+//        }
+//        if (SafeRunning.safe(() -> {
+//            SQLConnection.getUsers().updateBio(JWT, bio);
+//        })){
+//            return ResponseOrErrorType.SUCCESSFUL;
+//        }else {
+//            return ResponseOrErrorType.UNSUCCESSFUL;
+//        }
+//
+//    }
 
-    }
+//    public static ResponseOrErrorType setLocation(String JWT, String location) {
+//        if (SafeRunning.safe(() -> {
+//            SQLConnection.getUsers().updateLocation(JWT, location);
+//        })){
+//            return ResponseOrErrorType.SUCCESSFUL;
+//        }else {
+//            return ResponseOrErrorType.UNSUCCESSFUL;
+//        }
+//    }
 
-    public static ResponseOrErrorType setLocation(String JWT, String location) {
-        if (SafeRunning.safe(() -> {
-            SQLConnection.getUsers().updateLocation(JWT, location);
-        })){
-            return ResponseOrErrorType.SUCCESSFUL;
-        }else {
-            return ResponseOrErrorType.UNSUCCESSFUL;
-        }
-    }
-
-    public static ResponseOrErrorType setWebsite(String JWT, String website) {
-        ResponseOrErrorType isValidLink = Validate.validateWebsite(website);
-        if (isValidLink == ResponseOrErrorType.INVALID_LINK){
-            //TODO handle it
-        }
-        if (SafeRunning.safe(() -> {
-            SQLConnection.getUsers().updateWebsite(JWT, website);
-        })){
-            return ResponseOrErrorType.SUCCESSFUL;
-        }else {
-            return ResponseOrErrorType.UNSUCCESSFUL;
-        }
-    }
+//    public static ResponseOrErrorType setWebsite(String JWT, String website) {
+//        ResponseOrErrorType isValidLink = Validate.validateWebsite(website);
+//        if (isValidLink == ResponseOrErrorType.INVALID_LINK){
+//            //TODO handle it
+//        }
+//        if (SafeRunning.safe(() -> {
+//            SQLConnection.getUsers().updateWebsite(JWT, website);
+//        })){
+//            return ResponseOrErrorType.SUCCESSFUL;
+//        }else {
+//            return ResponseOrErrorType.UNSUCCESSFUL;
+//        }
+//    }
 
     public static ResponseOrErrorType follow(String JWTusername, String followingUsername){
         UsersTable out = SQLConnection.getUsers();
@@ -140,15 +155,20 @@ public class PagesToBeShownToUser {
 
     }
 
-    public static void searchInUsers(String key) throws SQLException {
+    public static HashSet<String> searchInUsers(String key) throws SQLException {
         UsersTable out = SQLConnection.getUsers();
-        out.searchInUsers(key);
-        //write the hashset to the client
+        return out.searchInUsers(key);
+
     }
 
-    public static void goToTheUsersProfile(String userName) throws SQLException {///////////////////////////////////////////////////////////////////////
+    public static SocketModel goToTheUsersProfile(String userName){///////////////////////////////////////////////////////////////////////
         UsersTable out = SQLConnection.getUsers();
-        User profileUser = out.getUserFromDatabase(userName);
+        try {
+            User profileUser = out.getUserFromDatabase(userName);
+            return new SocketModel(null, ResponseOrErrorType.SUCCESSFUL, profileUser);
+        } catch (SQLException e) {
+            return new SocketModel(null, ResponseOrErrorType.USER_NOTFOUND, false);
+        }
         //TODO show the profile in the scenebuilder
     }
 }

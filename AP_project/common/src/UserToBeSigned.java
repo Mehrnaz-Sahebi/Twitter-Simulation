@@ -2,7 +2,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class UserToBeSigned implements Serializable {
-    private String username, password, firstName, lastName, email, phoneNumber;
+    private String userDbId ,username, password, firstName, lastName, email, phoneNumber, searchingWord;
     private Date birthDate;
 
     public UserToBeSigned() {
@@ -27,6 +27,17 @@ public class UserToBeSigned implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
+    public void setUserDbId(String userDbId) {
+        this.userDbId = userDbId;
+    }
+
+    public void setSearchingWord(String searchingWord) {
+        this.searchingWord = searchingWord;
+    }
+
+    public String getSearchingWord() {
+        return searchingWord;
+    }
 
     public Date getBirthDate() {
         return birthDate;

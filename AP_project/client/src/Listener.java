@@ -14,6 +14,7 @@ public class Listener implements Runnable{
     private static Listener instance;
     private ObjectInputStream reader = null;
     private ObjectOutputStream writer = null;
+    UserToBeSigned thisUser;
 
 //    public static Listener getInstance(Socket socket, ObjectOutputStream writer) throws IOException {
 //        if (instance == null) {
@@ -27,6 +28,7 @@ public class Listener implements Runnable{
         this.socket = socket;
         this.reader = reader;
         this.writer = writer;
+
     }
 
     @Override
@@ -39,20 +41,34 @@ public class Listener implements Runnable{
                     case TYPE_SIGNUP :
                         if (model.message == ResponseOrErrorType.SUCCESSFUL){
                             ConsoleUtil.printLoginMessage((UserToBeSigned) model.data);
-//                        ConsoleImpl.openChatPage((UserToBeSigned) model.data);
+                            ConsoleImpl.openChatPage(socket, (UserToBeSigned) model.data, writer);
                         }else {
                             ConsoleUtil.printErrorMSg(model);
                             ConsoleImpl.openAccountMenu(socket, writer);
                         }
                         break;
+                    case TYPE_CHANGE_PROF:
+                        if (model.message == ResponseOrErrorType.SUCCESSFUL){
+                            ConsoleImpl.showProf(socket, model.get(), writer);
+                        }else {
+                            ConsoleImpl.openChatPage(socket, (UserToBeSigned) model.data, writer);
+                        }
+                        break;
+                    case TYPE_Update_PROF:
+                        if (model.message == ResponseOrErrorType.SUCCESSFUL){
 
+                        }else {
+                            ConsoleUtil.printErrorMSg(model);
+                        }
+                        break;
+                    case TYPE_USER_SEARCH:
+                        if (model.message == ResponseOrErrorType.SUCCESSFUL){
+                            ConsoleImpl.showSearchWords(model.get());
+                        }
+                        break;
                 }
             }
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
+        } catch (ClassNotFoundException | ParseException | IOException e) {
             throw new RuntimeException(e);
         }
 

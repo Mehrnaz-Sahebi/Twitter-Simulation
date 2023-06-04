@@ -5,6 +5,9 @@ import java.util.HashSet;
 
 public class User implements Serializable {
 
+
+
+    private String databaseId;
     private String username;
     private String password;
     private String firstName;
@@ -41,7 +44,13 @@ public class User implements Serializable {
         this.location = location;
         this.website = website;
     }
+    public void setDatabaseId(String databaseId) {
+        this.databaseId = databaseId;
+    }
 
+    public String getDatabaseId() {
+        return databaseId;
+    }
     public String getUsername() {
         return username;
     }

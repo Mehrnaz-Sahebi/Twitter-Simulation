@@ -4,6 +4,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class ClientHandler implements Runnable{
     static ArrayList<ClientHandler> clientHandlers = new ArrayList<>();
@@ -52,6 +53,22 @@ public class ClientHandler implements Runnable{
                         res.data = null;
                         res.data = user;
                         write(res);
+                    }
+                    case TYPE_CHANGE_PROF ->{
+                        UserToBeSigned user = (UserToBeSigned) model.get();
+                        SocketModel res = PagesToBeShownToUser.goToTheUsersProfile(user.getUsername());
+                        res.setEventType(Api.TYPE_CHANGE_PROF);
+                        write(res);
+                    }
+                    case TYPE_Update_PROF ->{
+                        User user = (User) model.get();
+                        ResponseOrErrorType res = PagesToBeShownToUser.updateProfile(user);
+                        write(new SocketModel(Api.TYPE_Update_PROF, res));
+                    }
+                    case TYPE_USER_SEARCH ->{
+                        UserToBeSigned user = (UserToBeSigned) model.get();
+                        HashSet<String> res = PagesToBeShownToUser.searchInUsers(user.getSearchingWord());
+                        write(new SocketModel(Api.TYPE_Update_PROF, ResponseOrErrorType.SUCCESSFUL, res));
                     }
                 }
             }

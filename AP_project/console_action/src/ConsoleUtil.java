@@ -52,8 +52,8 @@ public class ConsoleUtil {
     }
 
     public static void printHello(UserToBeSigned user) {
-//        printColored(33, "Hello " + user.getFirstName() + user.getLastName() );
-        printColored(33, "Your Email: " + user.getEmail());
+        printColored(33, "Hello " + user.getFirstName() + user.getLastName() );
+//        printColored(33, "Your Email: " + user.getEmail());
         printColored(33, "WELCOME TO CHAT!");
     }
 
