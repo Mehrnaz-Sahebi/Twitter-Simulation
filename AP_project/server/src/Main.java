@@ -14,7 +14,8 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        try (ServerSocket socketServer = new ServerSocket(8080)) {
+        try  {
+            ServerSocket socketServer = new ServerSocket(8080);
             SQLConnection.getInstance().connect();
             ExecutorService executorService = Executors.newCachedThreadPool();
             while (true) {

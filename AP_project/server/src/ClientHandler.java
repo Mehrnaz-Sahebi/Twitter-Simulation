@@ -69,7 +69,7 @@ public class ClientHandler implements Runnable{
             objectOutputStream.writeObject(model);
             objectOutputStream.flush();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 }

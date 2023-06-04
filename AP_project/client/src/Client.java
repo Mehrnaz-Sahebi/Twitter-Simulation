@@ -11,7 +11,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class Client {
     public static final BlockingQueue<Runnable> mainThreadQueue = new LinkedBlockingQueue<>();
     public static void main(String[] args) {
-        try (Socket socket = new Socket("127.0.0.1", 8080)){
+        try {
+            Socket socket = new Socket("127.0.0.1", 8080);
             ObjectOutputStream writer = new ObjectOutputStream(socket.getOutputStream());
             ObjectInputStream reader = new ObjectInputStream(socket.getInputStream());
             ExecutorService executorService = Executors.newCachedThreadPool();
