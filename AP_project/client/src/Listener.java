@@ -48,12 +48,10 @@ public class Listener implements Runnable{
 
                 }
             }
-
-
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
