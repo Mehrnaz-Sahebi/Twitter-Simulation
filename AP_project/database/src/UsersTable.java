@@ -95,9 +95,9 @@ public class UsersTable extends AbstractTable {
             statement.setString(7,null);
             statement.setString(8,null);
             statement.setString(9,null);
-//            statement.setDate(10,userModel.getBirthDate()); // commented because we have errors
-//            statement.setDate(11, java.sql.Date.valueOf(dtf.format(now)));//doubtful
-//            statement.setDate(12,null);
+            statement.setDate(10,new java.sql.Date(userModel.getBirthDate().getTime())); // commented because we have errors
+            statement.setDate(11, new java.sql.Date(new Date().getTime()));//doubtful
+            statement.setDate(12,new java.sql.Date(new Date().getTime()));
             statement.setString(13,null);
             statement.setString(14,null);
             statement.setString(15,null);
