@@ -77,13 +77,13 @@ public class ConsoleUtil {
     public static void printErrorMSg(SocketModel socketuser) {
         switch (socketuser.message){
             case ALREADY_ONLINE -> {
-                printColored(36, " This account is already online!"); //cyan color
+                printColored(32, " This account is already online!"); //cyan color
             }
             case INVALID_PASS -> {
-                printColored(36, " Invalid password"); //cyan color
+                printColored(31, " Invalid password"); //cyan color
             }
             case USER_NOTFOUND -> {
-                printColored(36, " User not found"); //cyan color
+                printColored(31, " User not found"); //cyan color
             }
             case DUPLICATE_USERNAME -> {
                 printColored(36, " duplicate username"); //cyan color
@@ -95,7 +95,7 @@ public class ConsoleUtil {
                 printColored(36, " duplicate phone number"); //cyan color
             }
             case UNSUCCESSFUL -> {
-                printColored(36, " Unsuccessful because of different DB probs"); //cyan color
+                printColored(33, " Unsuccessful because of different DB probs"); //cyan color
             }
 //            case USER_NOTFOUND -> {
 //                printColored(36, " User not found"); //cyan color

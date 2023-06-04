@@ -5,10 +5,10 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="19" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="common" />
-    <orderEntry type="module" module-name="console_action" />
-    <orderEntry type="module" module-name="server" />
+    <orderEntry type="module" module-name="common" exported="" />
+    <orderEntry type="module" module-name="console_action" exported="" />
+    <orderEntry type="module" module-name="server" exported="" />
   </component>
 </module>
