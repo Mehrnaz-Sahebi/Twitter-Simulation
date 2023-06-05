@@ -103,6 +103,9 @@ public class SocketModel implements Serializable {
     }
 
     public String getUsername(){
+        if(jwToken ==null){
+            return null;
+        }
         String[] parts = jwToken.split("\\.");
         JSONObject payload = null;
         try {

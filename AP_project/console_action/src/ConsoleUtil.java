@@ -143,8 +143,8 @@ public class ConsoleUtil {
     }
     public static void printTimeLine(ArrayList<Tweet> tweets){
         for (int i = 0; i < tweets.size(); i++) {
-            printColored(70,i+1 + "- "+ tweets.get(i).getAuthorUsername()+" :");
-            printColored(84, tweets.get(i).getText());
+            System.out.print(i+1 + "- ");
+            printATweet(tweets.get(i));
         }
     }
     public static void printANormalTweet(Tweet tweet){
