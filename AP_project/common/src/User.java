@@ -7,7 +7,7 @@ public class User implements Serializable {
 
 
 
-    private String databaseId;
+    private int databaseId;
     private String username;
     private String password;
     private String firstName;
@@ -44,11 +44,11 @@ public class User implements Serializable {
         this.location = location;
         this.website = website;
     }
-    public void setDatabaseId(String databaseId) {
+    public void setDatabaseId(int databaseId) {
         this.databaseId = databaseId;
     }
 
-    public String getDatabaseId() {
+    public int getDatabaseId() {
         return databaseId;
     }
     public String getUsername() {

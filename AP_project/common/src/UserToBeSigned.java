@@ -2,8 +2,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class UserToBeSigned implements Serializable {
-    private String userDbId ,username, password, firstName, lastName, email, phoneNumber;
+    private String username, password, firstName, lastName, email, phoneNumber;
     private Date birthDate;
+    private int userDbId;
 
     public UserToBeSigned() {
     }
@@ -27,7 +28,7 @@ public class UserToBeSigned implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
-    public void setUserDbId(String userDbId) {
+    public void setUserDbId(int userDbId) {
         this.userDbId = userDbId;
     }
 

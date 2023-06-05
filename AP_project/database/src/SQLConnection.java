@@ -52,6 +52,8 @@ public class SQLConnection {
 
     private void createTables() {
         users.createTable();
+        createFollowTable();
+        createBlockTable();
     }
 
     public static UsersTable getUsers() {

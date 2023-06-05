@@ -7,7 +7,6 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.Hashtable;
 import java.util.LinkedList;
 

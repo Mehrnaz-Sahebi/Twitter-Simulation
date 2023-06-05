@@ -12,9 +12,9 @@ public class BlockTable extends AbstractTable {
     public synchronized void createTable() {
         executeUpdate("CREATE TABLE IF NOT EXISTS " + TABLE_NAME +
                 "(" +
-                COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                COLUMN_BLOCKER + " string," +
-                COLUMN_BLOCKING + " string," +
+                COLUMN_ID + " INTEGER PRIMARY KEY AUTO_INCREMENT," +
+                COLUMN_BLOCKER + " VARCHAR(20)," +
+                COLUMN_BLOCKING + " VARCHAR(20)" +
                 ")");
     }
     public synchronized HashSet<String> getBlockers(String username) throws SQLException {
@@ -58,7 +58,7 @@ public class BlockTable extends AbstractTable {
         followTable.firstUnfollowsSecond(blocking,blocker);
         followTable.firstUnfollowsSecond(blocker,blocking);
     }
-    public synchronized void updateUsername(String username, String newUsername) throws SQLException {
+    public synchronized void updateUsername(int username, String newUsername) throws SQLException {
         String query1 = "UPDATE " + TABLE_NAME + " SET " + COLUMN_BLOCKER + " = '"+newUsername+"'" + " WHERE "+ COLUMN_BLOCKER + " = '"+username+"'";
         PreparedStatement statement1 = getConnection().prepareStatement(query1);
         ResultSet set1 = statement1.executeQuery();

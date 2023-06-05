@@ -10,11 +10,11 @@ public class FollowTable extends AbstractTable{
     private static final String COLUMN_FOLLOWING = "following";//...
     @Override
     public synchronized void createTable() {
-        executeUpdate("CREATE TABLE IF NOT EXISTS " + TABLE_NAME +
+        executeUpdate(" CREATE TABLE IF NOT EXISTS " + TABLE_NAME +
                 "(" +
-                COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                COLUMN_FOLLOWER + " string," +
-                COLUMN_FOLLOWING + " string," +
+                COLUMN_ID + " INTEGER PRIMARY KEY AUTO_INCREMENT, " +
+                COLUMN_FOLLOWER + " VARCHAR(20), " +
+                COLUMN_FOLLOWING + " VARCHAR(20)" +
                 ")");
     }
     public synchronized HashSet<String> getFollowers(String username) throws SQLException {
@@ -55,7 +55,7 @@ public class FollowTable extends AbstractTable{
         set.close();
         statement.close();
     }
-    public synchronized void updateUsername(String username, String newUsername) throws SQLException {
+    public synchronized void updateUsername(int username, String newUsername) throws SQLException {
         String query1 = "UPDATE " + TABLE_NAME + " SET " + COLUMN_FOLLOWER + " = '"+newUsername+"'" + " WHERE "+ COLUMN_FOLLOWER + " = '"+username+"'";
         PreparedStatement statement1 = getConnection().prepareStatement(query1);
         ResultSet set1 = statement1.executeQuery();
