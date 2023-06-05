@@ -189,16 +189,19 @@ public class ConsoleImpl {
         ConsoleUtil.printCommandHint("15. show followings");
         ConsoleUtil.printCommandHint("16. exit");
 
+        boolean isChanged = false;
         int cmd = ConsoleUtil.waitForCommand(1, 16);
         while (cmd != 16) {
             if (cmd == 1) {
                 ConsoleUtil.printCommandHint("enter first name:");
                 String str = ConsoleUtil.waitForString();
                 user.setFirstName(str);
+                isChanged = true;
             } else if (cmd == 2) {
                 ConsoleUtil.printCommandHint("enter last name:");
                 String str = ConsoleUtil.waitForString();
                 user.setLastName(str);
+                isChanged = true;
             } else if (cmd == 3) {
                 ConsoleUtil.printCommandHint("enter birthdate:");
                 String str = ConsoleUtil.waitForString();
@@ -207,10 +210,12 @@ public class ConsoleImpl {
                     str = ConsoleUtil.waitForString();
                 }
                 user.setBirthDate(new Date(str));
+                isChanged = true;
             } else if (cmd == 4) {
                 ConsoleUtil.printCommandHint("enter user name:");
                 String str = ConsoleUtil.waitForString();
                 user.setUsername(str);
+                isChanged = true;
             } else if (cmd == 5) {
                 ConsoleUtil.printCommandHint("enter your prev pass:");
                 String str1 = ConsoleUtil.waitForString();
@@ -230,22 +235,27 @@ public class ConsoleImpl {
                     repeatPass = ConsoleUtil.waitForString();
                 }
                 user.setPassword(str);
+                isChanged = true;
             } else if (cmd == 6) {
                 ConsoleUtil.printCommandHint("enter avatar path:");
                 String str = ConsoleUtil.waitForString();
                 user.setAvatar(str);
+                isChanged = true;
             } else if (cmd == 7) {
                 ConsoleUtil.printCommandHint("enter header path:");
                 String str = ConsoleUtil.waitForString();
                 user.setHeader(str);
+                isChanged = true;
             } else if (cmd == 8) {
                 ConsoleUtil.printCommandHint("enter bio:");
                 String str = ConsoleUtil.waitForString();
                 user.setBio(str);
+                isChanged = true;
             } else if (cmd == 9) {
                 ConsoleUtil.printCommandHint("enter location:");
                 String str = ConsoleUtil.waitForString();
                 user.setLocation(str);
+                isChanged = true;
             } else if (cmd == 10) {
                 ConsoleUtil.printCommandHint("enter website:");
                 String str = ConsoleUtil.waitForString();
@@ -257,6 +267,7 @@ public class ConsoleImpl {
                     str = ConsoleUtil.waitForString();
                 }
                 user.setWebsite(str);
+                isChanged = true;
             } else if (cmd == 11) {
                 ConsoleUtil.printCommandHint("enter email:");
                 String str = ConsoleUtil.waitForString();
@@ -265,29 +276,37 @@ public class ConsoleImpl {
                     str = ConsoleUtil.waitForString();
                 }
                 user.setEmail(str);
+                isChanged = true;
             } else if (cmd == 12) {
                 ConsoleUtil.printCommandHint("enter phone number:");
                 String str = ConsoleUtil.waitForString();
                 user.setPhoneNumber(str);
+                isChanged = true;
             } else if (cmd == 13) {
                 ConsoleUtil.printCommandHint("enter country choice:");
 //            showCountryList();
 //            int choice = ConsoleUtil.waitForCommand(1, 2);
 //            user.setRegionOrCountry(str);
+                isChanged = true;
             } else if (cmd == 14) {
                 Iterator<String> iterator = user.getFollowers().iterator();
                 /////////////////////////////////////////
                 while (iterator.hasNext()) {
 
                 }
+                isChanged = true;
             } else if (cmd == 15) {
                 //////////////////////////////////////
+                isChanged = true;
             }
             cmd = ConsoleUtil.waitForCommand(1, 16);
         }
-        SendMessage.write(socket, new SocketModel(Api.TYPE_Update_PROF, user,jwt), writer);
+        if (isChanged){
+            SendMessage.write(socket, new SocketModel(Api.TYPE_Update_PROF, user,jwt), writer);
+        }
 
-    }public synchronized static void showOthersProf(Socket socket, User user, ObjectOutputStream writer , String jwt) {
+    }
+    public synchronized static void showOthersProf(Socket socket, User user, ObjectOutputStream writer , String jwt) {
         if(user.doesBlock(getUsername(jwt))){
             ConsoleUtil.printCommandHint("You are blocked by this account so you can't view their profile.");
             ConsoleUtil.printCommandHint("Press Enter to go back to your timeLine");

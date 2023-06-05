@@ -85,6 +85,7 @@ public class Listener implements Runnable{
                     case TYPE_WRITING_TWEET:
                         if(model.message == ResponseOrErrorType.SUCCESSFUL){
                             ConsoleUtil.printTweetAddedMessage();
+                            ConsoleImpl.openChatPage(socket,writer,jwToken);
                         } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
                             ConsoleUtil.printErrorMSg(model);
                             ConsoleImpl.openAccountMenu(socket,writer,jwToken);
