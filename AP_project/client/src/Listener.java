@@ -56,6 +56,7 @@ public class Listener implements Runnable{
                     case TYPE_CHANGE_PROF:
                         if (model.message == ResponseOrErrorType.SUCCESSFUL){
                             ConsoleImpl.showProf(socket, model.get(), writer,jwToken);
+                            ConsoleImpl.openChatPage(socket, writer,jwToken);
                         } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
                             ConsoleUtil.printErrorMSg(model);
                             ConsoleImpl.openAccountMenu(socket,writer,jwToken);
@@ -65,7 +66,7 @@ public class Listener implements Runnable{
                         break;
                     case TYPE_Update_PROF:
                         if (model.message == ResponseOrErrorType.SUCCESSFUL){
-
+                            ConsoleImpl.openChatPage(socket, writer,jwToken);
                         } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
                             ConsoleUtil.printErrorMSg(model);
                             ConsoleImpl.openAccountMenu(socket,writer,jwToken);

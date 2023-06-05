@@ -131,7 +131,7 @@ public class ConsoleImpl {
         ConsoleUtil.printHello(username);
 
         int cmd = 0;
-        while (cmd != 5) {
+//        if (cmd != 5) {
             ConsoleUtil.printCommandHint("1. Profile");
             ConsoleUtil.printCommandHint("2. Search");
             ConsoleUtil.printCommandHint("3. TimeLine");
@@ -148,8 +148,10 @@ public class ConsoleImpl {
                 requestTimeLine(socket,writer,jwt);
             } else if (cmd == 4) {
                 addTweetForm(socket,writer,jwt);
+            } else if (cmd == 5) {
+                
             }
-        }
+//        }
 
 
 //        new Thread(() -> {
