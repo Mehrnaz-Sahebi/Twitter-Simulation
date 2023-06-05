@@ -10,5 +10,6 @@
     <orderEntry type="module" module-name="common" />
     <orderEntry type="module" module-name="DataBase" />
     <orderEntry type="module" module-name="console_action" />
+    <orderEntry type="library" name="java-json" level="project" />
   </component>
 </module>

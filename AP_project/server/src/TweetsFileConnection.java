@@ -1,16 +1,15 @@
 import java.io.*;
 import java.util.*;
-
 public class TweetsFileConnection {
     public static synchronized SocketModel addTweet(Tweet tweet) {
-        File file = new File("./lib//tweets.bin");
+        File file = new File("././lib//tweets.bin");
         HashSet<Tweet> tweets = new HashSet<Tweet>();
         if (!file.exists()) {
             try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("././lib//tweets.bin"))) {
                 outputStream.writeObject(tweet);
                 outputStream.flush();
             } catch (IOException e) {
-                return new SocketModel(Api.TYPE_WRITING_TWEET, ResponseOrErrorType.UNSUCCESSFUL, false);
+                return new SocketModel(Api.TYPE_WRITING_TWEET, ResponseOrErrorType.UNSUCCESSFUL_FILE, false);
             }
         } else {
             while (true) {
@@ -19,7 +18,7 @@ public class TweetsFileConnection {
                 } catch (EOFException e) {
                     break;
                 } catch (IOException | ClassNotFoundException e) {
-                    return new SocketModel(Api.TYPE_WRITING_TWEET, ResponseOrErrorType.UNSUCCESSFUL, false);
+                    return new SocketModel(Api.TYPE_WRITING_TWEET, ResponseOrErrorType.UNSUCCESSFUL_FILE, false);
                 }
             }
             tweets.add(tweet);
@@ -29,7 +28,7 @@ public class TweetsFileConnection {
                 }
                 outputStream.flush();
             } catch (IOException e) {
-                return new SocketModel(Api.TYPE_WRITING_TWEET, ResponseOrErrorType.UNSUCCESSFUL, false);
+                return new SocketModel(Api.TYPE_WRITING_TWEET, ResponseOrErrorType.UNSUCCESSFUL_FILE, false);
             }
         }
         return new SocketModel(Api.TYPE_WRITING_TWEET, ResponseOrErrorType.SUCCESSFUL, true);
@@ -92,7 +91,7 @@ public class TweetsFileConnection {
         }
         return true;
     }
-    public static synchronized boolean tweetRecievesAReply(Tweet tweet, Tweet reply) {
+    public static synchronized boolean tweetGetUnLiked(Tweet tweet, String likerUsername) {
         HashSet<Tweet> tweets = new HashSet<Tweet>();
         while (true) {
             try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("././lib//tweets.bin"))) {
@@ -103,15 +102,41 @@ public class TweetsFileConnection {
                 return false;
             }
         }
-        Reply newReply;
-        newReply = new Reply(reply.getAuthorUsername(),reply.getText(),reply.getPhoto(),tweet);
         for (Tweet loopTweet:tweets) {
             if(loopTweet.equals(tweet)){
-                loopTweet.recievesAReply(newReply);
+                loopTweet.getUnLiked(likerUsername);
                 break;
             }
         }
-        tweets.add(newReply);
+        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("././lib//tweets.bin"))) {
+            for (Tweet loopTweet : tweets) {
+                outputStream.writeObject(loopTweet);
+            }
+            outputStream.flush();
+        } catch (IOException e) {
+            return false;
+        }
+        return true;
+    }
+    public static synchronized boolean tweetRecievesAReply(Reply reply) {
+        HashSet<Tweet> tweets = new HashSet<Tweet>();
+        while (true) {
+            try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("././lib//tweets.bin"))) {
+                tweets.add((Tweet) inputStream.readObject());
+            } catch (EOFException e) {
+                break;
+            } catch (IOException | ClassNotFoundException e) {
+                return false;
+            }
+        }
+        Tweet  originalTweet = reply.getOriginalTweet();
+        for (Tweet loopTweet:tweets) {
+            if(loopTweet.equals(originalTweet)){
+                loopTweet.recievesAReply(reply);
+                break;
+            }
+        }
+        tweets.add(reply);
         try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("././lib//tweets.bin"))) {
             for (Tweet loopTweet : tweets) {
                 outputStream.writeObject(loopTweet);
@@ -151,7 +176,7 @@ public class TweetsFileConnection {
         }
         return true;
     }
-    public static synchronized boolean tweetGetsQuoted(Tweet originalTweet, String quote, String username, String photo ) {
+    public static synchronized boolean tweetGetUnRetweeted(Tweet tweet , String retweeterUsername) {
         HashSet<Tweet> tweets = new HashSet<Tweet>();
         while (true) {
             try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("././lib//tweets.bin"))) {
@@ -162,7 +187,36 @@ public class TweetsFileConnection {
                 return false;
             }
         }
-        QuoteTweet quoteTweet = new QuoteTweet(username,quote,photo,originalTweet);
+        for (Tweet loopTweet:tweets) {
+            if(loopTweet.equals(tweet)){
+                loopTweet.getUnRetweeted(retweeterUsername);
+                break;
+            }
+        }
+        Retweet newRetweet = new Retweet(tweet,retweeterUsername);
+        tweets.remove(newRetweet);
+        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("././lib//tweets.bin"))) {
+            for (Tweet loopTweet : tweets) {
+                outputStream.writeObject(loopTweet);
+            }
+            outputStream.flush();
+        } catch (IOException e) {
+            return false;
+        }
+        return true;
+    }
+    public static synchronized boolean tweetGetsQuoted(QuoteTweet quoteTweet) {
+        HashSet<Tweet> tweets = new HashSet<Tweet>();
+        while (true) {
+            try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("././lib//tweets.bin"))) {
+                tweets.add((Tweet) inputStream.readObject());
+            } catch (EOFException e) {
+                break;
+            } catch (IOException | ClassNotFoundException e) {
+                return false;
+            }
+        }
+        Tweet originalTweet = quoteTweet.getOriginalTweet();
         for (Tweet loopTweet:tweets) {
             if(loopTweet.equals(originalTweet)){
                 loopTweet.getsAQuote(quoteTweet);
@@ -184,24 +238,24 @@ public class TweetsFileConnection {
         FollowTable followTable = SQLConnection.getFollowTable();
         HashSet<Tweet> tweets = new HashSet<Tweet>();
 
-            for (String followingUsername: followTable.getFollowings(username)) {
-                HashSet<Tweet> followingsTweets = TweetsFileConnection.findTweetWithUsername(followingUsername);
-                for (Tweet loopTweet:followingsTweets) {
-                    tweets.add(loopTweet);
-                }
+        for (String followingUsername: followTable.getFollowings(username)) {
+            HashSet<Tweet> followingsTweets = TweetsFileConnection.findTweetWithUsername(followingUsername);
+            for (Tweet loopTweet:followingsTweets) {
+                tweets.add(loopTweet);
             }
+        }
         return tweets;
     }
     public static synchronized HashSet<Tweet> findBlockingsTweets(String username) throws Exception {
         BlockTable blockTable = SQLConnection.getBlockTable();
         HashSet<Tweet> tweets = new HashSet<Tweet>();
 
-            for (String blockingUsername: blockTable.getBlockings(username)) {
-                HashSet<Tweet> blockingsTweets = TweetsFileConnection.findTweetWithUsername(blockingUsername);
-                for (Tweet loopTweet:blockingsTweets) {
-                    tweets.add(loopTweet);
-                }
+        for (String blockingUsername: blockTable.getBlockings(username)) {
+            HashSet<Tweet> blockingsTweets = TweetsFileConnection.findTweetWithUsername(blockingUsername);
+            for (Tweet loopTweet:blockingsTweets) {
+                tweets.add(loopTweet);
             }
+        }
         return tweets;
     }
     public static synchronized ArrayList<Tweet> makeATimeLine(String username) throws Exception{
@@ -236,5 +290,3 @@ public class TweetsFileConnection {
         return sortedTweets;
     }
 }
-
-

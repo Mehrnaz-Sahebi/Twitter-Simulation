@@ -202,8 +202,8 @@ public class User implements Serializable {
     public void reTweet(Tweet tweet){
         TweetsFileConnection.tweetGetRetweeted(tweet,username);
     }
-    public void reply(Tweet tweet,Tweet reply){
-        TweetsFileConnection.tweetRecievesAReply(tweet,reply);
+    public void reply(Reply reply){
+        TweetsFileConnection.tweetRecievesAReply(reply);
     }
     public void follow(String followingUsername){
         SafeRunning.safe(()-> {
@@ -231,4 +231,22 @@ public class User implements Serializable {
             table.firstUnblockSecend(username, blockingUsername);
         });
     }
+    public boolean doesFollow(String username){
+        for (String str:followings) {
+            if(str.equals(username)){
+                return true;
+            }
+        }
+        return false;
+    }
+    public boolean doesBlock(String username){
+        for (String str:blackList) {
+            if(str.equals(username)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+
 }

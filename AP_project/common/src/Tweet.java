@@ -1,3 +1,4 @@
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
@@ -122,6 +123,12 @@ public class Tweet implements Serializable {
             favStar = true;
         }
     }
+    public void getUnLiked(String username){
+        likes.remove(username);
+        if(likes.size()<=10){
+            favStar = false;
+        }
+    }
 
     public void recievesAReply(Reply reply) {
         replies.add(reply);
@@ -130,8 +137,28 @@ public class Tweet implements Serializable {
     public void getRetweeted(String retweeter) {
         retweets.add(retweeter);
     }
+    public void getUnRetweeted(String retweeter) {
+        retweets.remove(retweeter);
+    }
     public void getsAQuote(QuoteTweet quoteTweet){
         quoteTweets.add(quoteTweet);
+    }
+    ///TODO changed
+    public boolean isLikedBy(String username){
+        for (String liker:likes) {
+            if(liker.equals(username)){
+                return true;
+            }
+        }
+        return false;
+    }
+    public boolean isRetweetedBy(String username){
+        for (String retweeter:retweets) {
+            if(retweeter.equals(username)){
+                return true;
+            }
+        }
+        return false;
     }
 }
 

@@ -14,4 +14,8 @@ public class Retweet extends Tweet{
         this.setText(originalTweet.getText());
         this.retweeterUsername = retweeterUsername;
     }
+
+    public String getRetweeterUsername() {
+        return retweeterUsername;
+    }
 }

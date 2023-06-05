@@ -5,4 +5,8 @@ public class QuoteTweet extends Tweet{
             super(authorUsername, text, photo);
             this.originalTweet = originalTweet;
         }
+
+    public Tweet getOriginalTweet() {
+        return originalTweet;
     }
+}

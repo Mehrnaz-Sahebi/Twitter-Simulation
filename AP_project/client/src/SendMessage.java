@@ -23,7 +23,7 @@ public class SendMessage{
 //
 //    }
 
-    public static void write(Socket socket, SocketModel model, ObjectOutputStream writer){
+    public synchronized static void write(Socket socket, SocketModel model, ObjectOutputStream writer){
         try {
             writer.writeObject(model);
             writer.flush();

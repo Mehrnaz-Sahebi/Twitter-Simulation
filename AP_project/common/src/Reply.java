@@ -5,4 +5,8 @@ public class Reply extends Tweet{
         super(authorUsername, text, photo);
         this.originalTweet = originalTweet;
     }
+
+    public Tweet getOriginalTweet() {
+        return originalTweet;
+    }
 }

@@ -1,6 +1,7 @@
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 
@@ -12,7 +13,7 @@ public class PagesToBeShownToUser {
         if (out instanceof UserToBeSigned) {
             return new SocketModel(Api.TYPE_SIGNIN, (UserToBeSigned)out);
         } else {
-            return new SocketModel(Api.TYPE_SIGNIN, (ResponseOrErrorType) out, null);
+            return new SocketModel(Api.TYPE_SIGNIN, (ResponseOrErrorType) out, (Object) null);
         }
     }
 
@@ -147,18 +148,88 @@ public class PagesToBeShownToUser {
     public static SocketModel addTweet(Tweet tweet) {
         return TweetsFileConnection.addTweet(tweet);
     }
-    public SocketModel tweetShowPage(){
-        return null;
+    public static SocketModel makeATimeLine(String username){
+        ArrayList<Tweet> timeLine = new ArrayList<Tweet>();
+        try {
+            timeLine = TweetsFileConnection.makeATimeLine(username);
+        }catch (Exception e){
+            return new SocketModel(Api.TYPE_LOADING_TIMELINE,ResponseOrErrorType.UNSUCCESSFUL_FILE,timeLine);
+        }
+        return new SocketModel(Api.TYPE_LOADING_TIMELINE,ResponseOrErrorType.SUCCESSFUL,timeLine);
     }
-
-    public void homePage() {
-
+    public static SocketModel unLikeTweet(Tweet tweet , String unlikerUsername){
+        if(TweetsFileConnection.tweetGetUnLiked(tweet,unlikerUsername)){
+            return new SocketModel(Api.TYPE_UNLIKE,ResponseOrErrorType.SUCCESSFUL);
+        }
+        return new SocketModel(Api.TYPE_UNLIKE,ResponseOrErrorType.UNSUCCESSFUL_FILE);
     }
-
+    public static SocketModel likeTweet(Tweet tweet , String likerUsername){
+        if(TweetsFileConnection.tweetGetLiked(tweet,likerUsername)){
+            return new SocketModel(Api.TYPE_UNLIKE,ResponseOrErrorType.SUCCESSFUL);
+        }
+        return new SocketModel(Api.TYPE_UNLIKE,ResponseOrErrorType.UNSUCCESSFUL_FILE);
+    }
+    public static SocketModel undoReTweet(Tweet tweet , String username){
+        if(TweetsFileConnection.tweetGetUnRetweeted(tweet,username)){
+            return new SocketModel(Api.TYPE_UNLIKE,ResponseOrErrorType.SUCCESSFUL);
+        }
+        return new SocketModel(Api.TYPE_UNLIKE,ResponseOrErrorType.UNSUCCESSFUL_FILE);
+    }
+    public static SocketModel reTweet(Tweet tweet , String username){
+        if(TweetsFileConnection.tweetGetRetweeted(tweet,username)){
+            return new SocketModel(Api.TYPE_UNLIKE,ResponseOrErrorType.SUCCESSFUL);
+        }
+        return new SocketModel(Api.TYPE_UNLIKE,ResponseOrErrorType.UNSUCCESSFUL_FILE);
+    }
+    public static SocketModel quoteTweet(QuoteTweet quoteTweet){
+        if(TweetsFileConnection.tweetGetsQuoted(quoteTweet)){
+            return new SocketModel(Api.TYPE_UNLIKE,ResponseOrErrorType.SUCCESSFUL);
+        }
+        return new SocketModel(Api.TYPE_UNLIKE,ResponseOrErrorType.UNSUCCESSFUL_FILE);
+    }
+    public static SocketModel reply(Reply reply){
+        if(TweetsFileConnection.tweetRecievesAReply(reply)){
+            return new SocketModel(Api.TYPE_UNLIKE,ResponseOrErrorType.SUCCESSFUL);
+        }
+        return new SocketModel(Api.TYPE_UNLIKE,ResponseOrErrorType.UNSUCCESSFUL_FILE);
+    }
+    public static SocketModel firstFollowsSecond(String username1 , String username2){
+        FollowTable followTable = new FollowTable();
+        try {
+            followTable.firstFollowsSecond(username1,username2);
+            return goToTheUsersProfile(username2);
+        }catch (SQLException e){
+            return new SocketModel(null, ResponseOrErrorType.UNSUCCESSFUL, false);
+        }
+    }public static SocketModel firstUnFollowsSecond(String username1 , String username2){
+        FollowTable followTable = new FollowTable();
+        try {
+            followTable.firstUnfollowsSecond(username1,username2);
+            return goToTheUsersProfile(username2);
+        }catch (SQLException e){
+            return new SocketModel(null, ResponseOrErrorType.UNSUCCESSFUL, false);
+        }
+    }public static SocketModel firstBlocksSecond(String username1 , String username2){
+        BlockTable blockTable = new BlockTable();
+        try {
+            blockTable.firstBlocksSecend(username1,username2);
+            return goToTheUsersProfile(username2);
+        }catch (SQLException e){
+            return new SocketModel(null, ResponseOrErrorType.UNSUCCESSFUL, false);
+        }
+    }
+    public static SocketModel firstUnBlocksSecond(String username1 , String username2){
+        BlockTable blockTable = new BlockTable();
+        try {
+            blockTable.firstUnblockSecend(username1,username2);
+            return goToTheUsersProfile(username2);
+        }catch (SQLException e){
+            return new SocketModel(null, ResponseOrErrorType.UNSUCCESSFUL, false);
+        }
+    }
     public static HashSet<String> searchInUsers(String key) throws SQLException {
         UsersTable out = SQLConnection.getUsers();
         return out.searchInUsers(key);
-
     }
 
     public static SocketModel goToTheUsersProfile(String userName){///////////////////////////////////////////////////////////////////////

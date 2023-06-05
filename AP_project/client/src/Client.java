@@ -30,7 +30,7 @@ public class Client {
         }
     }
     public static void start(Socket socket, ObjectOutputStream writer) throws ParseException {
-        ConsoleImpl.openAccountMenu(socket, writer);
+        ConsoleImpl.openAccountMenu(socket, writer,null);
 
 
     }
