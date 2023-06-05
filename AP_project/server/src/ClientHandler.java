@@ -98,7 +98,7 @@ public class ClientHandler implements Runnable {
                         write(res);
                     }
                     case TYPE_LOADING_TIMELINE -> {
-                        String username = model.getUsername();
+                        String username = (String) model.get();
                         SocketModel res = PagesToBeShownToUser.makeATimeLine(username);
                         if (!model.checkJwToken(secret)) {
                             res.setMessage(ResponseOrErrorType.INVALID_JWT);
