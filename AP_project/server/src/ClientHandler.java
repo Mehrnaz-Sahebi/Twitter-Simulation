@@ -205,6 +205,9 @@ public class ClientHandler implements Runnable {
                         }
                         write(res);
                     }
+                    case TYPE_OFFLINE_REQUEST -> {
+
+                    }
                 }
             }
 

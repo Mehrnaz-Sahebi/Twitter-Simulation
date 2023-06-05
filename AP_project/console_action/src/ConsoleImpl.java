@@ -462,4 +462,7 @@ public class ConsoleImpl {
     private synchronized static String decode(String encodedString) {
         return new String(Base64.getUrlDecoder().decode(encodedString));
     }
+//    public synchronized static void becomeOffline(Socket socket, ObjectOutputStream writer){
+//        SendMessage.write(socket, new SocketModel(Api.TYPE_OFFLINE_REQUEST,username),writer);
+//    }
 }

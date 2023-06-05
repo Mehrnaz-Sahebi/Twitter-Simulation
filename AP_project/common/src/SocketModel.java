@@ -86,6 +86,9 @@ public class SocketModel implements Serializable {
     }
 
     public boolean checkJwToken(String secret){
+        if (jwToken == null){
+            return true;
+        }
         String[] parts = jwToken.split("\\.");
 
         try {
@@ -94,7 +97,7 @@ public class SocketModel implements Serializable {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        String signature = decode(parts[2]);
+        String signature = parts[2];
         String headerAndPayloadHashed = hmacSha256(parts[0] + "." + parts[1],secret);
         if(!signature.equals(headerAndPayloadHashed)){
             return false;
