@@ -212,13 +212,13 @@ public class UsersTable extends AbstractTable {
         UserToBeSigned out = null;
         if (set.next()){
             if (set.getString(COLUMN_PASSWORD).equals(userModel.getPassword())){
-                if (set.next()) {
+
                     out = new UserToBeSigned();
                     out.setUsername(userModel.getUsername());
                     out.setFirstName(set.getString(COLUMN_FIRSTNAME));
                     out.setLastName(set.getString(COLUMN_LASTNAME));
                     out.setEmail(set.getString(COLUMN_EMAIL));
-                }
+
 
                 set.close();
                 statement.close();

@@ -11,7 +11,7 @@ public class PagesToBeShownToUser {
         T out = SQLConnection.getUsers().select(user);
 
         if (out instanceof UserToBeSigned) {
-            return new SocketModel(Api.TYPE_SIGNIN, (UserToBeSigned)out);
+            return new SocketModel(Api.TYPE_SIGNIN, user);
         } else {
             return new SocketModel(Api.TYPE_SIGNIN, (ResponseOrErrorType) out, (Object) null);
         }
