@@ -203,8 +203,7 @@ public class UsersTable extends AbstractTable {
         set.close();
     }
     public <T> T select(UserToBeSigned userModel) throws SQLException {
-        String query = "SELECT " + COLUMN_FIRSTNAME + "," + COLUMN_LASTNAME + "," + COLUMN_EMAIL +
-                " FROM " + TABLE_NAME + " WHERE " +
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " +
                 COLUMN_USERNAME + "=?";
 
         PreparedStatement statement = getConnection().prepareStatement(query);
