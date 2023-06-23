@@ -365,7 +365,7 @@ public class ConsoleImpl {
         SendMessage.write(socket, new SocketModel(Api.TYPE_WRITING_TWEET, tweet,jwt), writer);
     }
     public synchronized static void requestTimeLine(Socket socket, ObjectOutputStream writer, String jwt){
-        SendMessage.write(socket, new SocketModel(Api.TYPE_LOADING_TIMELINE,jwt), writer);
+        SendMessage.write(socket, new SocketModel(Api.TYPE_LOADING_TIMELINE,getUsername(jwt),jwt), writer);
     }
     public synchronized static void timeLinePage(Socket socket, ObjectOutputStream writer, ArrayList<Tweet> tweets , String jwt){
         String username = getUsername(jwt);

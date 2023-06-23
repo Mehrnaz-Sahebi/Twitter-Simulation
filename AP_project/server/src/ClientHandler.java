@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashSet;
 
-public class ClientHandler implements Runnable {
+public class ClientHandler{
     static ArrayList<ClientHandler> clientHandlers = new ArrayList<>();
     Socket socketBetweenClientServer;
     ObjectInputStream objectInputStream = null;
@@ -29,11 +29,10 @@ public class ClientHandler implements Runnable {
         clientHandlers.add(this);
     }
 
-    @Override
-    public void run() {
+    public static void run(SocketModel model) {
         try {
-            while (socketBetweenClientServer.isConnected()) {
-                SocketModel model = (SocketModel) objectInputStream.readObject();
+//            while (socketBetweenClientServer.isConnected()) {
+//                SocketModel model = (SocketModel) objectInputStream.readObject();
                 switch (model.eventType) {
                     case TYPE_SIGNIN -> {
                         UserToBeSigned user = (UserToBeSigned) model.get();
@@ -98,7 +97,7 @@ public class ClientHandler implements Runnable {
                         write(res);
                     }
                     case TYPE_LOADING_TIMELINE -> {
-                        String username = model.getUsername();
+                        String username = (String) model.get();
                         SocketModel res = PagesToBeShownToUser.makeATimeLine(username);
                         if (!model.checkJwToken(secret)) {
                             res.setMessage(ResponseOrErrorType.INVALID_JWT);
@@ -209,14 +208,14 @@ public class ClientHandler implements Runnable {
 
                     }
                 }
-            }
+//            }
 
         } catch (IOException | ClassNotFoundException | SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public boolean verifyLogIn(UserToBeSigned user) {
+    public static boolean verifyLogIn(UserToBeSigned user) {
         return !OnlineUsers.isOnline(user);
     }
 
