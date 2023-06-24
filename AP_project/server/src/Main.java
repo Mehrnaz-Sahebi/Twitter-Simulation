@@ -11,6 +11,10 @@ public class Main {
         try  {
             ServerSocket socketServer = new ServerSocket(8080);
             SQLConnection.getInstance().connect();
+            UsersTable usersTable = new UsersTable();
+            //Pay Attention
+            usersTable.deleteTable();
+
             ExecutorService executorService = Executors.newCachedThreadPool();
             while (true) {
                 Socket socket = socketServer.accept();

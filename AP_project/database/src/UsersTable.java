@@ -37,20 +37,26 @@ public class UsersTable extends AbstractTable {
                 COLUMN_ID + " INTEGER PRIMARY KEY AUTO_INCREMENT, " +
                 COLUMN_USERNAME + " VARCHAR(20), " +
                 COLUMN_PASSWORD + " VARCHAR(20),  " +
-                COLUMN_FIRSTNAME + " VARCHAR(20),  " +
-                COLUMN_LASTNAME + " VARCHAR(20),  " +
-                COLUMN_EMAIL + " VARCHAR(20),  " +
+                COLUMN_FIRSTNAME + " VARCHAR(40),  " +
+                COLUMN_LASTNAME + " VARCHAR(40),  " +
+                COLUMN_EMAIL + " VARCHAR(40),  " +
                 COLUMN_PHONE_NUMBER + " VARCHAR(20),  " +
                 COLUMN_AVATAR + " VARCHAR(20),  " +
                 COLUMN_HEADER + " VARCHAR(20),  " +
-                COLUMN_BIO + " VARCHAR(20),  " +
-                COLUMN_REGION + " VARCHAR(20),  " +
+                COLUMN_BIO + " VARCHAR(160),  " +
+                COLUMN_REGION + " VARCHAR(40),  " +
                 COLUMN_BIRTHDATE + " VARCHAR(20),  " +
                 COLUMN_SIGNUPDATE + " VARCHAR(20),  " +
                 COLUMN_LASTMODIFIEDDATE + " VARCHAR(20),  " +
-                COLUMN_LOCATION + " VARCHAR(20),  " +
-                COLUMN_WEBSITE + " VARCHAR(20)" +
+                COLUMN_LOCATION + " VARCHAR(40),  " +
+                COLUMN_WEBSITE + " VARCHAR(40)" +
                 ")");
+    }
+    public void deleteTable() throws SQLException{
+        String query = "DROP TABLE "+TABLE_NAME;
+        PreparedStatement statement = getConnection().prepareStatement(query);
+        ResultSet set = statement.executeQuery();
+        set.close();
     }
 
     public synchronized boolean insert(UserToBeSigned userModel) {
