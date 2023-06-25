@@ -2,30 +2,32 @@ package controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
-import model.common.Api;
-import model.common.SocketModel;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import model.common.UserToBeSigned;
-import model.client.SendMessage;
 
 import java.io.IOException;
 
 public class Util {
     public static void changeScene(ActionEvent event, String fxmlFile, String title, String username){
         Parent root = null;
-        if (username != null){
-
-
+        if (username != null) {
+        }
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(Util.class.getResource(fxmlFile));
                 root = fxmlLoader.load();
-                LoggedInController loggedInController = fxmlLoader.getController();
-
+//                LoggedInController loggedInController = fxmlLoader.getController();
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root);
+                stage.setTitle(title);
+                stage.setScene(scene);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
 
-        }
+
     }
     public synchronized static void openLoginForm(String username, String pass ,String jwt) {
         UserToBeSigned user = new UserToBeSigned();

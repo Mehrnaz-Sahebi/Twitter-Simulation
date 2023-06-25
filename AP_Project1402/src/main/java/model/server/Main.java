@@ -16,11 +16,12 @@ public class Main {
             SQLConnection.getInstance().connect();
             UsersTable usersTable = new UsersTable();
             //Pay Attention
-            usersTable.deleteTable();
+//            usersTable.deleteTable();
 
             ExecutorService executorService = Executors.newCachedThreadPool();
             while (true) {
                 Socket socket = socketServer.accept();
+                System.out.println("ggj");
                 ClientHandler clientHandler = new ClientHandler(socket);
                 executorService.execute(clientHandler);
             }

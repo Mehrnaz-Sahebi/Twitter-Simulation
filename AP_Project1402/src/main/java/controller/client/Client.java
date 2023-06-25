@@ -1,5 +1,8 @@
-package model.client;
+package controller.client;
 
+import controller.LogInController;
+import controller.Util;
+import javafx.event.ActionEvent;
 import model.common.*;
 import model.console_action.ConsoleImpl;
 import model.console_action.ConsoleUtil;
@@ -13,12 +16,12 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.LinkedList;
 
-public class Listener implements Runnable{
+public class Client{
 
     private Socket socket;
-    private final Hashtable<Integer, LinkedList<Listener>> listeners = new Hashtable<>();
+    private final Hashtable<Integer, LinkedList<Client>> listeners = new Hashtable<>();
     private boolean connected;
-    private static Listener instance;
+    private static Client instance;
     private ObjectInputStream reader = null;
     private ObjectOutputStream writer = null;
     private String jwToken;
@@ -32,15 +35,19 @@ public class Listener implements Runnable{
 //        return instance;
 //    }
 
-    public Listener(Socket socket, ObjectInputStream reader, ObjectOutputStream writer) throws IOException {
+    public Client(Socket socket) throws IOException {
+        this.writer = new ObjectOutputStream(socket.getOutputStream());
+        this.reader = new ObjectInputStream(socket.getInputStream());
         this.socket = socket;
-        this.reader = reader;
-        this.writer = writer;
         this.jwToken = null;
     }
 
-    @Override
-    public synchronized void run() {
+    public String getJwToken() {
+        return jwToken;
+    }
+
+//    @Override
+    public  void recieveMessageFromServer(ActionEvent event) {
         try {
             while (socket.isConnected()){
                 SocketModel model = (SocketModel) reader.readObject();
@@ -49,11 +56,13 @@ public class Listener implements Runnable{
                     case TYPE_SIGNUP :
                         if (model.message == ResponseOrErrorType.SUCCESSFUL){
                             this.jwToken = model.getJwToken();
-                            ConsoleUtil.printLoginMessage((UserToBeSigned) model.data);
-                            ConsoleImpl.openChatPage(socket, writer,jwToken);
+//                            ConsoleUtil.printLoginMessage((UserToBeSigned) model.data);
+//                            ConsoleImpl.openChatPage(socket, writer,jwToken);
+                            Util.changeScene(event,"logged_in.fxml","logged in",null);
                         } else {
-                            ConsoleUtil.printErrorMSg(model);
-                            ConsoleImpl.openAccountMenu(socket, writer,jwToken);
+                            String errorMessg = ConsoleUtil.getErrorMSg(model);
+//                            LogInController.addLabel(errorMessg);
+//                            ConsoleImpl.openAccountMenu(socket, writer,jwToken);
                         }
                         break;
                     case TYPE_CHANGE_PROF:
@@ -61,7 +70,7 @@ public class Listener implements Runnable{
                             ConsoleImpl.showProf(socket, model.get(), writer,jwToken);
                             ConsoleImpl.openChatPage(socket, writer,jwToken);
                         } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                            ConsoleUtil.printErrorMSg(model);
+                            ConsoleUtil.getErrorMSg(model);
                             ConsoleImpl.openAccountMenu(socket,writer,jwToken);
                         } else {
                             ConsoleImpl.openChatPage(socket, writer,jwToken);
@@ -71,17 +80,17 @@ public class Listener implements Runnable{
                         if (model.message == ResponseOrErrorType.SUCCESSFUL){
                             ConsoleImpl.openChatPage(socket, writer,jwToken);
                         } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                            ConsoleUtil.printErrorMSg(model);
+                            ConsoleUtil.getErrorMSg(model);
                             ConsoleImpl.openAccountMenu(socket,writer,jwToken);
                         } else {
-                            ConsoleUtil.printErrorMSg(model);
+                            ConsoleUtil.getErrorMSg(model);
                         }
                         break;
                     case TYPE_USER_SEARCH:
                         if (model.message == ResponseOrErrorType.SUCCESSFUL){
                             ConsoleImpl.showSearchWords(model.get());
                         } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                            ConsoleUtil.printErrorMSg(model);
+                            ConsoleUtil.getErrorMSg(model);
                             ConsoleImpl.openAccountMenu(socket,writer,jwToken);
                         }
                         break;
@@ -90,10 +99,10 @@ public class Listener implements Runnable{
                             ConsoleUtil.printTweetAddedMessage();
                             ConsoleImpl.openChatPage(socket,writer,jwToken);
                         } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                            ConsoleUtil.printErrorMSg(model);
+                            ConsoleUtil.getErrorMSg(model);
                             ConsoleImpl.openAccountMenu(socket,writer,jwToken);
                         } else {
-                            ConsoleUtil.printErrorMSg(model);
+                            ConsoleUtil.getErrorMSg(model);
                             ConsoleImpl.openChatPage(socket,writer,jwToken);
                         }
                         break;
@@ -101,10 +110,10 @@ public class Listener implements Runnable{
                         if(model.message == ResponseOrErrorType.SUCCESSFUL){
                             ConsoleImpl.timeLinePage(socket,writer,(ArrayList<Tweet>) model.data,jwToken);
                         } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                            ConsoleUtil.printErrorMSg(model);
+                            ConsoleUtil.getErrorMSg(model);
                             ConsoleImpl.openAccountMenu(socket,writer,jwToken);
                         }else {
-                            ConsoleUtil.printErrorMSg(model);
+                            ConsoleUtil.getErrorMSg(model);
                             ConsoleImpl.openChatPage(socket,writer,jwToken);
                         }
                         break;
@@ -113,10 +122,10 @@ public class Listener implements Runnable{
                             ConsoleUtil.printTweetUnlikedMessage();
                             ConsoleImpl.tweetPage(socket,writer,(Tweet) model.get(),jwToken);
                         } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                            ConsoleUtil.printErrorMSg(model);
+                            ConsoleUtil.getErrorMSg(model);
                             ConsoleImpl.openAccountMenu(socket,writer,jwToken);
                         }else {
-                            ConsoleUtil.printErrorMSg(model);
+                            ConsoleUtil.getErrorMSg(model);
                             ConsoleImpl.tweetPage(socket,writer,(Tweet) model.get(),jwToken);
                         }
                         break;
@@ -125,10 +134,10 @@ public class Listener implements Runnable{
                             ConsoleUtil.printTweetLikedMessage();
                             ConsoleImpl.tweetPage(socket,writer,(Tweet) model.get(),jwToken);
                         } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                            ConsoleUtil.printErrorMSg(model);
+                            ConsoleUtil.getErrorMSg(model);
                             ConsoleImpl.openAccountMenu(socket,writer,jwToken);
                         }else {
-                            ConsoleUtil.printErrorMSg(model);
+                            ConsoleUtil.getErrorMSg(model);
                             ConsoleImpl.tweetPage(socket,writer,(Tweet) model.get(),jwToken);
                         }
                         break;
@@ -137,10 +146,10 @@ public class Listener implements Runnable{
                             ConsoleUtil.printTweetUnRetweetedMessage();
                             ConsoleImpl.tweetPage(socket,writer,(Tweet) model.get(),jwToken);
                         } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                            ConsoleUtil.printErrorMSg(model);
+                            ConsoleUtil.getErrorMSg(model);
                             ConsoleImpl.openAccountMenu(socket,writer,jwToken);
                         }else {
-                            ConsoleUtil.printErrorMSg(model);
+                            ConsoleUtil.getErrorMSg(model);
                             ConsoleImpl.tweetPage(socket,writer,(Tweet) model.get(),jwToken);
                         }
                         break;
@@ -149,10 +158,10 @@ public class Listener implements Runnable{
                             ConsoleUtil.printTweetRetweetedMessage();
                             ConsoleImpl.tweetPage(socket,writer,(Tweet) model.get(),jwToken);
                         } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                            ConsoleUtil.printErrorMSg(model);
+                            ConsoleUtil.getErrorMSg(model);
                             ConsoleImpl.openAccountMenu(socket,writer,jwToken);
                         }else {
-                            ConsoleUtil.printErrorMSg(model);
+                            ConsoleUtil.getErrorMSg(model);
                             ConsoleImpl.tweetPage(socket,writer,(Tweet) model.get(),jwToken);
                         }
                         break;
@@ -161,10 +170,10 @@ public class Listener implements Runnable{
                             ConsoleUtil.printTweetQuotedMessage();
                             ConsoleImpl.tweetPage(socket,writer,(Tweet) model.get(),jwToken);
                         } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                            ConsoleUtil.printErrorMSg(model);
+                            ConsoleUtil.getErrorMSg(model);
                             ConsoleImpl.openAccountMenu(socket,writer,jwToken);
                         }else {
-                            ConsoleUtil.printErrorMSg(model);
+                            ConsoleUtil.getErrorMSg(model);
                             ConsoleImpl.tweetPage(socket,writer,(Tweet) model.get(),jwToken);
                         }
                         break;
@@ -173,10 +182,10 @@ public class Listener implements Runnable{
                             ConsoleUtil.printReplyAddedMessage();
                             ConsoleImpl.tweetPage(socket,writer,(Tweet) model.get(),jwToken);
                         } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                            ConsoleUtil.printErrorMSg(model);
+                            ConsoleUtil.getErrorMSg(model);
                             ConsoleImpl.openAccountMenu(socket,writer,jwToken);
                         }else {
-                            ConsoleUtil.printErrorMSg(model);
+                            ConsoleUtil.getErrorMSg(model);
                             ConsoleImpl.tweetPage(socket,writer,(Tweet) model.get(),jwToken);
                         }
                         break;
@@ -184,10 +193,10 @@ public class Listener implements Runnable{
                         if(model.message == ResponseOrErrorType.SUCCESSFUL){
                             ConsoleImpl.showOthersProf(socket,(User) model.get(),writer,jwToken);
                         } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                            ConsoleUtil.printErrorMSg(model);
+                            ConsoleUtil.getErrorMSg(model);
                             ConsoleImpl.openAccountMenu(socket,writer,jwToken);
                         }else {
-                            ConsoleUtil.printErrorMSg(model);
+                            ConsoleUtil.getErrorMSg(model);
                             ConsoleImpl.requestTimeLine(socket,writer,jwToken);
                         }
                         break;
@@ -196,10 +205,10 @@ public class Listener implements Runnable{
                             ConsoleUtil.printFollowMessage();
                             ConsoleImpl.showOthersProf(socket,(User) model.get(),writer,jwToken);
                         } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                            ConsoleUtil.printErrorMSg(model);
+                            ConsoleUtil.getErrorMSg(model);
                             ConsoleImpl.openAccountMenu(socket,writer,jwToken);
                         }else {
-                            ConsoleUtil.printErrorMSg(model);
+                            ConsoleUtil.getErrorMSg(model);
                             ConsoleImpl.showOthersProf(socket,(User) model.get(),writer,jwToken);
                         }
                         break;
@@ -208,10 +217,10 @@ public class Listener implements Runnable{
                             ConsoleUtil.printUnFollowMessage();
                             ConsoleImpl.showOthersProf(socket,(User) model.get(),writer,jwToken);
                         } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                            ConsoleUtil.printErrorMSg(model);
+                            ConsoleUtil.getErrorMSg(model);
                             ConsoleImpl.openAccountMenu(socket,writer,jwToken);
                         }else {
-                            ConsoleUtil.printErrorMSg(model);
+                            ConsoleUtil.getErrorMSg(model);
                             ConsoleImpl.showOthersProf(socket,(User) model.get(),writer,jwToken);
                         }
                         break;
@@ -220,10 +229,10 @@ public class Listener implements Runnable{
                             ConsoleUtil.printBlockMessage();
                             ConsoleImpl.showOthersProf(socket,(User) model.get(),writer,jwToken);
                         } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                            ConsoleUtil.printErrorMSg(model);
+                            ConsoleUtil.getErrorMSg(model);
                             ConsoleImpl.openAccountMenu(socket,writer,jwToken);
                         }else {
-                            ConsoleUtil.printErrorMSg(model);
+                            ConsoleUtil.getErrorMSg(model);
                             ConsoleImpl.showOthersProf(socket,(User) model.get(),writer,jwToken);
                         }
                         break;
@@ -232,10 +241,10 @@ public class Listener implements Runnable{
                             ConsoleUtil.printUnBlockMessage();
                             ConsoleImpl.showOthersProf(socket,(User) model.get(),writer,jwToken);
                         } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                            ConsoleUtil.printErrorMSg(model);
+                            ConsoleUtil.getErrorMSg(model);
                             ConsoleImpl.openAccountMenu(socket,writer,jwToken);
                         }else {
-                            ConsoleUtil.printErrorMSg(model);
+                            ConsoleUtil.getErrorMSg(model);
                             ConsoleImpl.showOthersProf(socket,(User) model.get(),writer,jwToken);
                         }
                         break;
@@ -246,7 +255,7 @@ public class Listener implements Runnable{
         }
 
     }
-    public synchronized void write(Socket socket, SocketModel model, ObjectOutputStream writer){
+    public synchronized void write(SocketModel model){
         try {
             writer.writeObject(model);
             writer.flush();

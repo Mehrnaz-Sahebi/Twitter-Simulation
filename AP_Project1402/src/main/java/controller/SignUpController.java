@@ -52,8 +52,7 @@ public class SignUpController {
 
     @FXML
     void setLog_in_button(ActionEvent event) {
-
-    }
+        Util.changeScene(event,"log_in.fxml","log in",null);    }
 
     @FXML
     void setSign_up_button(ActionEvent event) {

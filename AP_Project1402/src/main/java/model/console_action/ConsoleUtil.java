@@ -80,35 +80,40 @@ public class ConsoleUtil {
 //                ":\u001B[0m " + messageModel.getText());
 //    }
 
-    public static void printErrorMSg(SocketModel socketuser) {
+    public static String getErrorMSg(SocketModel socketuser) {
         switch (socketuser.message){
             case ALREADY_ONLINE -> {
-                printColored(32, " This account is already online!"); //cyan color
+//                printColored(32, " This account is already online!"); //cyan color
+                return " This account is already online!";
             }
             case INVALID_PASS -> {
-                printColored(31, " Invalid password"); //cyan color
-            }
-            case USER_NOTFOUND -> {
-                printColored(31, " User not found"); //cyan color
+//                printColored(31, " User not found"); //cyan color
+                return "Invalid pass";
             }
             case DUPLICATE_USERNAME -> {
-                printColored(36, " duplicate username"); //cyan color
+//                printColored(36, " duplicate username"); //cyan color
+                return " duplicate username";
             }
             case DUPLICATE_EMAIL -> {
-                printColored(36, " duplicate email"); //cyan color
+//                printColored(36, " duplicate email"); //cyan color
+                return " duplicate email";
             }
             case DUPLICATE_PHONENUMBER -> {
-                printColored(36, " duplicate phone number"); //cyan color
+//                printColored(36, " duplicate phone number"); //cyan color
+                return " duplicate phone number";
             }
             case UNSUCCESSFUL -> {
-                printColored(33, " Unsuccessful because of different DB probs"); //cyan color
+//                printColored(33, " Unsuccessful because of different DB probs"); //cyan color
+                return " Unsuccessful because of different DB probs";
             }
             case INVALID_JWT -> {
-                printColored(31,"Not You? Try signing in again.");
+//                printColored(31,"Not You? Try signing in again.");
+                return "Not You? Try signing in again.";
             }
-//            case USER_NOTFOUND -> {
+            case USER_NOTFOUND -> {
 //                printColored(36, " User not found"); //cyan color
-//            }
+                return "User not found";
+            }
 //            case USER_NOTFOUND -> {
 //                printColored(36, " User not found"); //cyan color
 //            }
@@ -116,6 +121,7 @@ public class ConsoleUtil {
 //                printColored(36, " User not found"); //cyan color
 //            }
         }
+        return null;
     }
     public static void printTweetAddedMessage() {
         printColored(35, "Your Tweet has been added successfully."); //pink color

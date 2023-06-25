@@ -10,13 +10,13 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="500.0" minWidth="398.0" prefHeight="697.0" prefWidth="788.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.view.SignUpController">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="500.0" minWidth="398.0" prefHeight="697.0" prefWidth="788.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SignUpController">
    <children>
       <AnchorPane minHeight="698.0" minWidth="258.0" prefHeight="699.0" prefWidth="258.0">
          <children>
             <ImageView fitHeight="697.0" fitWidth="270.0" layoutX="-1.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../../../images/HD-wallpaper-twitter-blue-logo-blue-brickwall-twitter-logo-brands-twitter-neon-logo-twitter.jpg" />
+                  <Image url="@../../../../images/HD-wallpaper-twitter-blue-logo-blue-brickwall-twitter-logo-brands-twitter-neon-logo-twitter.jpg" />
                </image>
             </ImageView>
          </children>
@@ -72,11 +72,6 @@
                   <Font name="System Italic" size="12.0" />
                </font>
             </Label>
-            <ImageView fitHeight="30.0" fitWidth="19.0" layoutX="205.0" layoutY="662.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../../../images/download.png" />
-               </image>
-            </ImageView>
             <Button fx:id="sign_up_button" layoutX="183.0" layoutY="552.0" mnemonicParsing="false" onAction="#setSign_up_button" prefHeight="30.0" prefWidth="165.0" style="-fx-background-color: #165ca1; -fx-cursor: Hand;" text="sign up" textFill="WHITE">
                <font>
                   <Font name="System Italic" size="14.0" />
@@ -202,6 +197,11 @@
                   <Font size="23.0" />
                </font>
             </Label>
+            <ImageView fitHeight="30.0" fitWidth="23.0" layoutX="194.0" layoutY="661.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../images/download.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
    </children>
