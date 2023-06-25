@@ -3,11 +3,12 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AP_project.iml" filepath="$PROJECT_DIR$/AP_project.iml" />
-      <module fileurl="file://$PROJECT_DIR$/DataBase/DataBase.iml" filepath="$PROJECT_DIR$/DataBase/DataBase.iml" />
-      <module fileurl="file://$PROJECT_DIR$/client/client.iml" filepath="$PROJECT_DIR$/client/client.iml" />
-      <module fileurl="file://$PROJECT_DIR$/common/common.iml" filepath="$PROJECT_DIR$/common/common.iml" />
-      <module fileurl="file://$PROJECT_DIR$/console_action/console_action.iml" filepath="$PROJECT_DIR$/console_action/console_action.iml" />
-      <module fileurl="file://$PROJECT_DIR$/server/server.iml" filepath="$PROJECT_DIR$/server/server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/src/main/java/com/model/9/DataBase.iml" filepath="$PROJECT_DIR$/src/main/java/com/model/9/DataBase.iml" />
+      <module fileurl="file://$PROJECT_DIR$/src/main/java/com/model/client/client.iml" filepath="$PROJECT_DIR$/src/main/java/com/model/client/client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/src/main/java/com/model/common/common.iml" filepath="$PROJECT_DIR$/src/main/java/com/model/common/common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/src/main/java/com/model/console_action/console_action.iml" filepath="$PROJECT_DIR$/src/main/java/com/model/console_action/console_action.iml" />
+      <module fileurl="file://$PROJECT_DIR$/src/main/java/com/model/database/database.iml" filepath="$PROJECT_DIR$/src/main/java/com/model/database/database.iml" />
+      <module fileurl="file://$PROJECT_DIR$/src/main/java/com/model/server/server.iml" filepath="$PROJECT_DIR$/src/main/java/com/model/server/server.iml" />
       <module fileurl="file://$PROJECT_DIR$/view/view.iml" filepath="$PROJECT_DIR$/view/view.iml" />
     </modules>
   </component>
