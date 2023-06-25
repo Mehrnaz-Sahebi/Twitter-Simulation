@@ -1,5 +1,6 @@
 package com.example.view;
 
+import com.example.view.common.src.SocketModel;
 import com.example.view.common.src.UserToBeSigned;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
