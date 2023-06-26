@@ -1,6 +1,6 @@
 package controller;
 
-import controller.client.Client;
+import model.client.*;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,14 +10,15 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import model.common.SocketModel;
-import model.console_action.ConsoleImpl;
+import model.javafx_action.JavaFXImpl;
 
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class LogInController implements Initializable {
+public class LogInController {
 
     @FXML
     private AnchorPane anchor_pane_txt;
@@ -40,24 +41,48 @@ public class LogInController implements Initializable {
     private TextField username_field;
     @FXML
     private TextField password_field;
-    private Client client;
+    private Socket socket;
+    private ObjectOutputStream writer;
+    private String jwt;
+    private static LogInController logInController ;
 
-
-
-    public void setSign_up_button(ActionEvent event){
-        Util.changeScene(event,"sign_up.fxml","sign up",null);
+    public void setSocket(Socket socket) {
+        this.socket = socket;
     }
-    public void setLog_in_button(ActionEvent event){
+
+    public void setWriter(ObjectOutputStream writer) {
+        this.writer = writer;
+    }
+
+    public void setJwt(String jwt) {
+        this.jwt = jwt;
+    }
+
+    public void setLogInController(LogInController logInController) {
+        this.logInController = logInController;
+
+    }
+
+    public static LogInController getInstance() {
+        return logInController;
+    }
+
+
+    public void setSign_up_button(ActionEvent event) {
+        Util.changeScene(event, "sign_up.fxml", "sign up", null);
+    }
+
+    public void setLog_in_button(ActionEvent event) {
         String userName = null, pass = null;
         try {
 
             userName = username_field.getText();
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             username_alert.setText("enter the username");
         }
         try {
             pass = password_field.getText();
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             pass_alert.setText("enter the password");
         }
         Thread threadTask = new Thread(new Runnable() {
@@ -80,12 +105,9 @@ public class LogInController implements Initializable {
         threadTask.start();
 //        login_alert.setText("uxa");
 
-        if (!userName.isBlank() && !pass.isBlank()){
-            SocketModel thisModel = ConsoleImpl.LoginForm(userName, pass, client);
+        if (!userName.isBlank() && !pass.isBlank()) {
+            JavaFXImpl.Login(userName, pass, socket, writer, jwt);
 
-            client.write(thisModel);
-            client.recieveMessageFromServer(event);
-//            Util.changeScene(event,"logged_in.fxml","logged in",userName);
         } else if (userName.isBlank()) {
             username_alert.setText("enter the username");
         } else if (pass.isBlank()) {
@@ -100,18 +122,20 @@ public class LogInController implements Initializable {
 //            }
 //        }
     }
-    public void addLabel(String errorMsg){
-        if (errorMsg.equals("User not found")){
-            login_alert.setText(errorMsg); ////// error
+
+    public void addLabel(String errorMsg) {
+        if (errorMsg.equals("User not found")) {
+            login_alert.setText(errorMsg);
         }
+
     }
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        try {
-            client = new Client(new Socket("127.0.0.1", 8080));
-        } catch (IOException e) {
-            System.out.println("Server isn't available");
-        }
+//    @Override
+//    public void initialize(URL url, ResourceBundle resourceBundle) {
+//        try {
+//            listenerForFX = new ListenerForFX(new Socket("127.0.0.1", 8080));
+//        } catch (IOException e) {
+//            System.out.println("Server isn't available");
+//        }
 
 //        anchor_pane_txt.heightProperty().addListener(new ChangeListener<Number>() {
 //            @Override
@@ -121,6 +145,4 @@ public class LogInController implements Initializable {
 //        });
 
 
-
-    }
 }

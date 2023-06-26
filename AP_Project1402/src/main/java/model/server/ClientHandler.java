@@ -211,7 +211,7 @@ public class ClientHandler implements Runnable {
             }
 
         } catch (IOException | ClassNotFoundException | SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 

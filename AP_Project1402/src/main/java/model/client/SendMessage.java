@@ -1,4 +1,4 @@
-package controller.client;
+package model.client;
 
 import model.common.SocketModel;
 
@@ -17,4 +17,3 @@ public class SendMessage{
         }
     }
 }
-//Unuseful class

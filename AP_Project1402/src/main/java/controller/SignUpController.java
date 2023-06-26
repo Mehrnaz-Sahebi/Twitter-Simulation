@@ -6,6 +6,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+
 public class SignUpController {
 
     @FXML
@@ -49,6 +52,31 @@ public class SignUpController {
 
     @FXML
     private TextField year_text;
+    private Socket socket;
+    private ObjectOutputStream writer;
+    private String jwt;
+    private static SignUpController signUpController ;
+
+    public void setSocket(Socket socket) {
+        this.socket = socket;
+    }
+
+    public void setWriter(ObjectOutputStream writer) {
+        this.writer = writer;
+    }
+
+    public void setJwt(String jwt) {
+        this.jwt = jwt;
+    }
+
+    public void setSignUpController(SignUpController signUpController) {
+
+            SignUpController.signUpController = signUpController;
+    }
+
+    public static SignUpController getInstance(){
+        return signUpController;
+    }
 
     @FXML
     void setLog_in_button(ActionEvent event) {

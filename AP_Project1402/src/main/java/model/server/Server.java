@@ -7,7 +7,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import model.database.*;
 
-public class Main {
+public class Server {
 
     public static void main(String[] args) throws IOException {
 
@@ -15,17 +15,12 @@ public class Main {
             ServerSocket socketServer = new ServerSocket(8080);
             SQLConnection.getInstance().connect();
             UsersTable usersTable = new UsersTable();
-            //Pay Attention
-//            usersTable.deleteTable();
-
             ExecutorService executorService = Executors.newCachedThreadPool();
             while (true) {
                 Socket socket = socketServer.accept();
-                System.out.println("ggj");
                 ClientHandler clientHandler = new ClientHandler(socket);
                 executorService.execute(clientHandler);
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }

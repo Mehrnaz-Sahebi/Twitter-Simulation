@@ -1,7 +1,6 @@
 package model.console_action;
 
-import controller.client.Client;
-import controller.client.SendMessage;
+import model.client.*;
 import model.common.*;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,23 +23,23 @@ public class ConsoleImpl {
 
         int cmd = ConsoleUtil.waitForCommand(1, 2);
         if (cmd == 1) {
-//            LoginForm(socket, writer,jwt);
+            openLoginForm(socket, writer,jwt);
         } else {
             openSignupForm(socket, writer,jwt);
         }
     }
 
-    public synchronized static SocketModel LoginForm(String username , String pass, Client client) {
+    public synchronized static void openLoginForm(Socket socket, ObjectOutputStream writer ,String jwt) {
         UserToBeSigned user = new UserToBeSigned();
 
-//        ConsoleUtil.printCommandHint("Enter username: ");
-//        user.setUsername(ConsoleUtil.waitForString());
-        user.setUsername(username);
-//        ConsoleUtil.printCommandHint("Enter password: ");
-//        user.setPassword(ConsoleUtil.waitForString());
-        user.setPassword(pass);
+        ConsoleUtil.printCommandHint("Enter username: ");
+        user.setUsername(ConsoleUtil.waitForString());
+
+        ConsoleUtil.printCommandHint("Enter password: ");
+        user.setPassword(ConsoleUtil.waitForString());
 
 //        return new SocketModel(Api.TYPE_SIGNIN, user);
+        SendMessage.write(socket, new SocketModel(Api.TYPE_SIGNIN, user,jwt), writer);
 
 //        SocketApi.getInstance().writeAndListen(
 //                new SocketModel(Api.TYPE_SIGNIN, user),
@@ -54,7 +53,6 @@ public class ConsoleImpl {
 //                    }
 //                }
 //        );
-        return new SocketModel(Api.TYPE_SIGNIN, user,client.getJwToken());
     }
 
     public synchronized static void openSignupForm(Socket socket, ObjectOutputStream writer , String jwt) throws ParseException {

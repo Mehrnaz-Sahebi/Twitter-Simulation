@@ -33,7 +33,8 @@ public class SQLConnection {
 
     public void connect() throws SQLException, ClassNotFoundException {
         if (connection == null) {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb", "root", "Ma@12345");//password of your database
+//            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb", "root", "Ma@12345");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/myschema", "root", "Mehrnaz@1383#");
         }
         createTables();
     }

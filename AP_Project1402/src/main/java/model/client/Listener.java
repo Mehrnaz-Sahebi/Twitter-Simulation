@@ -1,8 +1,5 @@
-package controller.client;
+package model.client;
 
-import controller.LogInController;
-import controller.Util;
-import javafx.event.ActionEvent;
 import model.common.*;
 import model.console_action.ConsoleImpl;
 import model.console_action.ConsoleUtil;
@@ -16,12 +13,12 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.LinkedList;
 
-public class Client{
+public class Listener implements Runnable{
 
     private Socket socket;
-    private final Hashtable<Integer, LinkedList<Client>> listeners = new Hashtable<>();
+    private final Hashtable<Integer, LinkedList<Listener>> listeners = new Hashtable<>();
     private boolean connected;
-    private static Client instance;
+    private static Listener instance;
     private ObjectInputStream reader = null;
     private ObjectOutputStream writer = null;
     private String jwToken;
@@ -35,19 +32,15 @@ public class Client{
 //        return instance;
 //    }
 
-    public Client(Socket socket) throws IOException {
-        this.writer = new ObjectOutputStream(socket.getOutputStream());
-        this.reader = new ObjectInputStream(socket.getInputStream());
+    public Listener(Socket socket, ObjectInputStream reader, ObjectOutputStream writer) throws IOException {
         this.socket = socket;
+        this.reader = reader;
+        this.writer = writer;
         this.jwToken = null;
     }
 
-    public String getJwToken() {
-        return jwToken;
-    }
-
-//    @Override
-    public  void recieveMessageFromServer(ActionEvent event) {
+    @Override
+    public synchronized void run() {
         try {
             while (socket.isConnected()){
                 SocketModel model = (SocketModel) reader.readObject();
@@ -56,13 +49,11 @@ public class Client{
                     case TYPE_SIGNUP :
                         if (model.message == ResponseOrErrorType.SUCCESSFUL){
                             this.jwToken = model.getJwToken();
-//                            ConsoleUtil.printLoginMessage((UserToBeSigned) model.data);
-//                            ConsoleImpl.openChatPage(socket, writer,jwToken);
-                            Util.changeScene(event,"logged_in.fxml","logged in",null);
+                            ConsoleUtil.printLoginMessage((UserToBeSigned) model.data);
+                            ConsoleImpl.openChatPage(socket, writer,jwToken);
                         } else {
-                            String errorMessg = ConsoleUtil.getErrorMSg(model);
-//                            LogInController.addLabel(errorMessg);
-//                            ConsoleImpl.openAccountMenu(socket, writer,jwToken);
+                            ConsoleUtil.printErrorMSg(model);
+                            ConsoleImpl.openAccountMenu(socket, writer,jwToken);
                         }
                         break;
                     case TYPE_CHANGE_PROF:
@@ -70,7 +61,7 @@ public class Client{
                             ConsoleImpl.showProf(socket, model.get(), writer,jwToken);
                             ConsoleImpl.openChatPage(socket, writer,jwToken);
                         } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                            ConsoleUtil.getErrorMSg(model);
+                            ConsoleUtil.printErrorMSg(model);
                             ConsoleImpl.openAccountMenu(socket,writer,jwToken);
                         } else {
                             ConsoleImpl.openChatPage(socket, writer,jwToken);
@@ -80,17 +71,17 @@ public class Client{
                         if (model.message == ResponseOrErrorType.SUCCESSFUL){
                             ConsoleImpl.openChatPage(socket, writer,jwToken);
                         } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                            ConsoleUtil.getErrorMSg(model);
+                            ConsoleUtil.printErrorMSg(model);
                             ConsoleImpl.openAccountMenu(socket,writer,jwToken);
                         } else {
-                            ConsoleUtil.getErrorMSg(model);
+                            ConsoleUtil.printErrorMSg(model);
                         }
                         break;
                     case TYPE_USER_SEARCH:
                         if (model.message == ResponseOrErrorType.SUCCESSFUL){
                             ConsoleImpl.showSearchWords(model.get());
                         } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                            ConsoleUtil.getErrorMSg(model);
+                            ConsoleUtil.printErrorMSg(model);
                             ConsoleImpl.openAccountMenu(socket,writer,jwToken);
                         }
                         break;
@@ -99,10 +90,10 @@ public class Client{
                             ConsoleUtil.printTweetAddedMessage();
                             ConsoleImpl.openChatPage(socket,writer,jwToken);
                         } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                            ConsoleUtil.getErrorMSg(model);
+                            ConsoleUtil.printErrorMSg(model);
                             ConsoleImpl.openAccountMenu(socket,writer,jwToken);
                         } else {
-                            ConsoleUtil.getErrorMSg(model);
+                            ConsoleUtil.printErrorMSg(model);
                             ConsoleImpl.openChatPage(socket,writer,jwToken);
                         }
                         break;
@@ -110,10 +101,10 @@ public class Client{
                         if(model.message == ResponseOrErrorType.SUCCESSFUL){
                             ConsoleImpl.timeLinePage(socket,writer,(ArrayList<Tweet>) model.data,jwToken);
                         } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                            ConsoleUtil.getErrorMSg(model);
+                            ConsoleUtil.printErrorMSg(model);
                             ConsoleImpl.openAccountMenu(socket,writer,jwToken);
                         }else {
-                            ConsoleUtil.getErrorMSg(model);
+                            ConsoleUtil.printErrorMSg(model);
                             ConsoleImpl.openChatPage(socket,writer,jwToken);
                         }
                         break;
@@ -122,10 +113,10 @@ public class Client{
                             ConsoleUtil.printTweetUnlikedMessage();
                             ConsoleImpl.tweetPage(socket,writer,(Tweet) model.get(),jwToken);
                         } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                            ConsoleUtil.getErrorMSg(model);
+                            ConsoleUtil.printErrorMSg(model);
                             ConsoleImpl.openAccountMenu(socket,writer,jwToken);
                         }else {
-                            ConsoleUtil.getErrorMSg(model);
+                            ConsoleUtil.printErrorMSg(model);
                             ConsoleImpl.tweetPage(socket,writer,(Tweet) model.get(),jwToken);
                         }
                         break;
@@ -134,10 +125,10 @@ public class Client{
                             ConsoleUtil.printTweetLikedMessage();
                             ConsoleImpl.tweetPage(socket,writer,(Tweet) model.get(),jwToken);
                         } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                            ConsoleUtil.getErrorMSg(model);
+                            ConsoleUtil.printErrorMSg(model);
                             ConsoleImpl.openAccountMenu(socket,writer,jwToken);
                         }else {
-                            ConsoleUtil.getErrorMSg(model);
+                            ConsoleUtil.printErrorMSg(model);
                             ConsoleImpl.tweetPage(socket,writer,(Tweet) model.get(),jwToken);
                         }
                         break;
@@ -146,10 +137,10 @@ public class Client{
                             ConsoleUtil.printTweetUnRetweetedMessage();
                             ConsoleImpl.tweetPage(socket,writer,(Tweet) model.get(),jwToken);
                         } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                            ConsoleUtil.getErrorMSg(model);
+                            ConsoleUtil.printErrorMSg(model);
                             ConsoleImpl.openAccountMenu(socket,writer,jwToken);
                         }else {
-                            ConsoleUtil.getErrorMSg(model);
+                            ConsoleUtil.printErrorMSg(model);
                             ConsoleImpl.tweetPage(socket,writer,(Tweet) model.get(),jwToken);
                         }
                         break;
@@ -158,10 +149,10 @@ public class Client{
                             ConsoleUtil.printTweetRetweetedMessage();
                             ConsoleImpl.tweetPage(socket,writer,(Tweet) model.get(),jwToken);
                         } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                            ConsoleUtil.getErrorMSg(model);
+                            ConsoleUtil.printErrorMSg(model);
                             ConsoleImpl.openAccountMenu(socket,writer,jwToken);
                         }else {
-                            ConsoleUtil.getErrorMSg(model);
+                            ConsoleUtil.printErrorMSg(model);
                             ConsoleImpl.tweetPage(socket,writer,(Tweet) model.get(),jwToken);
                         }
                         break;
@@ -170,10 +161,10 @@ public class Client{
                             ConsoleUtil.printTweetQuotedMessage();
                             ConsoleImpl.tweetPage(socket,writer,(Tweet) model.get(),jwToken);
                         } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                            ConsoleUtil.getErrorMSg(model);
+                            ConsoleUtil.printErrorMSg(model);
                             ConsoleImpl.openAccountMenu(socket,writer,jwToken);
                         }else {
-                            ConsoleUtil.getErrorMSg(model);
+                            ConsoleUtil.printErrorMSg(model);
                             ConsoleImpl.tweetPage(socket,writer,(Tweet) model.get(),jwToken);
                         }
                         break;
@@ -182,10 +173,10 @@ public class Client{
                             ConsoleUtil.printReplyAddedMessage();
                             ConsoleImpl.tweetPage(socket,writer,(Tweet) model.get(),jwToken);
                         } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                            ConsoleUtil.getErrorMSg(model);
+                            ConsoleUtil.printErrorMSg(model);
                             ConsoleImpl.openAccountMenu(socket,writer,jwToken);
                         }else {
-                            ConsoleUtil.getErrorMSg(model);
+                            ConsoleUtil.printErrorMSg(model);
                             ConsoleImpl.tweetPage(socket,writer,(Tweet) model.get(),jwToken);
                         }
                         break;
@@ -193,10 +184,10 @@ public class Client{
                         if(model.message == ResponseOrErrorType.SUCCESSFUL){
                             ConsoleImpl.showOthersProf(socket,(User) model.get(),writer,jwToken);
                         } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                            ConsoleUtil.getErrorMSg(model);
+                            ConsoleUtil.printErrorMSg(model);
                             ConsoleImpl.openAccountMenu(socket,writer,jwToken);
                         }else {
-                            ConsoleUtil.getErrorMSg(model);
+                            ConsoleUtil.printErrorMSg(model);
                             ConsoleImpl.requestTimeLine(socket,writer,jwToken);
                         }
                         break;
@@ -205,10 +196,10 @@ public class Client{
                             ConsoleUtil.printFollowMessage();
                             ConsoleImpl.showOthersProf(socket,(User) model.get(),writer,jwToken);
                         } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                            ConsoleUtil.getErrorMSg(model);
+                            ConsoleUtil.printErrorMSg(model);
                             ConsoleImpl.openAccountMenu(socket,writer,jwToken);
                         }else {
-                            ConsoleUtil.getErrorMSg(model);
+                            ConsoleUtil.printErrorMSg(model);
                             ConsoleImpl.showOthersProf(socket,(User) model.get(),writer,jwToken);
                         }
                         break;
@@ -217,10 +208,10 @@ public class Client{
                             ConsoleUtil.printUnFollowMessage();
                             ConsoleImpl.showOthersProf(socket,(User) model.get(),writer,jwToken);
                         } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                            ConsoleUtil.getErrorMSg(model);
+                            ConsoleUtil.printErrorMSg(model);
                             ConsoleImpl.openAccountMenu(socket,writer,jwToken);
                         }else {
-                            ConsoleUtil.getErrorMSg(model);
+                            ConsoleUtil.printErrorMSg(model);
                             ConsoleImpl.showOthersProf(socket,(User) model.get(),writer,jwToken);
                         }
                         break;
@@ -229,10 +220,10 @@ public class Client{
                             ConsoleUtil.printBlockMessage();
                             ConsoleImpl.showOthersProf(socket,(User) model.get(),writer,jwToken);
                         } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                            ConsoleUtil.getErrorMSg(model);
+                            ConsoleUtil.printErrorMSg(model);
                             ConsoleImpl.openAccountMenu(socket,writer,jwToken);
                         }else {
-                            ConsoleUtil.getErrorMSg(model);
+                            ConsoleUtil.printErrorMSg(model);
                             ConsoleImpl.showOthersProf(socket,(User) model.get(),writer,jwToken);
                         }
                         break;
@@ -241,10 +232,10 @@ public class Client{
                             ConsoleUtil.printUnBlockMessage();
                             ConsoleImpl.showOthersProf(socket,(User) model.get(),writer,jwToken);
                         } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                            ConsoleUtil.getErrorMSg(model);
+                            ConsoleUtil.printErrorMSg(model);
                             ConsoleImpl.openAccountMenu(socket,writer,jwToken);
                         }else {
-                            ConsoleUtil.getErrorMSg(model);
+                            ConsoleUtil.printErrorMSg(model);
                             ConsoleImpl.showOthersProf(socket,(User) model.get(),writer,jwToken);
                         }
                         break;
@@ -255,7 +246,7 @@ public class Client{
         }
 
     }
-    public synchronized void write(SocketModel model){
+    public synchronized void write(Socket socket, SocketModel model, ObjectOutputStream writer){
         try {
             writer.writeObject(model);
             writer.flush();
