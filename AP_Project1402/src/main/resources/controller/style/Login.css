@@ -45,3 +45,8 @@
     -fx-border-color: linear-gradient(to bottom right, #20cfe6, #1a35e9);
     -fx-border-width: 5px;
 }
+.choice-box{
+    -fx-background-color: #fff;
+    -fx-border-color: linear-gradient(to bottom right, #20cfe6, #1a35e9);
+    -fx-border-width: 1px;
+}

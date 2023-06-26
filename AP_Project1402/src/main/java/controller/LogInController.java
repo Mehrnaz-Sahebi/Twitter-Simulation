@@ -65,7 +65,7 @@ public class LogInController {
 
 
     public void setSign_up_button(ActionEvent event) {
-        Util.changeScene(event, "sign_up.fxml", "sign up", null);
+        Util.changeScene(event, "SignUp.fxml", "sign up", null);
     }
 
     public void setLog_in_button(ActionEvent event) {
@@ -85,7 +85,7 @@ public class LogInController {
             @Override
             public void run() {
                 try {
-                    Thread.sleep(2000);
+                    Thread.sleep(1500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -99,7 +99,6 @@ public class LogInController {
             }
         });
         threadTask.start();
-//        login_alert.setText("uxa");
 
         if (!userName.isBlank() && !pass.isBlank()) {
             JavaFXImpl.Login(userName, pass, socket, writer, jwt);
@@ -109,20 +108,29 @@ public class LogInController {
         } else if (pass.isBlank()) {
             pass_alert.setText("enter the password");
         }
-//        else {
-//            if (userName == null){
-//
-//            }
-//            if (pass == null){
-//
-//            }
-//        }
     }
 
     public void addLabel(String errorMsg) {
         if (errorMsg.equals("User not found")) {
             login_alert.setText(errorMsg);
         }
+        Thread threadTask = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(1500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                       login_alert.setText("");
+                    }
+                });
+            }
+        });
+        threadTask.start();
 
     }
 //    @Override

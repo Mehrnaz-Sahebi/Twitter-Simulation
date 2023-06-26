@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="814.0" prefWidth="830.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LogInController">
+   <children>
+      <AnchorPane prefHeight="590.0" prefWidth="414.0" styleClass="gradient" stylesheets="@style/Login.css">
+         <children>
+            <Label layoutX="90.0" layoutY="360.0" prefHeight="31.0" prefWidth="231.0" stylesheets="@style/Login.css" text="Aready have an account?" textFill="WHITE">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Label>
+            <Button fx:id="side_Login_btn" layoutX="146.0" layoutY="419.0" mnemonicParsing="false" onAction="#setSign_up_button" prefHeight="35.0" prefWidth="122.0" styleClass="signup-button" stylesheets="@style/Login.css" text="Login" />
+         </children>
+      </AnchorPane>
+      <ScrollPane prefHeight="590.0" prefWidth="422.0">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="870.0" prefWidth="402.0" styleClass="white-form" stylesheets="@style/Login.css">
+               <children>
+                  <Label layoutX="44.0" layoutY="55.0" prefHeight="35.0" prefWidth="217.0" styleClass="head-label" stylesheets="@style/Login.css" text="Create An Account">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="rightside_signUp_Btn" layoutX="140.0" layoutY="800.0" mnemonicParsing="false" onAction="#setLog_in_button" prefHeight="35.0" prefWidth="122.0" styleClass="login-button" stylesheets="@style/Login.css" text="Sign up">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
+                  <TextField fx:id="rightside_yearTxt" layoutX="107.0" layoutY="649.0" prefHeight="44.0" prefWidth="57.0" promptText="Year">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </TextField>
+                  <Label fx:id="login_alert" layoutX="-95.0" layoutY="141.0" prefHeight="26.0" prefWidth="231.0" textFill="RED">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="rightside_firstnameText" layoutX="44.0" layoutY="194.0" prefHeight="44.0" prefWidth="282.0" promptText="First Name">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="rightside_lastnameText" layoutX="44.0" layoutY="269.0" prefHeight="44.0" prefWidth="282.0" promptText="Last Name">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="rightside_emailText" layoutX="44.0" layoutY="342.0" prefHeight="44.0" prefWidth="282.0" promptText="Email">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="rightside_phonenumberText" layoutX="44.0" layoutY="419.0" prefHeight="44.0" prefWidth="282.0" promptText="Phone Number">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="rightside_passText" layoutX="44.0" layoutY="497.0" prefHeight="44.0" prefWidth="282.0" promptText="Password">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="rightside_passrepeatTxt" layoutX="44.0" layoutY="573.0" prefHeight="44.0" prefWidth="282.0" promptText="Repeat Your Password">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="rightside_usernameText" layoutX="44.0" layoutY="119.0" prefHeight="44.0" prefWidth="282.0" promptText="Username">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="rightside_dayTxt" layoutX="268.0" layoutY="649.0" prefHeight="44.0" prefWidth="57.0" promptText="Day">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="rightside_monthTxt" layoutX="188.0" layoutY="649.0" prefHeight="44.0" prefWidth="57.0" promptText="Month">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="44.0" layoutY="662.0" styleClass="head-label" stylesheets="@style/Login.css" text="Birth Date" />
+                  <Label layoutX="172.0" layoutY="661.0" text="/">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="256.0" layoutY="661.0" text="/">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <ChoiceBox fx:id="chiceBox" layoutX="102.0" layoutY="726.0" prefWidth="150.0" stylesheets="@style/Login.css" />
+                  <Label layoutX="44.0" layoutY="730.0" styleClass="head-label" stylesheets="@style/Login.css" text="Region" />
+                  <Label fx:id="sign_up_alert" layoutX="44.0" layoutY="97.0" prefHeight="23.0" prefWidth="214.0" textFill="RED" />
+                  <Label fx:id="birthdate_alert" layoutX="45.0" layoutY="693.0" prefHeight="23.0" prefWidth="214.0" textFill="RED" />
+                  <Label fx:id="region_alert" layoutX="44.0" layoutY="752.0" prefHeight="23.0" prefWidth="214.0" textFill="RED" />
+                  <Label fx:id="pass_repeat_alert" layoutX="45.0" layoutY="617.0" prefHeight="23.0" prefWidth="214.0" textFill="RED" />
+                  <Label fx:id="pass_alert" layoutX="44.0" layoutY="541.0" prefHeight="23.0" prefWidth="214.0" textFill="RED" />
+                  <Label fx:id="phonenumber_alert" layoutX="44.0" layoutY="463.0" prefHeight="23.0" prefWidth="214.0" textFill="RED" />
+                  <Label fx:id="email_alert" layoutX="45.0" layoutY="386.0" prefHeight="23.0" prefWidth="214.0" textFill="RED" />
+                  <Label fx:id="last_name_alert" layoutX="44.0" layoutY="313.0" prefHeight="23.0" prefWidth="214.0" textFill="RED" />
+                  <Label fx:id="first_name_alert" layoutX="44.0" layoutY="238.0" prefHeight="23.0" prefWidth="214.0" textFill="RED" />
+                  <Label fx:id="username_alert" layoutX="45.0" layoutY="163.0" prefHeight="23.0" prefWidth="214.0" textFill="RED" />
+               </children>
+            </AnchorPane>
+        </content>
+         <HBox.margin>
+            <Insets />
+         </HBox.margin>
+      </ScrollPane>
+   </children>
+</HBox>
