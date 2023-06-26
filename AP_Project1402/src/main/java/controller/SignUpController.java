@@ -3,6 +3,7 @@ package controller;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -13,9 +14,11 @@ import model.javafx_action.JavaFXImpl;
 
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.net.URL;
 import java.util.Date;
+import java.util.ResourceBundle;
 
-public class SignUpController {
+public class SignUpController implements Initializable {
 
     @FXML
     private TextField rightside_dayTxt;
@@ -58,8 +61,7 @@ public class SignUpController {
     @FXML
     private Label birthdate_alert;
 
-    @FXML
-    private ChoiceBox<String> chiceBox;
+
 
     @FXML
     private Label email_alert;
@@ -83,7 +85,30 @@ public class SignUpController {
     @FXML
     private Label sign_up_alert;
 
-
+    @FXML
+    private ChoiceBox<String> chiceBox;
+    private String countries[] = {"Afghanistan","Albania","Algeria","Andorra","Angola","Anguilla","Antigua &amp; Barbuda",
+            "Argentina","Armenia","Aruba","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados",
+            "Belarus","Belgium","Belize","Benin","Bermuda","Bhutan","Bolivia","Bosnia &amp; Herzegovina","Botswana","Brazil",
+            "British Virgin Islands","Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Cape Verde",
+            "Cayman Islands","Chad","Chile","China","Colombia","Congo","Cook Islands","Costa Rica","Cote D Ivoire","Croatia",
+            "Cruise Ship","Cuba","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador",
+            "Egypt","El Salvador","Equatorial Guinea","Estonia","Ethiopia","Falkland Islands","Faroe Islands","Fiji","Finland",
+            "France","French Polynesia","French West Indies","Gabon","Gambia","Georgia","Germany","Ghana","Gibraltar","Greece",
+            "Greenland","Grenada","Guam","Guatemala","Guernsey","Guinea","Guinea Bissau","Guyana","Haiti","Honduras","Hong Kong",
+            "Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Isle of Man","Israel","Italy","Jamaica","Japan",
+            "Jersey","Jordan","Kazakhstan","Kenya","Kuwait","Kyrgyz Republic","Laos","Latvia","Lebanon","Lesotho","Liberia",
+            "Libya","Liechtenstein","Lithuania","Luxembourg","Macau","Macedonia","Madagascar","Malawi","Malaysia","Maldives",
+            "Mali","Malta","Mauritania","Mauritius","Mexico","Moldova","Monaco","Mongolia","Montenegro","Montserrat",
+            "Morocco","Mozambique","Namibia","Nepal","Netherlands","Netherlands Antilles","New Caledonia","New Zealand",
+            "Nicaragua","Niger","Nigeria","Norway","Oman","Pakistan","Palestine","Panama","Papua New Guinea","Paraguay",
+            "Peru","Philippines","Poland","Portugal","Puerto Rico","Qatar","Reunion","Romania","Russia","Rwanda",
+            "Saint Pierre &amp; Miquelon","Samoa","San Marino","Satellite","Saudi Arabia","Senegal","Serbia","Seychelles",
+            "Sierra Leone","Singapore","Slovakia","Slovenia","South Africa","South Korea","Spain","Sri Lanka",
+            "St Kitts &amp; Nevis","St Lucia","St Vincent","St. Lucia","Sudan","Suriname","Swaziland","Sweden","Switzerland",
+            "Syria","Taiwan","Tajikistan","Tanzania","Thailand","Timor L'Este","Togo","Tonga","Trinidad &amp; Tobago",
+            "Tunisia","Turkey","Turkmenistan","Turks &amp; Caicos","Uganda","Ukraine","United Arab Emirates","United Kingdom",
+            "Uruguay", "Uzbekistan","Venezuela","Vietnam","Virgin Islands (US)","Yemen","Zambia","Zimbabwe"};
     private Socket socket;
     private ObjectOutputStream writer;
     private String jwt;
@@ -156,8 +181,7 @@ public class SignUpController {
         if(email == null || email.equals("")) {
             email_alert.setText("enter your email");
             isAllowedToRegister = false;
-        }
-        if (Validate.validateEmail(email) != ResponseOrErrorType.SUCCESSFUL) {
+        }else if (Validate.validateEmail(email) != ResponseOrErrorType.SUCCESSFUL) {
             email_alert.setText("Invalid Email");
             isAllowedToRegister = false;
         }
@@ -166,15 +190,15 @@ public class SignUpController {
         if(phoneNumber.isBlank()) {
             phonenumber_alert.setText("enter your phone number");
             isAllowedToRegister = false;
-        }if (phoneNumber.length()!=11 ) {
+        }else if (phoneNumber.length()!=11 ) {
             phonenumber_alert.setText("Invalid phone number");
             isAllowedToRegister = false;
-        }
-        try {
-            Integer.parseInt(phoneNumber);
-        }catch (NumberFormatException e){
-            phonenumber_alert.setText("Invalid phone number");
-            isAllowedToRegister = false;
+            try {
+                Integer.parseInt(phoneNumber);
+            }catch (NumberFormatException e){
+                phonenumber_alert.setText("Invalid phone number");
+                isAllowedToRegister = false;
+            }
         }
 
 
@@ -184,8 +208,7 @@ public class SignUpController {
         if(password == null || password.equals("")){
             pass_alert.setText("enter your password");
             isAllowedToRegister = false;
-        }
-        if (Validate.validPass(password) != ResponseOrErrorType.SUCCESSFUL) {
+        }else if (Validate.validPass(password) != ResponseOrErrorType.SUCCESSFUL) {
             pass_alert.setText("Invalid password(correct pass = 8chars in both upper and lower case)");
             isAllowedToRegister = false;
         }
@@ -195,17 +218,16 @@ public class SignUpController {
         if(repeatPass == null || repeatPass.equals("")){
             pass_repeat_alert.setText("repeat your password");
             isAllowedToRegister = false;
-        }
-        if (!repeatPass.equals(repeatPass)) {
+        }else if (!repeatPass.equals(repeatPass)) {
             pass_repeat_alert.setText("Password doesn't match with its repetition");
             isAllowedToRegister = false;
         }
         //TODO show the countries list
         String region = null;
 
-//        region = region_text.getText();
+        region = chiceBox.getValue();
         if(region == null || region.equals("")){
-            region_alert.setText("Enter your country");
+            region_alert.setText("enter your country");
             isAllowedToRegister = false;
         }
         String year = null;
@@ -216,24 +238,24 @@ public class SignUpController {
         year = rightside_yearTxt.getText();
         month = rightside_monthTxt.getText();
         day = rightside_dayTxt.getText();
-        if(day == null || month == null || year == null || day.equals("") || month.equals("") || year.equals("")){
-            birthdate_alert.setText("Enter your birth date completely");
-            isAllowedToRegister = false;
-        }
         birthdateSB.append(year);
         birthdateSB.append("/");
         birthdateSB.append(month);
         birthdateSB.append("/");
         birthdateSB.append(day);
-        if(Validate.validateDateFormat(birthdateSB.toString()) != ResponseOrErrorType.SUCCESSFUL) {
+        Date birthdate =null;
+        if(day == null || month == null || year == null || day.equals("") || month.equals("") || year.equals("")){
+            birthdate_alert.setText("Enter your birth date completely");
+            isAllowedToRegister = false;
+        }else if(Validate.validateDateFormat(birthdateSB.toString()) != ResponseOrErrorType.SUCCESSFUL) {
             birthdate_alert.setText("Invalid birth date");
             isAllowedToRegister = false;
-        }
-        Date birthdate =null;
-        try {
-            birthdate = new Date(Integer.parseInt(year),Integer.parseInt(month),Integer.parseInt(day));
-        } catch (Exception e){
-            isAllowedToRegister =false;
+            try {
+                birthdate = new Date(Integer.parseInt(year),Integer.parseInt(month),Integer.parseInt(day));
+            } catch (Exception e){
+                isAllowedToRegister =false;
+                birthdate_alert.setText("Invalid birth date");
+            }
         }
         Thread threadTask = new Thread(new Runnable() {
             @Override
@@ -268,9 +290,11 @@ public class SignUpController {
         }
     }
     public void addLabel(String errorMsg) {
-        if (errorMsg.equals("User not found")) {
             sign_up_alert.setText(errorMsg);
-        }
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        chiceBox.getItems().addAll(countries);
+    }
 }
