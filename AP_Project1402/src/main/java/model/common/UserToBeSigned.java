@@ -3,7 +3,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class UserToBeSigned implements Serializable {
-    private String username, password, firstName, lastName, email, phoneNumber;
+    private String username, password, firstName, lastName, email, phoneNumber, region;
     private Date birthDate;
     private int userDbId;
 
@@ -15,14 +15,15 @@ public class UserToBeSigned implements Serializable {
         this.password = password;
     }
 
-    public UserToBeSigned(String username, String password, String firstName, String lastName, String email, String phoneNumber, Date birthDate) {
+    public UserToBeSigned(String username, String password, String firstName, String lastName, String email, String phoneNumber, Date birthDate ,String region) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.birthDate = (java.sql.Date) birthDate;
+        this.birthDate = birthDate;
+        this.region = region;
     }
 
     public void setPhoneNumber(String phoneNumber) {

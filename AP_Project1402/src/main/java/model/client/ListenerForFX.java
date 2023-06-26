@@ -52,7 +52,7 @@ public class ListenerForFX implements Runnable {
         return jwToken;
     }
 
-//    @Override
+    //    @Override
     public void run() {
         try {
             while (socket.isConnected()){
@@ -61,7 +61,12 @@ public class ListenerForFX implements Runnable {
                     case TYPE_SIGNIN :
                         if (model.message == ResponseOrErrorType.SUCCESSFUL){
                             this.jwToken = model.getJwToken();
-                            TwitterApplication.firstPage(stage,socket,writer,jwToken);
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    TwitterApplication.firstPage(stage,socket,writer,jwToken);
+                                }
+                            });
                         } else {
                             String errorMessg = JavaFXUtil.getErrorMSg(model);
                             Platform.runLater(new Runnable() {
@@ -77,13 +82,19 @@ public class ListenerForFX implements Runnable {
                     case TYPE_SIGNUP :
                         if (model.message == ResponseOrErrorType.SUCCESSFUL){
                             this.jwToken = model.getJwToken();
-                            TwitterApplication.firstPage(stage,socket,writer,jwToken);
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    TwitterApplication.firstPage(stage,socket,writer,jwToken);
+                                }
+                            });
+
                         } else {
                             String errorMessg = JavaFXUtil.getErrorMSg(model);
                             Platform.runLater(new Runnable() {
                                 @Override
                                 public void run() {
-//                                    TwitterApplication.signUpPage(stage,socket,writer,jwToken).addLabel(errorMessg);
+                                    TwitterApplication.signUpPage(stage,socket,writer,jwToken).addLabel(errorMessg);
                                 }
                             });
                         }
