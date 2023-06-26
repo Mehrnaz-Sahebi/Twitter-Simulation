@@ -155,7 +155,7 @@
                   <Cursor fx:constant="TEXT" />
                </cursor>
             </TextField>
-            <TextField layoutX="158.0" layoutY="432.0" prefHeight="38.0" prefWidth="313.0" style="-fx-background-color: #00000025;">
+            <TextField fx:id="region_text" layoutX="158.0" layoutY="432.0" prefHeight="38.0" prefWidth="313.0" style="-fx-background-color: #00000025;">
                <font>
                   <Font size="16.0" />
                </font>
@@ -202,6 +202,7 @@
                   <Image url="@../../../../images/download.png" />
                </image>
             </ImageView>
+            <Label fx:id="alert" layoutX="25.0" layoutY="558.0" prefWidth="150.0" text="Label" />
          </children>
       </AnchorPane>
    </children>

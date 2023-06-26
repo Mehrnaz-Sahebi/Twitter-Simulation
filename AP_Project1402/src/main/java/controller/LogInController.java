@@ -101,7 +101,7 @@ public class LogInController {
         threadTask.start();
 
         if (!userName.isBlank() && !pass.isBlank()) {
-            JavaFXImpl.Login(userName, pass, socket, writer, jwt);
+            JavaFXImpl.login(userName, pass, socket, writer, jwt);
 
         } else if (userName.isBlank()) {
             username_alert.setText("enter the username");
