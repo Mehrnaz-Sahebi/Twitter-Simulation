@@ -11,23 +11,20 @@ import model.common.UserToBeSigned;
 import java.io.IOException;
 
 public class Util {
-    public static void changeScene(ActionEvent event, String fxmlFile, String title, String username){
+    public static <T> T changeScene(Stage stage, String fxmlFile, String title, String username){
         Parent root = null;
-        if (username != null) {
-        }
+        FXMLLoader fxmlLoader = new FXMLLoader(Util.class.getResource(fxmlFile));
+//        if (username != null) {
+//        }
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(Util.class.getResource(fxmlFile));
                 root = fxmlLoader.load();
-//                LoggedInController loggedInController = fxmlLoader.getController();
-                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 Scene scene = new Scene(root);
                 stage.setTitle(title);
                 stage.setScene(scene);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-
-
+        return  fxmlLoader.getController();
     }
     public synchronized static void openLoginForm(String username, String pass ,String jwt) {
         UserToBeSigned user = new UserToBeSigned();

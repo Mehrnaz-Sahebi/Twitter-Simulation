@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="814.0" prefWidth="830.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LogInController">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="589.0" prefWidth="830.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SignUpController">
    <children>
       <AnchorPane prefHeight="590.0" prefWidth="414.0" styleClass="gradient" stylesheets="@style/Login.css">
          <children>
@@ -19,7 +19,7 @@
                   <Font size="21.0" />
                </font>
             </Label>
-            <Button fx:id="side_Login_btn" layoutX="146.0" layoutY="419.0" mnemonicParsing="false" onAction="#setSign_up_button" prefHeight="35.0" prefWidth="122.0" styleClass="signup-button" stylesheets="@style/Login.css" text="Login" />
+            <Button fx:id="side_Login_btn" layoutX="146.0" layoutY="419.0" mnemonicParsing="false" onAction="#setLog_in_button" prefHeight="35.0" prefWidth="122.0" styleClass="signup-button" stylesheets="@style/Login.css" text="Login" />
          </children>
       </AnchorPane>
       <ScrollPane prefHeight="590.0" prefWidth="422.0">
@@ -31,7 +31,7 @@
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Button fx:id="rightside_signUp_Btn" layoutX="140.0" layoutY="800.0" mnemonicParsing="false" onAction="#setLog_in_button" prefHeight="35.0" prefWidth="122.0" styleClass="login-button" stylesheets="@style/Login.css" text="Sign up">
+                  <Button fx:id="rightside_signUp_Btn" layoutX="140.0" layoutY="800.0" mnemonicParsing="false" onAction="#setSign_up_button" prefHeight="35.0" prefWidth="122.0" styleClass="login-button" stylesheets="@style/Login.css" text="Sign up">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -41,11 +41,6 @@
                         <Font size="15.0" />
                      </font>
                   </TextField>
-                  <Label fx:id="login_alert" layoutX="-95.0" layoutY="141.0" prefHeight="26.0" prefWidth="231.0" textFill="RED">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Label>
                   <TextField fx:id="rightside_firstnameText" layoutX="44.0" layoutY="194.0" prefHeight="44.0" prefWidth="282.0" promptText="First Name">
                      <font>
                         <Font size="15.0" />

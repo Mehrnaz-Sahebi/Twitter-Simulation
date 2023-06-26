@@ -3,6 +3,7 @@ package controller;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -53,38 +54,47 @@ public class TwitterApplication extends Application {
         stage.show();
     }
     public static LogInController signInPage(Stage stage, Socket socket , ObjectOutputStream writer, String jwt){
-        FXMLLoader fxmlLoader = new FXMLLoader(TwitterApplication.class.getResource("login.fxml"));
-        Scene scene = null;
-        try {
-            scene = new Scene(fxmlLoader.load());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        LogInController controller = fxmlLoader.getController();
-        controller.setSocket(socket);
-        controller.setJwt(jwt);
-        controller.setWriter(writer);
-        controller.setLogInController(controller);
-        stage.setScene(scene);
-        stage.show();
-        return controller;
-    }
-    public static SignUpController signUpPage(Stage stage ,Socket socket , ObjectOutputStream writer, String jwt){
 
-        FXMLLoader fxmlLoader = new FXMLLoader(TwitterApplication.class.getResource("sign_up.fxml"));
-        Scene scene = null;
+        FXMLLoader fxmlLoader = new FXMLLoader(TwitterApplication.class.getResource("SignUp.fxml"));
         try {
-            scene = new Scene(fxmlLoader.load());
+            fxmlLoader.load();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         SignUpController controller = fxmlLoader.getController();
+        controller.setSignUpController(controller);
+        //        FXMLLoader fxmlLoader = new FXMLLoader(TwitterApplication.class.getResource("login.fxml"));
+//        Scene scene = null;
+//        try {
+//            scene = new Scene(fxmlLoader.load());
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+        LogInController controller2 = Util.changeScene(stage, "login.fxml", "Sign Up to Twitter", null);
+        controller2.setSocket(socket);
+        controller2.setJwt(jwt);
+        controller2.setWriter(writer);
+        controller2.setLogInController(controller2);
+//        stage.setScene(scene);
+//        stage.show();
+        return controller2;
+    }
+    public static SignUpController signUpPage(Stage stage , Socket socket , ObjectOutputStream writer, String jwt){
+
+//        FXMLLoader fxmlLoader = new FXMLLoader(TwitterApplication.class.getResource("SignUp.fxml"));
+//        Scene scene = null;
+//        try {
+//            scene = new Scene(fxmlLoader.load());
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+        SignUpController controller = Util.changeScene(stage, "SignUp.fxml", "Sign Up to Twitter", null);
         controller.setSocket(socket);
         controller.setJwt(jwt);
         controller.setWriter(writer);
         controller.setSignUpController(controller);
-        stage.setScene(scene);
-        stage.show();
+//        stage.setScene(scene);
+//        stage.show();
         return controller;
     }
     public static void firstPage(Stage stage ,Socket socket , ObjectOutputStream writer, String jwt){

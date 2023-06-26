@@ -1,5 +1,7 @@
 package controller;
 
+import javafx.scene.Node;
+import javafx.stage.Stage;
 import model.client.*;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -65,7 +67,8 @@ public class LogInController {
 
 
     public void setSign_up_button(ActionEvent event) {
-        Util.changeScene(event, "SignUp.fxml", "sign up", null);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Util.changeScene(stage, "SignUp.fxml", "sign up", null);
     }
 
     public void setLog_in_button(ActionEvent event) {
