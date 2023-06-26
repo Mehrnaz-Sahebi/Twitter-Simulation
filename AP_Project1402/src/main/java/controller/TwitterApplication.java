@@ -53,7 +53,7 @@ public class TwitterApplication extends Application {
         stage.show();
     }
     public static LogInController signInPage(Stage stage, Socket socket , ObjectOutputStream writer, String jwt){
-        FXMLLoader fxmlLoader = new FXMLLoader(TwitterApplication.class.getResource("log_in.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(TwitterApplication.class.getResource("login.fxml"));
         Scene scene = null;
         try {
             scene = new Scene(fxmlLoader.load());

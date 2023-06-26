@@ -21,10 +21,6 @@ import java.util.ResourceBundle;
 public class LogInController {
 
     @FXML
-    private AnchorPane anchor_pane_txt;
-
-
-    @FXML
     private Label username_alert;
     @FXML
     private Label pass_alert;
@@ -33,14 +29,14 @@ public class LogInController {
     private Label login_alert;
 
     @FXML
-    private Button sign_up_button;
+    private Button side_signupBtn;
     @FXML
-    private Button log_in_button;
+    private Button rightside_loginBtn;
 
     @FXML
-    private TextField username_field;
+    private TextField rightside_usernameText;
     @FXML
-    private TextField password_field;
+    private TextField rightside_passText;
     private Socket socket;
     private ObjectOutputStream writer;
     private String jwt;
@@ -76,12 +72,12 @@ public class LogInController {
         String userName = null, pass = null;
         try {
 
-            userName = username_field.getText();
+            userName = rightside_usernameText.getText();
         } catch (NullPointerException e) {
             username_alert.setText("enter the username");
         }
         try {
-            pass = password_field.getText();
+            pass = rightside_passText.getText();
         } catch (NullPointerException e) {
             pass_alert.setText("enter the password");
         }

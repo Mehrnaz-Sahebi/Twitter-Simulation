@@ -41,7 +41,7 @@ public class WelcomeController {
     @FXML
     public void goToSignInPage(ActionEvent event) {
         Stage stage = (Stage) sign_in_button.getScene().getWindow();
-        TwitterApplication.signInPage(stage,socket,writer,jwt);
+        TwitterApplication. signInPage(stage,socket,writer,jwt);
     }
 
 }
