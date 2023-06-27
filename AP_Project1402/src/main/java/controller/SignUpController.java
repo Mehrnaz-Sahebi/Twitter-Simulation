@@ -250,12 +250,12 @@ public class SignUpController implements Initializable {
         }else if(Validate.validateDateFormat(birthdateSB.toString()) != ResponseOrErrorType.SUCCESSFUL) {
             birthdate_alert.setText("Invalid birth date");
             isAllowedToRegister = false;
-            try {
-                birthdate = new Date(Integer.parseInt(year),Integer.parseInt(month),Integer.parseInt(day));
-            } catch (Exception e){
-                isAllowedToRegister =false;
-                birthdate_alert.setText("Invalid birth date");
-            }
+        }
+        try {
+            birthdate = new Date(Integer.parseInt(year),Integer.parseInt(month),Integer.parseInt(day));
+        } catch (Exception e){
+            isAllowedToRegister =false;
+            birthdate_alert.setText("Invalid birth date");
         }
         Thread threadTask = new Thread(new Runnable() {
             @Override

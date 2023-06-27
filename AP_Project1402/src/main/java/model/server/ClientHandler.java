@@ -55,9 +55,9 @@ public class ClientHandler implements Runnable {
                     case TYPE_SIGNUP -> {
                         UserToBeSigned user = (UserToBeSigned) model.get();
                         SocketModel res = PagesToBeShownToUser.signUpPage(user);
-                        if (res.get()) {
-                            OnlineUsers.addOnlineUser(this, user);
-                        }
+//                        if (res.get()) {
+//                            OnlineUsers.addOnlineUser(this, user);
+//                        }
                         res.data = user;
                         res.makeJwToken(user.getUsername(), secret);
                         write(res);

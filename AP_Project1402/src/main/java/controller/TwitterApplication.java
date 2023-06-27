@@ -2,8 +2,6 @@ package controller;
 
 
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -62,6 +60,9 @@ public class TwitterApplication extends Application {
             throw new RuntimeException(e);
         }
         SignUpController controller = fxmlLoader.getController();
+        controller.setSocket(socket);
+        controller.setJwt(jwt);
+        controller.setWriter(writer);
         controller.setSignUpController(controller);
         //        FXMLLoader fxmlLoader = new FXMLLoader(TwitterApplication.class.getResource("login.fxml"));
 //        Scene scene = null;
