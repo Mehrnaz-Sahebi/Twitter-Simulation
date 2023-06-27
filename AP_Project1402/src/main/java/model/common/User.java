@@ -27,11 +27,16 @@ public class User implements Serializable {
     private Date SignUpDate;
     private Date lastModifiedDate;
     private String bio;
+    private String birthdateForProf;
     private String location;
     private String website;
+    private String linkProf;
     private HashSet<String> followings;
+    private int numOfFollowings;
     private HashSet<String> followers;
     private HashSet<String> blackList;
+    private int numOfFollowers;
+    private int numberOfTweets;
 
     public User(String username, String password, String firstName, String lastName, String email, String phoneNumber, String avatar, String header, String regionOrCountry, Date birthDate, Date signUpDate, Date lastModifiedDate, String bio, String location, String website) {
         this.username = username;
@@ -97,6 +102,13 @@ public class User implements Serializable {
         this.email = email;
     }
 
+    public String getBirthdateForProf() {
+        return birthdateForProf;
+    }
+
+    public void setBirthdateForProf(String birthdateForProf) {
+        this.birthdateForProf = birthdateForProf;
+    }
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -187,6 +199,16 @@ public class User implements Serializable {
 
     public HashSet<String> getFollowers() {
         return followers;
+    }
+
+    public int getNumOfFollowings() {
+        numOfFollowings = followings.size();
+        return numOfFollowings;
+    }
+
+    public int getNumOfFollowers() {
+        numOfFollowers = followers.size();
+        return numOfFollowers;
     }
 
     public void setFollowers(HashSet<String> followers) {

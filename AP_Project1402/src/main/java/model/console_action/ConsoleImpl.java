@@ -37,22 +37,7 @@ public class ConsoleImpl {
 
         ConsoleUtil.printCommandHint("Enter password: ");
         user.setPassword(ConsoleUtil.waitForString());
-
-//        return new SocketModel(Api.TYPE_SIGNIN, user);
         SendMessage.write(socket, new SocketModel(Api.TYPE_SIGNIN, user,jwt), writer);
-
-//        SocketApi.getInstance().writeAndListen(
-//                new SocketModel(Api.TYPE_SIGNIN, user),
-//                model -> {
-//                    UserToBeSigned result = model.get();
-//                    if (result == null) {
-//                        System.out.println(model.message);
-//                        openAccountMenu();
-//                    } else {
-//                        openChatPage(result);
-//                    }
-//                }
-//        );
     }
 
     public synchronized static void openSignupForm(Socket socket, ObjectOutputStream writer , String jwt) throws ParseException {
@@ -143,7 +128,7 @@ public class ConsoleImpl {
             ConsoleUtil.printCommandHint("5. enter 5 in order to exit for chat");
             cmd = ConsoleUtil.waitForCommand(1, 5);
             if (cmd == 1) {
-                SendMessage.write(socket, new SocketModel(Api.TYPE_CHANGE_PROF, username,jwt), writer);
+                SendMessage.write(socket, new SocketModel(Api.TYPE_SEE_PROF, username,jwt), writer);
             } else if (cmd == 2) {
                 ConsoleUtil.printCommandHint("2. Enter the word to search");
                 String str = ConsoleUtil.waitForString();

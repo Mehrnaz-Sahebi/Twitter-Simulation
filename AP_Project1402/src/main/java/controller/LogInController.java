@@ -68,21 +68,23 @@ public class LogInController {
 
     public void setSign_up_button(ActionEvent event) {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Util.changeScene(stage, "SignUp.fxml", "sign up", null);
+        Util.changeScene(stage, "SignUp.fxml", "sign up");
     }
 
     public void setLog_in_button(ActionEvent event) {
         String userName = null, pass = null;
+        boolean isAllowed = true;
         try {
-
             userName = rightside_usernameText.getText();
         } catch (NullPointerException e) {
             username_alert.setText("enter the username");
+            isAllowed = false;
         }
         try {
             pass = rightside_passText.getText();
         } catch (NullPointerException e) {
             pass_alert.setText("enter the password");
+            isAllowed = false;
         }
         Thread threadTask = new Thread(new Runnable() {
             @Override
@@ -102,19 +104,13 @@ public class LogInController {
             }
         });
         threadTask.start();
-
-        if (!userName.isBlank() && !pass.isBlank()) {
+        if (isAllowed){
             JavaFXImpl.login(userName, pass, socket, writer, jwt);
-
-        } else if (userName.isBlank()) {
-            username_alert.setText("enter the username");
-        } else if (pass.isBlank()) {
-            pass_alert.setText("enter the password");
         }
     }
 
     public void addLabel(String errorMsg) {
-        if (errorMsg.equals("User not found")) {
+        if (errorMsg.equals("User not found") || errorMsg.equals(" This account is already online!")) {
             login_alert.setText(errorMsg);
         }
         Thread threadTask = new Thread(new Runnable() {
@@ -136,20 +132,4 @@ public class LogInController {
         threadTask.start();
 
     }
-//    @Override
-//    public void initialize(URL url, ResourceBundle resourceBundle) {
-//        try {
-//            listenerForFX = new ListenerForFX(new Socket("127.0.0.1", 8080));
-//        } catch (IOException e) {
-//            System.out.println("Server isn't available");
-//        }
-
-//        anchor_pane_txt.heightProperty().addListener(new ChangeListener<Number>() {
-//            @Override
-//            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
-//
-//            }
-//        });
-
-
 }

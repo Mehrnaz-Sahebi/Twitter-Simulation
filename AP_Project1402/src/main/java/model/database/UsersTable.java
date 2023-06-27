@@ -65,15 +65,6 @@ public class UsersTable extends AbstractTable {
     }
 
     public synchronized boolean insert(UserToBeSigned userModel) {
-        if (!Validate.NotBlank(  //if the info is empty, so returns false
-                userModel.getUsername(),
-                userModel.getPassword(),
-                userModel.getFirstName(),
-                userModel.getLastName()
-        )) {
-            return false;
-        }
-
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
         LocalDateTime now = LocalDateTime.now();
         return SafeRunning.safe(() -> {

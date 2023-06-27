@@ -198,7 +198,7 @@ public class PagesToBeShownToUser {
         FollowTable followTable = new FollowTable();
         try {
             followTable.firstFollowsSecond(username1,username2);
-            return goToTheUsersProfile(username2);
+            return goToTheUsersProfile(username2, true);
         }catch (SQLException e){
             return new SocketModel(null, ResponseOrErrorType.UNSUCCESSFUL, false);
         }
@@ -206,7 +206,7 @@ public class PagesToBeShownToUser {
         FollowTable followTable = new FollowTable();
         try {
             followTable.firstUnfollowsSecond(username1,username2);
-            return goToTheUsersProfile(username2);
+            return goToTheUsersProfile(username2, true);
         }catch (SQLException e){
             return new SocketModel(null, ResponseOrErrorType.UNSUCCESSFUL, false);
         }
@@ -214,7 +214,7 @@ public class PagesToBeShownToUser {
         BlockTable blockTable = new BlockTable();
         try {
             blockTable.firstBlocksSecend(username1,username2);
-            return goToTheUsersProfile(username2);
+            return goToTheUsersProfile(username2, true);
         }catch (SQLException e){
             return new SocketModel(null, ResponseOrErrorType.UNSUCCESSFUL, false);
         }
@@ -223,7 +223,7 @@ public class PagesToBeShownToUser {
         BlockTable blockTable = new BlockTable();
         try {
             blockTable.firstUnblockSecend(username1,username2);
-            return goToTheUsersProfile(username2);
+            return goToTheUsersProfile(username2, true);
         }catch (SQLException e){
             return new SocketModel(null, ResponseOrErrorType.UNSUCCESSFUL, false);
         }
@@ -233,14 +233,18 @@ public class PagesToBeShownToUser {
         return out.searchInUsers(key);
     }
 
-    public static SocketModel goToTheUsersProfile(String userName){///////////////////////////////////////////////////////////////////////
+    public static SocketModel goToTheUsersProfile(String userName, boolean othersProf){///////////////////////////////////////////////////////////////////////
         UsersTable out = SQLConnection.getUsers();
         try {
             User profileUser = out.getUserFromDatabase(userName);
+            if (othersProf){
+                profileUser.setPassword(null);
+                profileUser.setEmail(null);
+//                profileUser.set
+            }
             return new SocketModel(null, ResponseOrErrorType.SUCCESSFUL, profileUser);
         } catch (SQLException e) {
             return new SocketModel(null, ResponseOrErrorType.USER_NOTFOUND, false);
         }
-        //TODO show the profile in the scenebuilder
     }
 }

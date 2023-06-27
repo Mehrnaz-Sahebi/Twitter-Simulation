@@ -16,12 +16,6 @@ public class Validate {
         }
         return true;
     }
-    public static boolean dateNotBlank(Date date){
-        if(date == null ){
-            return false;
-        }
-        return true;
-    }
     public static ResponseOrErrorType validateDateFormat(String dateToValidate) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
         //To make strict date format validation

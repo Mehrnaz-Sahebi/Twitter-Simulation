@@ -8,8 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="589.0" prefWidth="830.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LogInController">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="589.0" prefWidth="832.0" styleClass="white-form" stylesheets="@style/Login.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LogInController">
    <children>
       <AnchorPane prefHeight="590.0" prefWidth="414.0" styleClass="gradient" stylesheets="@style/Login.css">
          <children>
@@ -21,7 +20,7 @@
             <Button fx:id="side_signupBtn" layoutX="146.0" layoutY="419.0" mnemonicParsing="false" onAction="#setSign_up_button" prefHeight="35.0" prefWidth="122.0" styleClass="signup-button" stylesheets="@style/Login.css" text="Sign Up" />
          </children>
       </AnchorPane>
-      <AnchorPane prefHeight="590.0" prefWidth="414.0" styleClass="white-form" stylesheets="@style/Login.css">
+      <AnchorPane prefHeight="590.0" prefWidth="430.0" styleClass="white-form" stylesheets="@style/Login.css">
          <children>
             <Label layoutX="67.0" layoutY="63.0" prefHeight="35.0" prefWidth="202.0" styleClass="head-label" stylesheets="@style/Login.css" text="Login Account">
                <font>

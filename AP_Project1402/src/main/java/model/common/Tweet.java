@@ -6,7 +6,7 @@ import java.util.HashSet;
 public class Tweet implements Serializable {
     private String authorUsername;
     private String text;
-    private String photo;//doubtful about the type
+    private String photo;//the url
     private HashSet<String> likes;
     private HashSet<Reply> replies;
     private HashSet<String> retweets;

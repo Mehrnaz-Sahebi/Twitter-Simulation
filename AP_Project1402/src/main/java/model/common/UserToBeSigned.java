@@ -10,11 +10,6 @@ public class UserToBeSigned implements Serializable {
     public UserToBeSigned() {
     }
 
-    public UserToBeSigned(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
-
     public UserToBeSigned(String username, String password, String firstName, String lastName, String email, String phoneNumber, Date birthDate ,String region) {
         this.username = username;
         this.password = password;

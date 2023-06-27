@@ -159,26 +159,26 @@ public class SignUpController implements Initializable {
         String username = rightside_usernameText.getText();
 
         username = rightside_usernameText.getText();
-        if(username == null || username.equals("")){
+        if(Validate.NotBlank(username)){
             username_alert.setText("enter the username");
             isAllowedToRegister = false;
         }
         String firstName = null;
 
         firstName = rightside_firstnameText.getText();
-        if(firstName==null || firstName.equals("")) {
+        if(Validate.NotBlank(firstName)) {
             first_name_alert.setText("enter your first name");
             isAllowedToRegister = false;
         }
         String lastName = null;
         lastName = rightside_lastnameText.getText();
-        if(lastName == null || lastName.equals("")) {
+        if(Validate.NotBlank(lastName)) {
             last_name_alert.setText("enter your last name");
             isAllowedToRegister = false;
         }
         String email = null;
         email = rightside_emailText.getText();
-        if(email == null || email.equals("")) {
+        if(Validate.NotBlank(email)) {
             email_alert.setText("enter your email");
             isAllowedToRegister = false;
         }else if (Validate.validateEmail(email) != ResponseOrErrorType.SUCCESSFUL) {
@@ -187,7 +187,7 @@ public class SignUpController implements Initializable {
         }
         String phoneNumber = null;
         phoneNumber = rightside_phonenumberText.getText();
-        if(phoneNumber.isBlank()) {
+        if(Validate.NotBlank(phoneNumber)) {
             phonenumber_alert.setText("enter your phone number");
             isAllowedToRegister = false;
         }else if (phoneNumber.length()!=11 ) {
@@ -205,7 +205,7 @@ public class SignUpController implements Initializable {
         String password = null;
 
         password = rightside_passText.getText();
-        if(password == null || password.equals("")){
+        if(Validate.NotBlank(password)){
             pass_alert.setText("enter your password");
             isAllowedToRegister = false;
         }else if (Validate.validPass(password) != ResponseOrErrorType.SUCCESSFUL) {
@@ -215,18 +215,17 @@ public class SignUpController implements Initializable {
         String repeatPass = null;
 
         repeatPass = rightside_passrepeatTxt.getText();
-        if(repeatPass == null || repeatPass.equals("")){
+        if(Validate.NotBlank(repeatPass)){
             pass_repeat_alert.setText("repeat your password");
             isAllowedToRegister = false;
         }else if (!repeatPass.equals(repeatPass)) {
             pass_repeat_alert.setText("Password doesn't match with its repetition");
             isAllowedToRegister = false;
         }
-        //TODO show the countries list
         String region = null;
 
         region = chiceBox.getValue();
-        if(region == null || region.equals("")){
+        if(Validate.NotBlank(region)){
             region_alert.setText("enter your country");
             isAllowedToRegister = false;
         }
@@ -244,7 +243,7 @@ public class SignUpController implements Initializable {
         birthdateSB.append("/");
         birthdateSB.append(day);
         Date birthdate =null;
-        if(day == null || month == null || year == null || day.equals("") || month.equals("") || year.equals("")){
+        if(Validate.NotBlank(day, month, year)){
             birthdate_alert.setText("Enter your birth date completely");
             isAllowedToRegister = false;
         }else if(Validate.validateDateFormat(birthdateSB.toString()) != ResponseOrErrorType.SUCCESSFUL) {
@@ -278,7 +277,6 @@ public class SignUpController implements Initializable {
                         last_name_alert.setText("");
                         sign_up_alert.setText("");
                         region_alert.setText("");
-                        //                        alert.setText("");
                     }
                 });
             }

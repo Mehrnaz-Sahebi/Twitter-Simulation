@@ -4,10 +4,30 @@
 . white-form{
     -fx-background-color: #fff;
 }
+. dark-form{
+    -fx-background-color:  #18015e;
+}
+.header_dark_form {
+    -fx-background-color: linear-gradient(to bottom right, #18015e, #20cfe6);
+}
+.left_dark_form {
+    -fx-background-color: linear-gradient(to bottom right, #18015e, #20cfe6);
+}
 . head-label{
     -fx-border-color: linear-gradient(to bottom right, #1a35e9, #20cfe6);
     -fx-border-width: 0 0 0 2.5px;
     -fx-padding: 0 0 0 5px;
+}
+. prof-withborder-label{
+    -fx-border-color: linear-gradient(to bottom right, #1a35e9, #20cfe6);
+    -fx-border-width: 0 0 0 2.5px;
+    -fx-padding: 0 0 0 5px;
+}
+. prof-label{
+    -fx-text-fill: #00ddff;
+}
+. prof-label2{
+    -fx-text-fill: #18015e;
 }
 .login-button {
     -fx-background-color: linear-gradient(to bottom right, #20cfe6, #0004ec);
@@ -49,4 +69,7 @@
     -fx-background-color: #fff;
     -fx-border-color: linear-gradient(to bottom right, #20cfe6, #1a35e9);
     -fx-border-width: 1px;
+}
+.circle_prof{
+    -fx-background-color: linear-gradient(to bottom right, #17015e, #20cfe6);
 }

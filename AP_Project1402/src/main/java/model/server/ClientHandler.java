@@ -36,7 +36,6 @@ public class ClientHandler implements Runnable {
                 switch (model.eventType) {
                     case TYPE_SIGNIN -> {
                         UserToBeSigned user = (UserToBeSigned) model.get();
-                        if (verifyLogIn(user)) {
                             SocketModel socketModel = PagesToBeShownToUser.signInPage(user);
                             socketModel.makeJwToken(user.getUsername(), secret);
                             if (socketModel.message != null) {
@@ -44,34 +43,34 @@ public class ClientHandler implements Runnable {
                             } else {
                                 socketModel.setMessage(ResponseOrErrorType.SUCCESSFUL);
                                 write(socketModel);
-                                OnlineUsers.addOnlineUser(this, user);
                             }
-                        } else {
-                            model.setMessage(ResponseOrErrorType.ALREADY_ONLINE);
-                            model.makeJwToken(model.getUsername(), secret);
-                            write(model);
-                        }
                     }
                     case TYPE_SIGNUP -> {
                         UserToBeSigned user = (UserToBeSigned) model.get();
                         SocketModel res = PagesToBeShownToUser.signUpPage(user);
-//                        if (res.get()) {
-//                            OnlineUsers.addOnlineUser(this, user);
-//                        }
                         res.data = user;
                         res.makeJwToken(user.getUsername(), secret);
                         write(res);
                     }
-                    case TYPE_CHANGE_PROF -> {
-                        String username = (String) model.get();
-                        SocketModel res = PagesToBeShownToUser.goToTheUsersProfile(username);
-                        res.setEventType(Api.TYPE_CHANGE_PROF);
+                    case TYPE_SEE_PROF -> {
+                        String username = ((UserToBeSigned) model.get()).getUsername();
+                        SocketModel res = PagesToBeShownToUser.goToTheUsersProfile(username, false);
+                        res.setEventType(Api.TYPE_SEE_PROF);
                         if (!model.checkJwToken(secret)) {
                             res.setMessage(ResponseOrErrorType.INVALID_JWT);
                         }
                         write(res);
                     }
-                    case TYPE_Update_PROF -> {
+                    case TYPE_SHOW_OTHERS_PROFILE ->{
+                        String username = (String) model.get();
+                        SocketModel res = PagesToBeShownToUser.goToTheUsersProfile(username, true);
+                        res.setEventType(Api.TYPE_SHOW_OTHERS_PROFILE);
+                        if (!model.checkJwToken(secret)) {
+                            res.setMessage(ResponseOrErrorType.INVALID_JWT);
+                        }
+                        write(res);
+                    }
+                        case TYPE_Update_PROF -> {
                         User user = (User) model.get();
                         ResponseOrErrorType res = PagesToBeShownToUser.updateProfile(user);
                         if (!model.checkJwToken(secret)) {
@@ -164,14 +163,6 @@ public class ClientHandler implements Runnable {
                         res.data = reply.getOriginalTweet();
                         write(res);
                     }
-                    case TYPE_SHOW_OTHERS_PROFILE -> {
-                        String usernameToShow = (String) model.get();
-                        SocketModel res = PagesToBeShownToUser.goToTheUsersProfile(usernameToShow);
-                        if (!model.checkJwToken(secret)) {
-                            res.setMessage(ResponseOrErrorType.INVALID_JWT);
-                        }
-                        write(res);
-                    }
                     case TYPE_FOLLOW -> {
                         User user = (User) model.get();
                         SocketModel res = PagesToBeShownToUser.firstFollowsSecond(model.getUsername(), user.getUsername());
@@ -216,7 +207,8 @@ public class ClientHandler implements Runnable {
     }
 
     public static boolean verifyLogIn(UserToBeSigned user) {
-        return !OnlineUsers.isOnline(user);
+//        return !OnlineUsers.isOnline(user);
+        return true;
     }
 
     public void write(SocketModel model) {

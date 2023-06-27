@@ -17,20 +17,9 @@ public class Listener implements Runnable{
 
     private Socket socket;
     private final Hashtable<Integer, LinkedList<Listener>> listeners = new Hashtable<>();
-    private boolean connected;
-    private static Listener instance;
     private ObjectInputStream reader = null;
     private ObjectOutputStream writer = null;
     private String jwToken;
-    UserToBeSigned thisUser;
-
-//    public static Listener getInstance(Socket socket, ObjectOutputStream writer) throws IOException {
-//        if (instance == null) {
-//            instance = new Listener(socket);
-//            this.writer = writer;
-//        }
-//        return instance;
-//    }
 
     public Listener(Socket socket, ObjectInputStream reader, ObjectOutputStream writer) throws IOException {
         this.socket = socket;

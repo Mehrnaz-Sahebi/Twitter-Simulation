@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import model.common.*;
 import model.console_action.ConsoleImpl;
 import model.console_action.ConsoleUtil;
+import model.javafx_action.JavaFXImpl;
 import model.javafx_action.JavaFXUtil;
 
 import java.io.IOException;
@@ -25,7 +26,6 @@ public class ListenerForFX implements Runnable {
 
     private Socket socket;
     private final Hashtable<Integer, LinkedList<Client>> listeners = new Hashtable<>();
-    private boolean connected;
     private static Client instance;
     private ObjectInputStream reader = null;
     private ObjectOutputStream writer = null;
@@ -64,7 +64,7 @@ public class ListenerForFX implements Runnable {
                             Platform.runLater(new Runnable() {
                                 @Override
                                 public void run() {
-                                    TwitterApplication.firstPage(stage,socket,writer,jwToken);
+                                    JavaFXImpl.seeThisUserProf(model.getUsername(),socket, writer,jwToken);
                                 }
                             });
                         } else {
@@ -99,15 +99,24 @@ public class ListenerForFX implements Runnable {
                             });
                         }
                         break;
-                    case TYPE_CHANGE_PROF:
+                    case TYPE_SEE_PROF:
                         if (model.message == ResponseOrErrorType.SUCCESSFUL){
-                            ConsoleImpl.showProf(socket, model.get(), writer,jwToken);
-                            ConsoleImpl.openChatPage(socket, writer,jwToken);
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    TwitterApplication.profPage(stage,socket,writer,jwToken, (User)model.data);
+                                }
+                            });
                         } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
                             JavaFXUtil.getErrorMSg(model);
-                            ConsoleImpl.openAccountMenu(socket,writer,jwToken);
+                            ////TODO go to first timeline page and add label
                         } else {
-                            ConsoleImpl.openChatPage(socket, writer,jwToken);
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    TwitterApplication.firstPage(stage,socket,writer,jwToken);
+                                }
+                            });
                         }
                         break;
                     case TYPE_Update_PROF:
