@@ -11,7 +11,6 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-
 <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="745.0" prefWidth="963.0" styleClass="background" stylesheets="@style/AddTweet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddTweetController">
    <children>
       <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="54.0" prefWidth="963.0">
@@ -32,17 +31,17 @@
          </padding>
       </HBox>
       <Line endX="953.0" startX="20.0" stroke="#1a35e9" />
-      <HBox spacing="40.0">
+      <HBox spacing="30.0">
          <children>
-            <TextArea fx:id="tweet_text_area" prefHeight="283.0" prefWidth="679.0" style="-fx-control-inner-background: #cae3e7;">
+            <TextArea fx:id="tweet_text_area" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="283.0" prefWidth="715.0" style="-fx-control-inner-background: #cae3e7;" styleClass="text-field" stylesheets="@style/AddTweet.css">
                <font>
                   <Font size="24.0" />
                </font>
             </TextArea>
-            <VBox alignment="TOP_CENTER" prefHeight="108.0" prefWidth="188.0" spacing="15.0">
+            <VBox alignment="TOP_CENTER" spacing="15.0">
                <children>
                   <Button fx:id="tweet_button" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#tweet" stylesheets="@style/AddTweet.css" text="Tweet" />
-                  <Button fx:id="upload_image_button" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#uploadImage" stylesheets="@style/AddTweet.css" text="Upload Image" />
+                  <Button fx:id="upload_image_button" mnemonicParsing="false" onAction="#uploadImage" prefHeight="34.0" prefWidth="166.0" stylesheets="@style/AddTweet.css" text="Upload Image" />
                </children>
                <padding>
                   <Insets top="20.0" />

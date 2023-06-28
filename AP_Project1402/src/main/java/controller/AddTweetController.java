@@ -50,8 +50,6 @@ public class AddTweetController {
     private ObjectOutputStream writer;
     private String jwt;
     private String imagePath;
-    private static int imageNameCounter;
-
 
     public void setSocket(Socket socket) {
         this.socket = socket;
@@ -85,15 +83,23 @@ public class AddTweetController {
 
     @FXML
     void tweet(ActionEvent event) throws URISyntaxException, IOException {
-        String newImageFileName = ".//.//.//.//images//tweet-images//"+String.valueOf(imageNameCounter)+".png";
+        String tweetText = tweet_text_area.getText();
+        String newImageFileName = getUsername();
+        String newImageFilePath = ".//.//.//.//images//tweet-images//"+newImageFileName+".png";
         if(image.getImage()!=null){
-
-            File newImageFile = new File(newImageFileName);
+            File checkFile = new File(newImageFilePath);
+            int i = 1;
+            while(checkFile.exists()){
+                newImageFileName =newImageFileName + i;
+                newImageFilePath = ".//.//.//.//images//tweet-images//"+newImageFileName+".png";
+                checkFile = new File(newImageFilePath);
+                i++;
+            }
+            File newImageFile = new File(newImageFilePath);
             Files.copy(new File(imagePath).toPath(),newImageFile.toPath(),StandardCopyOption.REPLACE_EXISTING);
         }
-        Tweet tweet = new Tweet(getUsername(),tweet_text_area.getText(),newImageFileName);
+        Tweet tweet = new Tweet(getUsername(),tweetText,newImageFilePath);
         JavaFXImpl.addTweet(tweet,socket,writer,jwt);
-        imageNameCounter++;
     }
 
     @FXML
