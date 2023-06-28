@@ -85,7 +85,6 @@ public class AddTweetController {
 
     @FXML
     void tweet(ActionEvent event) throws URISyntaxException, IOException {
-        System.out.println("1");
         String newImageFileName = ".//.//.//.//images//tweet-images//"+String.valueOf(imageNameCounter)+".png";
         if(image.getImage()!=null){
 

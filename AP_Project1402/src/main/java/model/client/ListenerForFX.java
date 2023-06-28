@@ -160,7 +160,6 @@ public class ListenerForFX implements Runnable {
                         break;
                     case TYPE_WRITING_TWEET:
                         if (model.message == ResponseOrErrorType.SUCCESSFUL) {
-                            System.out.println("success");
                             Platform.runLater(new Runnable() {
                                 @Override
                                 public void run() {
