@@ -120,4 +120,24 @@ public class TwitterApplication extends Application {
         stage.setScene(scene);
         return controller;
     }
+    public static EditProfController editProfPage(Stage stage ,Socket socket , ObjectOutputStream writer, String jwt, User user){
+        FXMLLoader fxmlLoader = new FXMLLoader(TwitterApplication.class.getResource("EditProfPage.fxml"));
+        Parent root;
+        try {
+            root = fxmlLoader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        EditProfController controller = fxmlLoader.getController();
+        controller.setSocket(socket);
+        controller.setJwt(jwt);
+        controller.setWriter(writer);
+        controller.setUserProfController(controller);
+        controller.setUser(user);
+        controller.prepareProf();
+        Scene scene = null;
+        scene = new Scene(root);
+        stage.setScene(scene);
+        return controller;
+    }
 }

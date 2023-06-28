@@ -37,6 +37,7 @@ public class User implements Serializable {
     private HashSet<String> blackList;
     private int numOfFollowers;
     private int numberOfTweets;
+    private boolean toShowLocInProf = false;
 
     public User(String username, String password, String firstName, String lastName, String email, String phoneNumber, String avatar, String header, String regionOrCountry, Date birthDate, Date signUpDate, Date lastModifiedDate, String bio, String location, String website) {
         this.username = username;

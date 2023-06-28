@@ -3,11 +3,11 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -15,117 +15,168 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="745.0" prefWidth="963.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UsersProfileController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="745.0" prefWidth="963.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.EditProfController">
    <left>
-      <VBox prefHeight="578.0" prefWidth="331.0" style="-fx-background-radius: 10px;" styleClass="left_dark_form" stylesheets="@style/Login.css" BorderPane.alignment="CENTER">
+      <VBox prefHeight="578.0" prefWidth="463.0" style="-fx-background-radius: 10px;" styleClass="left_dark_form" stylesheets="@style/Login.css" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets left="1.0" top="1.0" />
          </BorderPane.margin>
          <children>
-            <Label fx:id="Followers_that_you_know_Labl" prefHeight="42.0" prefWidth="158.0" style="-fx-text-fill: #ffffff;" stylesheets="@style/Login.css" text="Followers that you know" textFill="#00ddff">
+            <Label prefHeight="42.0" prefWidth="158.0" styleClass="head-label2" stylesheets="@style/Login.css" text="Your Pesonal Info" textFill="#f34fff">
                <VBox.margin>
                   <Insets left="30.0" top="20.0" />
                </VBox.margin>
+               <font>
+                  <Font size="15.0" />
+               </font>
             </Label>
-            <ScrollPane prefHeight="190.0" prefWidth="253.0" style="-fx-background-radius: 10px; -fx-border-radius: 10px;" styleClass="dark-form" stylesheets="@style/Login.css">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="178.0" prefWidth="556.0" styleClass="dark-form" stylesheets="@style/Login.css" />
-               </content>
-               <VBox.margin>
-                  <Insets left="2.0" right="2.0" />
-               </VBox.margin>
-            </ScrollPane>
-            <Label fx:id="PhotosVid_Labl" prefHeight="42.0" prefWidth="137.0" style="-fx-text-fill: #ffffff;" styleClass="prof-label2" stylesheets="@style/Login.css" text="Photos and videos" textFill="#00ddff">
-               <VBox.margin>
-                  <Insets left="30.0" />
-               </VBox.margin>
-            </Label>
+            <HBox prefHeight="74.0" prefWidth="463.0">
+               <children>
+                  <Label prefHeight="26.0" prefWidth="95.0" text="Email" textFill="#f34fff">
+                     <font>
+                        <Font name="MV Boli" size="12.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="30.0" top="20.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="email_lbl" onDragDetected="#EditEmail" text="0000" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets top="20.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox prefHeight="68.0" prefWidth="463.0">
+               <children>
+                  <Label prefHeight="26.0" prefWidth="95.0" text="Phonenumber" textFill="#f34fff">
+                     <font>
+                        <Font name="MV Boli" size="12.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="30.0" top="20.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="phonenumber_lbl" onDragDetected="#EditPhone" text="0000" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets top="20.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox prefHeight="68.0" prefWidth="463.0">
+               <children>
+                  <Label prefHeight="26.0" prefWidth="95.0" text="Rgion" textFill="#f34fff">
+                     <font>
+                        <Font name="MV Boli" size="12.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="30.0" top="20.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="region_lbl" text="0000" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets top="20.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Label>
+                  <ChoiceBox fx:id="chiceBox" onDragDetected="#EditRegion" prefWidth="150.0" stylesheets="@style/Login.css">
+                     <HBox.margin>
+                        <Insets left="20.0" top="20.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ChoiceBox>
+               </children>
+            </HBox>
+            <HBox prefHeight="68.0" prefWidth="463.0">
+               <children>
+                  <Label prefHeight="26.0" prefWidth="95.0" text="BirthDate" textFill="#f34fff">
+                     <font>
+                        <Font name="MV Boli" size="12.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="30.0" top="20.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="year_lbl" onDragDetected="#EditBirthdate" text="0000" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets top="20.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Label>
+                  <Label onDragDetected="#EditBirthdate" text="/" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <HBox.margin>
+                        <Insets left="5.0" top="20.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="month_lbl" onDragDetected="#EditBirthdate" text="0000" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <HBox.margin>
+                        <Insets left="5.0" top="20.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label onDragDetected="#EditBirthdate" text="/" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <HBox.margin>
+                        <Insets left="5.0" top="20.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="day_lbl" onDragDetected="#EditBirthdate" text="0000" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <HBox.margin>
+                        <Insets left="5.0" top="20.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
          </children>
       </VBox>
    </left>
-   <top>
-      <VBox prefHeight="166.0" prefWidth="830.0" style="-fx-background-radius: 10px;" styleClass="header_dark_form" stylesheets="@style/Login.css" BorderPane.alignment="CENTER">
-         <children>
-            <AnchorPane prefHeight="164.0" prefWidth="830.0">
-               <children>
-                  <Circle fx:id="circle_prof" fill="#1e0079" layoutX="66.0" layoutY="59.0" onDragDetected="#showProfilePhoto" radius="40.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="2.0" />
-                  <Label fx:id="Name_Lbl" layoutX="128.0" layoutY="15.0" prefHeight="38.0" prefWidth="95.0" styleClass="prof-withborder-label" stylesheets="@style/Login.css" text="Name" textFill="#6ce6ff">
-                     <font>
-                        <Font name="MT Extra" size="16.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="Username_Lbl" layoutX="135.0" layoutY="54.0" prefHeight="38.0" prefWidth="95.0" styleClass="prof-label" stylesheets="@style/Login.css" text="Username" textFill="#00ddff">
-                     <font>
-                        <Font name="Segoe UI Black" size="16.0" />
-                     </font>
-                  </Label>
-                  <HBox layoutX="3.0" layoutY="109.0" prefHeight="54.0" prefWidth="953.0" style="-fx-background-color: #cae3e7; -fx-background-radius: 10px;">
-                     <children>
-                        <Label fx:id="num_of_followers" text="num">
-                           <HBox.margin>
-                              <Insets left="240.0" top="15.0" />
-                           </HBox.margin>
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="Followers_Lbl" onDragDetected="#showFollowers" prefHeight="22.0" prefWidth="107.0" styleClass="head-label" stylesheets="@style/Login.css" text="Followers" textFill="#18015e">
-                           <HBox.margin>
-                              <Insets left="5.0" top="15.0" />
-                           </HBox.margin>
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Label>
-                        <Label fx:id="num_of_followings" text="num">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                           <HBox.margin>
-                              <Insets left="10.0" right="5.0" top="15.0" />
-                           </HBox.margin>
-                        </Label>
-                        <Label fx:id="Followings_Lbl" onDragDetected="#showFollowings" prefHeight="22.0" prefWidth="107.0" styleClass="head-label" stylesheets="@style/Login.css" text="Followings" textFill="#18015e">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                           <HBox.margin>
-                              <Insets top="15.0" />
-                           </HBox.margin>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Label>
-                        <Label fx:id="num_of_tweets" text="num">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                           <HBox.margin>
-                              <Insets left="10.0" right="5.0" top="15.0" />
-                           </HBox.margin>
-                        </Label>
-                        <Label fx:id="Tweets_Lbl" onDragDetected="#showTweets" prefHeight="22.0" prefWidth="107.0" styleClass="head-prof-label" stylesheets="@style/Login.css" text="Tweets" textFill="#18015e">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                           <HBox.margin>
-                              <Insets top="15.0" />
-                           </HBox.margin>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Label>
-                     </children>
-                  </HBox>
-                  <Button fx:id="EditProf_Btn" layoutX="838.0" layoutY="66.0" mnemonicParsing="false" onAction="#EditProfile" prefHeight="31.0" prefWidth="119.0" styleClass="signup-button" stylesheets="@style/Login.css" text="Edit Profile" />
-               </children>
-            </AnchorPane>
-         </children>
-      </VBox>
-   </top>
    <center>
       <VBox prefHeight="579.0" prefWidth="442.0" style="-fx-background-color: #cae3e7;" BorderPane.alignment="CENTER">
          <children>
@@ -137,7 +188,7 @@
                   <Font size="21.0" />
                </font>
             </Label>
-            <Label fx:id="Bio_labl" prefHeight="40.0" prefWidth="190.0" stylesheets="@style/Login.css" text="Bio">
+            <Label prefHeight="54.0" prefWidth="190.0" stylesheets="@style/Login.css" text="Bio">
                <font>
                   <Font name="Segoe Script" size="18.0" />
                </font>
@@ -145,7 +196,7 @@
                   <Insets left="30.0" top="30.0" />
                </VBox.margin>
             </Label>
-            <TextField prefHeight="26.0" prefWidth="546.0" promptText="enter your bio">
+            <TextField fx:id="bio_txt" prefHeight="26.0" prefWidth="546.0" promptText="enter your bio">
                <VBox.margin>
                   <Insets left="20.0" right="20.0" />
                </VBox.margin>
@@ -153,31 +204,7 @@
                   <Font name="MV Boli" size="12.0" />
                </font>
             </TextField>
-            <Hyperlink fx:id="Link_hyper" onAction="#goToLink" prefHeight="14.0" prefWidth="35.0" text="Link" textFill="#00ddff">
-               <VBox.margin>
-                  <Insets left="30.0" />
-               </VBox.margin>
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Hyperlink>
-            <Label fx:id="Registeration_date_labl" prefHeight="26.0" prefWidth="95.0" styleClass="prof-label" stylesheets="@style/Login.css" text="reg_date" textFill="#00ddff">
-               <VBox.margin>
-                  <Insets left="30.0" />
-               </VBox.margin>
-               <font>
-                  <Font name="MV Boli" size="12.0" />
-               </font>
-            </Label>
-            <Label fx:id="Birthdate_Labl" prefHeight="26.0" prefWidth="95.0" styleClass="prof-label" stylesheets="@style/Login.css" text="birthdate" textFill="#cae3e7">
-               <VBox.margin>
-                  <Insets left="30.0" />
-               </VBox.margin>
-               <font>
-                  <Font name="MV Boli" size="12.0" />
-               </font>
-            </Label>
-            <Label fx:id="Bio_labl1" prefHeight="40.0" prefWidth="190.0" stylesheets="@style/Login.css" text="Location">
+            <Label prefHeight="49.0" prefWidth="190.0" stylesheets="@style/Login.css" text="Link">
                <font>
                   <Font name="Segoe Script" size="18.0" />
                </font>
@@ -185,12 +212,15 @@
                   <Insets left="30.0" />
                </VBox.margin>
             </Label>
-            <TextField prefHeight="26.0" prefWidth="546.0" promptText="enter your location">
+            <TextField fx:id="link_txt" prefHeight="26.0" prefWidth="546.0" promptText="enter your link">
                <VBox.margin>
                   <Insets left="20.0" right="20.0" />
                </VBox.margin>
+               <font>
+                  <Font name="MV Boli" size="12.0" />
+               </font>
             </TextField>
-            <Label fx:id="Bio_labl2" prefHeight="40.0" prefWidth="190.0" stylesheets="@style/Login.css" text="Registeration_date">
+            <Label prefHeight="54.0" prefWidth="190.0" stylesheets="@style/Login.css" text="Location">
                <font>
                   <Font name="Segoe Script" size="18.0" />
                </font>
@@ -200,18 +230,36 @@
             </Label>
             <HBox prefHeight="36.0" prefWidth="631.0">
                <children>
-                  <Label fx:id="Location_Labl" prefHeight="26.0" prefWidth="95.0" text="Location" textFill="#003eff">
+                  <Label prefHeight="26.0" prefWidth="151.0" text="Wanna keep in profile?" textFill="#003eff">
                      <font>
                         <Font name="MV Boli" size="12.0" />
                      </font>
                      <HBox.margin>
-                        <Insets left="30.0" />
+                        <Insets left="30.0" top="5.0" />
                      </HBox.margin>
                   </Label>
-                  <CheckBox mnemonicParsing="false" text="CheckBox" />
+                  <RadioButton fx:id="yep_loc" mnemonicParsing="false" styleClass="my_radio_button" stylesheets="@style/Login.css" text="Yep">
+                     <HBox.margin>
+                        <Insets left="30.0" top="10.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <toggleGroup>
+                        <ToggleGroup fx:id="loc_choices" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="nope_loc" mnemonicParsing="false" styleClass="my_radio_button" stylesheets="@style/Login.css" text="Nope" toggleGroup="$loc_choices">
+                     <HBox.margin>
+                        <Insets left="30.0" top="10.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </RadioButton>
                </children>
             </HBox>
-            <Label fx:id="Bio_labl3" prefHeight="40.0" prefWidth="190.0" stylesheets="@style/Login.css" text="Birthdate">
+            <Label prefHeight="54.0" prefWidth="190.0" stylesheets="@style/Login.css" text="Registeration_date">
                <font>
                   <Font name="Segoe Script" size="18.0" />
                </font>
@@ -219,7 +267,38 @@
                   <Insets left="30.0" />
                </VBox.margin>
             </Label>
-            <Label fx:id="Bio_labl4" prefHeight="40.0" prefWidth="190.0" stylesheets="@style/Login.css" text="Link">
+            <HBox prefHeight="36.0" prefWidth="631.0">
+               <children>
+                  <Label prefHeight="26.0" prefWidth="151.0" text="Wanna keep in profile?" textFill="#003eff">
+                     <font>
+                        <Font name="MV Boli" size="12.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="30.0" top="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <RadioButton fx:id="yep_reg" mnemonicParsing="false" styleClass="my_radio_button" stylesheets="@style/Login.css" text="Yep">
+                     <HBox.margin>
+                        <Insets left="30.0" top="10.0" />
+                     </HBox.margin>
+                     <toggleGroup>
+                        <ToggleGroup fx:id="reg_choices" />
+                     </toggleGroup>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </RadioButton>
+                  <RadioButton fx:id="nope_reg" mnemonicParsing="false" styleClass="my_radio_button" stylesheets="@style/Login.css" text="Nope" toggleGroup="$reg_choices">
+                     <HBox.margin>
+                        <Insets left="30.0" top="10.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </RadioButton>
+               </children>
+            </HBox>
+            <Label prefHeight="54.0" prefWidth="190.0" stylesheets="@style/Login.css" text="Birthdate">
                <font>
                   <Font name="Segoe Script" size="18.0" />
                </font>
@@ -227,12 +306,69 @@
                   <Insets left="30.0" />
                </VBox.margin>
             </Label>
-            <TextField prefHeight="26.0" prefWidth="546.0" promptText="enter your link">
-               <VBox.margin>
-                  <Insets left="20.0" right="20.0" />
-               </VBox.margin>
-            </TextField>
+            <HBox prefHeight="36.0" prefWidth="631.0">
+               <children>
+                  <Label prefHeight="26.0" prefWidth="151.0" text="Wanna keep in profile?" textFill="#003eff">
+                     <font>
+                        <Font name="MV Boli" size="12.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="30.0" top="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <RadioButton fx:id="yep_birth" mnemonicParsing="false" styleClass="my_radio_button" stylesheets="@style/Login.css" text="Yep">
+                     <HBox.margin>
+                        <Insets left="30.0" top="10.0" />
+                     </HBox.margin>
+                     <toggleGroup>
+                        <ToggleGroup fx:id="birthdate_choices" />
+                     </toggleGroup>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </RadioButton>
+                  <RadioButton fx:id="nope_birth" mnemonicParsing="false" styleClass="my_radio_button" stylesheets="@style/Login.css" text="Nope" toggleGroup="$birthdate_choices">
+                     <HBox.margin>
+                        <Insets left="30.0" top="10.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </RadioButton>
+               </children>
+            </HBox>
          </children>
       </VBox>
    </center>
+   <top>
+      <HBox prefHeight="176.0" prefWidth="963.0" style="-fx-background-radius: 10px;" styleClass="left_dark_form" stylesheets="@style/Login.css" BorderPane.alignment="CENTER">
+         <children>
+            <AnchorPane prefHeight="143.0" prefWidth="551.0">
+               <children>
+                  <Circle fx:id="circle_prof" fill="#1e0079" layoutX="88.0" layoutY="81.0" onDragDetected="#editProfilePhoto" radius="62.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="2.0">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Circle>
+                  <Label fx:id="Name_Lbl" layoutX="184.0" layoutY="27.0" onDragDetected="#editName" prefHeight="38.0" prefWidth="95.0" styleClass="prof-withborder-label" stylesheets="@style/Login.css" text="Name" textFill="#6ce6ff">
+                     <font>
+                        <Font name="MT Extra" size="16.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Label>
+                  <Label fx:id="Username_Lbl" layoutX="184.0" layoutY="88.0" onDragDetected="#editUsername" prefHeight="38.0" prefWidth="95.0" styleClass="prof-label" stylesheets="@style/Login.css" text="Username" textFill="#00ddff">
+                     <font>
+                        <Font name="Segoe UI Black" size="16.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Label>
+                  <Button fx:id="Save_Btn" layoutX="159.0" layoutY="139.0" mnemonicParsing="false" onAction="#saveProfile" prefHeight="31.0" prefWidth="119.0" styleClass="signup-button" stylesheets="@style/Login.css" text="Save" />
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
+   </top>
 </BorderPane>
