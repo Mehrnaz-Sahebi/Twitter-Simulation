@@ -87,12 +87,12 @@
             <AnchorPane prefHeight="164.0" prefWidth="830.0">
                <children>
                   <Circle fx:id="circle_prof" fill="#1e0079" layoutX="66.0" layoutY="59.0" onDragDetected="#showProfilePhoto" radius="40.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="2.0" />
-                  <Label fx:id="Name_Lbl" layoutX="128.0" layoutY="15.0" prefHeight="38.0" prefWidth="95.0" styleClass="prof-withborder-label" stylesheets="@style/Login.css" text="Name" textFill="#6ce6ff">
+                  <Label fx:id="Name_Lbl" layoutX="128.0" layoutY="15.0" prefHeight="38.0" prefWidth="345.0" styleClass="prof-withborder-label" stylesheets="@style/Login.css" text="Name" textFill="#6ce6ff">
                      <font>
                         <Font name="MT Extra" size="16.0" />
                      </font>
                   </Label>
-                  <Label fx:id="Username_Lbl" layoutX="135.0" layoutY="54.0" prefHeight="38.0" prefWidth="95.0" styleClass="prof-label" stylesheets="@style/Login.css" text="Username" textFill="#00ddff">
+                  <Label fx:id="Username_Lbl" layoutX="135.0" layoutY="54.0" prefHeight="38.0" prefWidth="249.0" styleClass="prof-label" stylesheets="@style/Login.css" text="Username" textFill="#00ddff">
                      <font>
                         <Font name="Segoe UI Black" size="16.0" />
                      </font></Label>
@@ -163,6 +163,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
+                  <Button layoutX="838.0" layoutY="18.0" mnemonicParsing="false" onAction="#GoBack" prefHeight="31.0" prefWidth="119.0" styleClass="signup-button" stylesheets="@style/Login.css" text="Back" />
                </children>
             </AnchorPane>
          </children>

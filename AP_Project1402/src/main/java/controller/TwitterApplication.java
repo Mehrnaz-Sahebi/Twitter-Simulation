@@ -145,7 +145,10 @@ public class TwitterApplication extends Application {
         stage.setScene(scene);
         return controller;
     }
-    public static void goBack(Stage stage){
-        stage.setScene(backScene);
+    public static void goBackProfilePage(Stage stage ,Socket socket , ObjectOutputStream writer, String jwt, User user){
+        profPage(stage, socket, writer,jwt, user);
+    }
+    public static void goBackHomePage(Stage stage , Socket socket , ObjectOutputStream writer, String jwt, String username){
+        homePage(stage, socket, writer,jwt, username);
     }
 }

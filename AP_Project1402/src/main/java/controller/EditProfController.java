@@ -290,7 +290,7 @@ public class EditProfController implements Initializable {
     }
     @FXML
     void GoBack(ActionEvent event) {
-        TwitterApplication.goBack((Stage) ((Node) event.getSource()).getScene().getWindow());
+        TwitterApplication.goBackProfilePage((Stage) ((Node) event.getSource()).getScene().getWindow(), socket, writer, jwt, user);
     }
     @FXML
     void saveProfile(ActionEvent event) {

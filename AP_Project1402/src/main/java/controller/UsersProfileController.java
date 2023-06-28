@@ -3,6 +3,7 @@ package controller;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
@@ -10,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.stage.Stage;
 import model.common.User;
 import model.javafx_action.JavaFXImpl;
 
@@ -125,6 +127,10 @@ public class UsersProfileController {
     @FXML
     void showTweets(MouseEvent event) {
 
+    }
+    @FXML
+    void GoBack(ActionEvent event) {
+        TwitterApplication.goBackHomePage((Stage) ((Node) event.getSource()).getScene().getWindow(), socket, writer, jwt, user.getUsername());
     }
 
     public void prepareProf() {
