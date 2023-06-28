@@ -1,9 +1,6 @@
 package model.javafx_action;
 
-import model.common.Api;
-import model.common.SocketModel;
-import model.common.User;
-import model.common.UserToBeSigned;
+import model.common.*;
 import model.client.*;
 
 import java.io.ObjectOutputStream;
@@ -23,5 +20,9 @@ public class JavaFXImpl {
         UserToBeSigned user = new UserToBeSigned();
         user.setUsername(username);
         SendMessage.write(socket, new SocketModel(Api.TYPE_SEE_PROF, user,jwt), writer);
+    }
+    public synchronized static void addTweet(Tweet tweet, Socket socket, ObjectOutputStream writer, String jwt){
+        SendMessage.write(socket, new SocketModel(Api.TYPE_WRITING_TWEET, tweet,jwt), writer);
+        System.out.println("2");
     }
 }

@@ -1,8 +1,10 @@
 package controller;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import model.client.ListenerForFX;
 
@@ -17,6 +19,8 @@ public class WelcomeController {
 
     @FXML
     private Button sign_in_button;
+    @FXML
+    private Label alert_label;
     private Socket socket;
     private ObjectOutputStream writer;
     private String jwt;
@@ -42,6 +46,26 @@ public class WelcomeController {
     public void goToSignInPage(ActionEvent event) {
         Stage stage = (Stage) sign_in_button.getScene().getWindow();
         TwitterApplication. signInPage(stage,socket,writer,jwt);
+    }
+    public void addAlert(String alert){
+        alert_label.setText(alert);
+        Thread threadTask = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        alert_label.setText("");
+                    }
+                });
+            }
+        });
+        threadTask.start();
     }
 
 }

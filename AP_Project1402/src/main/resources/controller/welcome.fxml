@@ -37,6 +37,11 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
+            <Label fx:id="alert_label" alignment="TOP_LEFT" contentDisplay="CENTER" layoutX="399.0" layoutY="475.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textAlignment="CENTER" textFill="RED">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </children>
