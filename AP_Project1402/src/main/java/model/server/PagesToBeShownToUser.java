@@ -147,6 +147,7 @@ public class PagesToBeShownToUser {
     }
 
     public static SocketModel addTweet(Tweet tweet) {
+        System.out.println("4");
         return TweetsFileConnection.addTweet(tweet);
     }
     public static SocketModel makeATimeLine(String username){

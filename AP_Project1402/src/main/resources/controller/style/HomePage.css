@@ -1,0 +1,37 @@
+.gradient {
+    -fx-background-color: linear-gradient(to bottom right, #20cfe6, #0004ec);
+}
+.search-button {
+    -fx-background-color: transparent;
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 15px;
+    -fx-border-width: 1px;
+    -fx-border-color: white;
+    -fx-border-radius: 5px;
+}
+.username_label {
+    -fx-background-color: transparent;
+    -fx-background-radius: 5px;
+    -fx-text-fill: #ffffff;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 18px;
+    -fx-border-color: transparent;
+}
+.search-button:hover {
+    -fx-background-color: #fff;
+    -fx-text-fill: #1a35e9
+}
+.add-button {
+    -fx-background-color: white;
+    -fx-text-fill: linear-gradient(to bottom right, #1a35e9, #20cfe6);
+    -fx-font-size: 30px;
+    -fx-border-width: 1px;
+    -fx-border-color: white;
+    -fx-background-radius: 5em;
+}
+.add-button:hover{
+    -fx-background-color: #1a35e9;
+    -fx-text-fill: white;
+}

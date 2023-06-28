@@ -38,6 +38,9 @@ public class TwitterApplication extends Application {
         } catch (IOException e) {
             System.out.println("Server isn't available");
         }
+        welcomePage(stage,socket,writer, null);
+    }
+    public static WelcomeController welcomePage(Stage stage, Socket socket, ObjectOutputStream writer, String jwt){
         FXMLLoader fxmlLoader = new FXMLLoader(TwitterApplication.class.getResource("welcome.fxml"));
         Scene scene = null;
         try {
@@ -49,24 +52,26 @@ public class TwitterApplication extends Application {
         controller.setSocket(socket);
         controller.setJwt(null);
         controller.setWriter(writer);
+
         stage.setTitle("Twitter");
         stage.setScene(scene);
         stage.show();
+        return controller;
     }
     public static LogInController signInPage(Stage stage, Socket socket , ObjectOutputStream writer, String jwt){
 
-        FXMLLoader fxmlLoader = new FXMLLoader(TwitterApplication.class.getResource("SignUp.fxml"));
-        try {
-            fxmlLoader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        SignUpController controller = fxmlLoader.getController();
-        controller.setSocket(socket);
-        controller.setJwt(jwt);
-        controller.setWriter(writer);
-        controller.setSignUpController(controller);
-        LogInController controller2 = Util.changeScene(stage, "login.fxml", "Sign Up to Twitter");
+//        FXMLLoader fxmlLoader = new FXMLLoader(TwitterApplication.class.getResource("login.fxml"));
+//        try {
+//            fxmlLoader.load();
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//        SignUpController controller = fxmlLoader.getController();
+//        controller.setSocket(socket);
+//        controller.setJwt(jwt);
+//        controller.setWriter(writer);
+//        controller.setSignUpController(controller);
+        LogInController controller2 = Util.changeScene(stage, "login.fxml", "Log in to Twitter");
         controller2.setSocket(socket);
         controller2.setJwt(jwt);
         controller2.setWriter(writer);
@@ -81,8 +86,20 @@ public class TwitterApplication extends Application {
         controller.setSignUpController(controller);
         return controller;
     }
-    public static void firstPage(Stage stage ,Socket socket , ObjectOutputStream writer, String jwt){
-
+    public static HomePageController homePage(Stage stage ,Socket socket , ObjectOutputStream writer, String jwt){
+        HomePageController controller = Util.changeScene(stage, "HomePage.fxml", "Home");
+        controller.setSocket(socket);
+        controller.setJwt(jwt);
+        controller.setWriter(writer);
+        controller.setHomePageController(controller);
+        return controller;
+    }
+    public static AddTweetController addTweet(Stage stage ,Socket socket , ObjectOutputStream writer, String jwt){
+        AddTweetController controller = Util.changeScene(stage, "AddTweet.fxml", "Write a new tweet");
+        controller.setSocket(socket);
+        controller.setJwt(jwt);
+        controller.setWriter(writer);
+        return controller;
     }
     public static UsersProfileController profPage(Stage stage ,Socket socket , ObjectOutputStream writer, String jwt, User user){
         FXMLLoader fxmlLoader = new FXMLLoader(TwitterApplication.class.getResource("UsersProfile.fxml"));

@@ -96,6 +96,7 @@ public class ClientHandler implements Runnable {
                         }
                     }
                     case TYPE_WRITING_TWEET -> {
+                        System.out.println("3");
                         Tweet tweetToAdd = (Tweet) model.get();
                         SocketModel res = PagesToBeShownToUser.addTweet(tweetToAdd);
                         if (!model.checkJwToken(secret)) {
