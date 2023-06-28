@@ -21,16 +21,13 @@ public class JavaFXImpl {
         user.setUsername(username);
         SendMessage.write(socket, new SocketModel(Api.TYPE_SEE_PROF, user,jwt), writer);
     }
-<<<<<<< HEAD
     public synchronized static void changeProf(User user, Socket socket, ObjectOutputStream writer, String jwt){
         SendMessage.write(socket, new SocketModel(Api.TYPE_Update_PROF, user,jwt), writer);
     }
-    public synchronized static void goToEditProfPage(User user, Socket socket, ObjectOutputStream writer, String jwt){
-        SendMessage.write(socket, new SocketModel(Api.TYPE_GO_TO_EDIT_PROF, user,jwt), writer);
-=======
+    public synchronized static void goToEditProfPage(User user, Socket socket, ObjectOutputStream writer, String jwt) {
+        SendMessage.write(socket, new SocketModel(Api.TYPE_GO_TO_EDIT_PROF, user, jwt), writer);
+    }
     public synchronized static void addTweet(Tweet tweet, Socket socket, ObjectOutputStream writer, String jwt){
         SendMessage.write(socket, new SocketModel(Api.TYPE_WRITING_TWEET, tweet,jwt), writer);
-
->>>>>>> 2ae50ed82fa7161873166e9aae632067749409ec
     }
 }

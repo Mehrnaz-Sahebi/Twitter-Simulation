@@ -13,6 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
+import model.javafx_action.JavaFXImpl;
 
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -43,8 +44,12 @@ public class HomePageController implements Initializable {
     private Socket socket;
     private ObjectOutputStream writer;
     private String jwt;
+    private String username;
     private static HomePageController homePageController;
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     public void setSocket(Socket socket) {
         this.socket = socket;
@@ -81,12 +86,12 @@ public class HomePageController implements Initializable {
 
     @FXML
     public void goToAddTweet(ActionEvent event) {
-        TwitterApplication.addTweet((Stage) add_tweet_button.getScene().getWindow(),socket,writer,jwt);
+        TwitterApplication.addTweet((Stage) add_tweet_button.getScene().getWindow(),socket,writer,jwt, username);
     }
 
     @FXML
-    public void goToProfile(MouseEvent event) {
-//        TwitterApplication.profPage((Stage) username_label.getScene().getWindow(),socket,writer,jwt);
+    public void goToProfile(ActionEvent event) {
+        JavaFXImpl.seeThisUserProf(username, socket, writer, jwt);
     }
 
     @FXML
@@ -95,7 +100,7 @@ public class HomePageController implements Initializable {
     }
     @FXML
     public void reload(ActionEvent event){
-        TwitterApplication.homePage((Stage) username_label.getScene().getWindow(),socket,writer,jwt);
+        TwitterApplication.homePage((Stage) username_label.getScene().getWindow(),socket,writer,jwt, username);
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

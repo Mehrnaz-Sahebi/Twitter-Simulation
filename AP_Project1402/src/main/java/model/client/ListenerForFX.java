@@ -12,6 +12,7 @@ import model.console_action.ConsoleImpl;
 import model.console_action.ConsoleUtil;
 import model.javafx_action.JavaFXImpl;
 import model.javafx_action.JavaFXUtil;
+import model.common.Api;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -31,6 +32,7 @@ public class ListenerForFX implements Runnable {
     private ObjectOutputStream writer = null;
     private String jwToken;
     private Stage stage;
+    private String username;
 
 //    public static Listener getInstance(Socket socket, ObjectOutputStream writer) throws IOException {
 //        if (instance == null) {
@@ -61,12 +63,10 @@ public class ListenerForFX implements Runnable {
                     case TYPE_SIGNIN:
                         if (model.message == ResponseOrErrorType.SUCCESSFUL) {
                             this.jwToken = model.getJwToken();
-<<<<<<< HEAD
-=======
                             Platform.runLater(new Runnable() {
                                 @Override
                                 public void run() {
-                                    TwitterApplication.homePage(stage, socket, writer, jwToken);
+                                    TwitterApplication.homePage(stage, socket, writer, jwToken, ((UserToBeSigned)model.data).getUsername());
                                 }
                             });
                         } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
@@ -77,7 +77,7 @@ public class ListenerForFX implements Runnable {
                                     TwitterApplication.welcomePage(stage, socket, writer, jwToken).addAlert(errorMessg);
                                 }
                             });
->>>>>>> 2ae50ed82fa7161873166e9aae632067749409ec
+
                         } else {
                             String errorMessg = JavaFXUtil.getErrorMSg(model);
                             Platform.runLater(new Runnable() {
@@ -95,7 +95,7 @@ public class ListenerForFX implements Runnable {
                                 @Override
                                 public void run() {
 
-                                    TwitterApplication.homePage(stage, socket, writer, jwToken);
+                                    TwitterApplication.homePage(stage, socket, writer, jwToken, ((UserToBeSigned)model.data).getUsername());
                                 }
                             });
 
@@ -104,7 +104,7 @@ public class ListenerForFX implements Runnable {
                             Platform.runLater(new Runnable() {
                                 @Override
                                 public void run() {
-                                    TwitterApplication.welcomePage(stage,socket,writer,jwToken).addAlert(errorMessg);
+                                    TwitterApplication.welcomePage(stage, socket, writer, jwToken).addAlert(errorMessg);
                                 }
                             });
                         } else {
@@ -130,7 +130,7 @@ public class ListenerForFX implements Runnable {
                             Platform.runLater(new Runnable() {
                                 @Override
                                 public void run() {
-                                    TwitterApplication.welcomePage(stage,socket,writer,jwToken).addAlert(errorMessg);
+                                    TwitterApplication.welcomePage(stage, socket, writer, jwToken).addAlert(errorMessg);
                                 }
                             });
                         } else {
@@ -138,17 +138,18 @@ public class ListenerForFX implements Runnable {
                                 @Override
                                 public void run() {
 
-                                    TwitterApplication.homePage(stage, socket, writer, jwToken);
+                                    TwitterApplication.homePage(stage, socket, writer, jwToken, ((User)model.data).getUsername());
                                 }
                             });
                         }
                         break;
                     case TYPE_GO_TO_EDIT_PROF:
-                        if (model.message == ResponseOrErrorType.SUCCESSFUL){
+                        if (model.message == ResponseOrErrorType.SUCCESSFUL) {
+                            username = ((User)model.data).getUsername();
                             Platform.runLater(new Runnable() {
                                 @Override
                                 public void run() {
-                                    TwitterApplication.editProfPage(stage, socket, writer, jwToken, (User)model.data);
+                                    TwitterApplication.editProfPage(stage, socket, writer, jwToken, (User) model.data);
                                 }
                             });
 
@@ -157,232 +158,230 @@ public class ListenerForFX implements Runnable {
                             Platform.runLater(new Runnable() {
                                 @Override
                                 public void run() {
-                                    TwitterApplication.profPage(stage, socket, writer, jwToken, (User)model.data).addLabel(msg);
+                                    TwitterApplication.profPage(stage, socket, writer, jwToken, (User) model.data).addLabel(msg);
                                 }
                             });
 
                         }
                         break;
                     case TYPE_Update_PROF:
-<<<<<<< HEAD
-                        if (model.message == ResponseOrErrorType.SUCCESSFUL){
+                        if (model.message == ResponseOrErrorType.SUCCESSFUL) {
                             Platform.runLater(new Runnable() {
                                 @Override
                                 public void run() {
-                                    TwitterApplication.profPage(stage, socket, writer, jwToken, (User)model.data);
+                                    TwitterApplication.profPage(stage, socket, writer, jwToken, (User) model.data);
                                 }
                             });
+                            if (model.message == ResponseOrErrorType.SUCCESSFUL) {
+                                ConsoleImpl.openChatPage(socket, writer, jwToken);
+                            } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
+                                JavaFXUtil.getErrorMSg(model);
+                                ConsoleImpl.openAccountMenu(socket, writer, jwToken);
+                            } else {
+                                String msg = JavaFXUtil.getErrorMSg(model);
+                                Platform.runLater(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        TwitterApplication.editProfPage(stage, socket, writer, jwToken, (User) model.data).addLabel(msg);
+                                    }
+                                });
 
-=======
-                        if (model.message == ResponseOrErrorType.SUCCESSFUL) {
-                            ConsoleImpl.openChatPage(socket, writer, jwToken);
-                        } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                            JavaFXUtil.getErrorMSg(model);
-                            ConsoleImpl.openAccountMenu(socket, writer, jwToken);
->>>>>>> 2ae50ed82fa7161873166e9aae632067749409ec
-                        } else {
-                            String msg = JavaFXUtil.getErrorMSg(model);
-                            Platform.runLater(new Runnable() {
-                                @Override
-                                public void run() {
-                                    TwitterApplication.editProfPage(stage, socket, writer, jwToken, (User)model.data).addLabel(msg);
+                            }
+                            break;
+                        }
+                            case TYPE_USER_SEARCH:
+                                if (model.message == ResponseOrErrorType.SUCCESSFUL) {
+                                    ConsoleImpl.showSearchWords(model.get());
+                                } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
+                                    JavaFXUtil.getErrorMSg(model);
+                                    ConsoleImpl.openAccountMenu(socket, writer, jwToken);
                                 }
-                            });
-
-                        }
-                        break;
-                    case TYPE_USER_SEARCH:
-                        if (model.message == ResponseOrErrorType.SUCCESSFUL) {
-                            ConsoleImpl.showSearchWords(model.get());
-                        } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                            JavaFXUtil.getErrorMSg(model);
-                            ConsoleImpl.openAccountMenu(socket, writer, jwToken);
-                        }
-                        break;
-                    case TYPE_WRITING_TWEET:
-                        if (model.message == ResponseOrErrorType.SUCCESSFUL) {
-                            Platform.runLater(new Runnable() {
-                                @Override
-                                public void run() {
-                                    TwitterApplication.homePage(stage, socket, writer, jwToken);
+                                break;
+                            case TYPE_WRITING_TWEET:
+                                if (model.message == ResponseOrErrorType.SUCCESSFUL) {
+                                    Platform.runLater(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            TwitterApplication.homePage(stage, socket, writer, jwToken, username);
+                                        }
+                                    });
+                                } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
+                                    String errorMessg = JavaFXUtil.getErrorMSg(model);
+                                    Platform.runLater(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            TwitterApplication.welcomePage(stage, socket, writer, jwToken).addAlert(errorMessg);
+                                        }
+                                    });
+                                } else {
+                                    String errorMessg = JavaFXUtil.getErrorMSg(model);
+                                    Platform.runLater(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            TwitterApplication.addTweet(stage, socket, writer, jwToken, username).addAlert(errorMessg);
+                                        }
+                                    });
                                 }
-                            });
-                        } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                            String errorMessg = JavaFXUtil.getErrorMSg(model);
-                            Platform.runLater(new Runnable() {
-                                @Override
-                                public void run() {
-                                    TwitterApplication.welcomePage(stage, socket, writer, jwToken).addAlert(errorMessg);
+                                break;
+                            case TYPE_LOADING_TIMELINE:
+                                if (model.message == ResponseOrErrorType.SUCCESSFUL) {
+                                    ConsoleImpl.timeLinePage(socket, writer, (ArrayList<Tweet>) model.data, jwToken);
+                                } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
+                                    JavaFXUtil.getErrorMSg(model);
+                                    ConsoleImpl.openAccountMenu(socket, writer, jwToken);
+                                } else {
+                                    JavaFXUtil.getErrorMSg(model);
+                                    ConsoleImpl.openChatPage(socket, writer, jwToken);
                                 }
-                            });
-                        } else {
-                            String errorMessg = JavaFXUtil.getErrorMSg(model);
-                            Platform.runLater(new Runnable() {
-                                @Override
-                                public void run() {
-                                    TwitterApplication.addTweet(stage, socket, writer, jwToken).addAlert(errorMessg);
+                                break;
+                            case TYPE_UNLIKE:
+                                if (model.message == ResponseOrErrorType.SUCCESSFUL) {
+                                    ConsoleUtil.printTweetUnlikedMessage();
+                                    ConsoleImpl.tweetPage(socket, writer, (Tweet) model.get(), jwToken);
+                                } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
+                                    JavaFXUtil.getErrorMSg(model);
+                                    ConsoleImpl.openAccountMenu(socket, writer, jwToken);
+                                } else {
+                                    JavaFXUtil.getErrorMSg(model);
+                                    ConsoleImpl.tweetPage(socket, writer, (Tweet) model.get(), jwToken);
                                 }
-                            });
+                                break;
+                            case TYPE_LIKE:
+                                if (model.message == ResponseOrErrorType.SUCCESSFUL) {
+                                    ConsoleUtil.printTweetLikedMessage();
+                                    ConsoleImpl.tweetPage(socket, writer, (Tweet) model.get(), jwToken);
+                                } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
+                                    JavaFXUtil.getErrorMSg(model);
+                                    ConsoleImpl.openAccountMenu(socket, writer, jwToken);
+                                } else {
+                                    JavaFXUtil.getErrorMSg(model);
+                                    ConsoleImpl.tweetPage(socket, writer, (Tweet) model.get(), jwToken);
+                                }
+                                break;
+                            case TYPE_UNDO_RETWEET:
+                                if (model.message == ResponseOrErrorType.SUCCESSFUL) {
+                                    ConsoleUtil.printTweetUnRetweetedMessage();
+                                    ConsoleImpl.tweetPage(socket, writer, (Tweet) model.get(), jwToken);
+                                } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
+                                    JavaFXUtil.getErrorMSg(model);
+                                    ConsoleImpl.openAccountMenu(socket, writer, jwToken);
+                                } else {
+                                    JavaFXUtil.getErrorMSg(model);
+                                    ConsoleImpl.tweetPage(socket, writer, (Tweet) model.get(), jwToken);
+                                }
+                                break;
+                            case TYPE_RETWEET:
+                                if (model.message == ResponseOrErrorType.SUCCESSFUL) {
+                                    ConsoleUtil.printTweetRetweetedMessage();
+                                    ConsoleImpl.tweetPage(socket, writer, (Tweet) model.get(), jwToken);
+                                } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
+                                    JavaFXUtil.getErrorMSg(model);
+                                    ConsoleImpl.openAccountMenu(socket, writer, jwToken);
+                                } else {
+                                    JavaFXUtil.getErrorMSg(model);
+                                    ConsoleImpl.tweetPage(socket, writer, (Tweet) model.get(), jwToken);
+                                }
+                                break;
+                            case TYPE_QUOTE_TWEET:
+                                if (model.message == ResponseOrErrorType.SUCCESSFUL) {
+                                    ConsoleUtil.printTweetQuotedMessage();
+                                    ConsoleImpl.tweetPage(socket, writer, (Tweet) model.get(), jwToken);
+                                } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
+                                    JavaFXUtil.getErrorMSg(model);
+                                    ConsoleImpl.openAccountMenu(socket, writer, jwToken);
+                                } else {
+                                    JavaFXUtil.getErrorMSg(model);
+                                    ConsoleImpl.tweetPage(socket, writer, (Tweet) model.get(), jwToken);
+                                }
+                                break;
+                            case TYPE_REPLY:
+                                if (model.message == ResponseOrErrorType.SUCCESSFUL) {
+                                    ConsoleUtil.printReplyAddedMessage();
+                                    ConsoleImpl.tweetPage(socket, writer, (Tweet) model.get(), jwToken);
+                                } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
+                                    JavaFXUtil.getErrorMSg(model);
+                                    ConsoleImpl.openAccountMenu(socket, writer, jwToken);
+                                } else {
+                                    JavaFXUtil.getErrorMSg(model);
+                                    ConsoleImpl.tweetPage(socket, writer, (Tweet) model.get(), jwToken);
+                                }
+                                break;
+                            case TYPE_SHOW_OTHERS_PROFILE:
+                                if (model.message == ResponseOrErrorType.SUCCESSFUL) {
+                                    ConsoleImpl.showOthersProf(socket, (User) model.get(), writer, jwToken);
+                                } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
+                                    JavaFXUtil.getErrorMSg(model);
+                                    ConsoleImpl.openAccountMenu(socket, writer, jwToken);
+                                } else {
+                                    JavaFXUtil.getErrorMSg(model);
+                                    ConsoleImpl.requestTimeLine(socket, writer, jwToken);
+                                }
+                                break;
+                            case TYPE_FOLLOW:
+                                if (model.message == ResponseOrErrorType.SUCCESSFUL) {
+                                    ConsoleUtil.printFollowMessage();
+                                    ConsoleImpl.showOthersProf(socket, (User) model.get(), writer, jwToken);
+                                } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
+                                    JavaFXUtil.getErrorMSg(model);
+                                    ConsoleImpl.openAccountMenu(socket, writer, jwToken);
+                                } else {
+                                    JavaFXUtil.getErrorMSg(model);
+                                    ConsoleImpl.showOthersProf(socket, (User) model.get(), writer, jwToken);
+                                }
+                                break;
+                            case TYPE_UNFOLLOW:
+                                if (model.message == ResponseOrErrorType.SUCCESSFUL) {
+                                    ConsoleUtil.printUnFollowMessage();
+                                    ConsoleImpl.showOthersProf(socket, (User) model.get(), writer, jwToken);
+                                } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
+                                    JavaFXUtil.getErrorMSg(model);
+                                    ConsoleImpl.openAccountMenu(socket, writer, jwToken);
+                                } else {
+                                    JavaFXUtil.getErrorMSg(model);
+                                    ConsoleImpl.showOthersProf(socket, (User) model.get(), writer, jwToken);
+                                }
+                                break;
+                            case TYPE_BLOCK:
+                                if (model.message == ResponseOrErrorType.SUCCESSFUL) {
+                                    ConsoleUtil.printBlockMessage();
+                                    ConsoleImpl.showOthersProf(socket, (User) model.get(), writer, jwToken);
+                                } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
+                                    JavaFXUtil.getErrorMSg(model);
+                                    ConsoleImpl.openAccountMenu(socket, writer, jwToken);
+                                } else {
+                                    JavaFXUtil.getErrorMSg(model);
+                                    ConsoleImpl.showOthersProf(socket, (User) model.get(), writer, jwToken);
+                                }
+                                break;
+                            case TYPE_UNBLOCK:
+                                if (model.message == ResponseOrErrorType.SUCCESSFUL) {
+                                    ConsoleUtil.printUnBlockMessage();
+                                    ConsoleImpl.showOthersProf(socket, (User) model.get(), writer, jwToken);
+                                } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
+                                    JavaFXUtil.getErrorMSg(model);
+                                    ConsoleImpl.openAccountMenu(socket, writer, jwToken);
+                                } else {
+                                    JavaFXUtil.getErrorMSg(model);
+                                    ConsoleImpl.showOthersProf(socket, (User) model.get(), writer, jwToken);
+                                }
+                                break;
                         }
-                        break;
-                    case TYPE_LOADING_TIMELINE:
-                        if (model.message == ResponseOrErrorType.SUCCESSFUL) {
-                            ConsoleImpl.timeLinePage(socket, writer, (ArrayList<Tweet>) model.data, jwToken);
-                        } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                            JavaFXUtil.getErrorMSg(model);
-                            ConsoleImpl.openAccountMenu(socket, writer, jwToken);
-                        } else {
-                            JavaFXUtil.getErrorMSg(model);
-                            ConsoleImpl.openChatPage(socket, writer, jwToken);
-                        }
-                        break;
-                    case TYPE_UNLIKE:
-                        if (model.message == ResponseOrErrorType.SUCCESSFUL) {
-                            ConsoleUtil.printTweetUnlikedMessage();
-                            ConsoleImpl.tweetPage(socket, writer, (Tweet) model.get(), jwToken);
-                        } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                            JavaFXUtil.getErrorMSg(model);
-                            ConsoleImpl.openAccountMenu(socket, writer, jwToken);
-                        } else {
-                            JavaFXUtil.getErrorMSg(model);
-                            ConsoleImpl.tweetPage(socket, writer, (Tweet) model.get(), jwToken);
-                        }
-                        break;
-                    case TYPE_LIKE:
-                        if (model.message == ResponseOrErrorType.SUCCESSFUL) {
-                            ConsoleUtil.printTweetLikedMessage();
-                            ConsoleImpl.tweetPage(socket, writer, (Tweet) model.get(), jwToken);
-                        } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                            JavaFXUtil.getErrorMSg(model);
-                            ConsoleImpl.openAccountMenu(socket, writer, jwToken);
-                        } else {
-                            JavaFXUtil.getErrorMSg(model);
-                            ConsoleImpl.tweetPage(socket, writer, (Tweet) model.get(), jwToken);
-                        }
-                        break;
-                    case TYPE_UNDO_RETWEET:
-                        if (model.message == ResponseOrErrorType.SUCCESSFUL) {
-                            ConsoleUtil.printTweetUnRetweetedMessage();
-                            ConsoleImpl.tweetPage(socket, writer, (Tweet) model.get(), jwToken);
-                        } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                            JavaFXUtil.getErrorMSg(model);
-                            ConsoleImpl.openAccountMenu(socket, writer, jwToken);
-                        } else {
-                            JavaFXUtil.getErrorMSg(model);
-                            ConsoleImpl.tweetPage(socket, writer, (Tweet) model.get(), jwToken);
-                        }
-                        break;
-                    case TYPE_RETWEET:
-                        if (model.message == ResponseOrErrorType.SUCCESSFUL) {
-                            ConsoleUtil.printTweetRetweetedMessage();
-                            ConsoleImpl.tweetPage(socket, writer, (Tweet) model.get(), jwToken);
-                        } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                            JavaFXUtil.getErrorMSg(model);
-                            ConsoleImpl.openAccountMenu(socket, writer, jwToken);
-                        } else {
-                            JavaFXUtil.getErrorMSg(model);
-                            ConsoleImpl.tweetPage(socket, writer, (Tweet) model.get(), jwToken);
-                        }
-                        break;
-                    case TYPE_QUOTE_TWEET:
-                        if (model.message == ResponseOrErrorType.SUCCESSFUL) {
-                            ConsoleUtil.printTweetQuotedMessage();
-                            ConsoleImpl.tweetPage(socket, writer, (Tweet) model.get(), jwToken);
-                        } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                            JavaFXUtil.getErrorMSg(model);
-                            ConsoleImpl.openAccountMenu(socket, writer, jwToken);
-                        } else {
-                            JavaFXUtil.getErrorMSg(model);
-                            ConsoleImpl.tweetPage(socket, writer, (Tweet) model.get(), jwToken);
-                        }
-                        break;
-                    case TYPE_REPLY:
-                        if (model.message == ResponseOrErrorType.SUCCESSFUL) {
-                            ConsoleUtil.printReplyAddedMessage();
-                            ConsoleImpl.tweetPage(socket, writer, (Tweet) model.get(), jwToken);
-                        } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                            JavaFXUtil.getErrorMSg(model);
-                            ConsoleImpl.openAccountMenu(socket, writer, jwToken);
-                        } else {
-                            JavaFXUtil.getErrorMSg(model);
-                            ConsoleImpl.tweetPage(socket, writer, (Tweet) model.get(), jwToken);
-                        }
-                        break;
-                    case TYPE_SHOW_OTHERS_PROFILE:
-                        if (model.message == ResponseOrErrorType.SUCCESSFUL) {
-                            ConsoleImpl.showOthersProf(socket, (User) model.get(), writer, jwToken);
-                        } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                            JavaFXUtil.getErrorMSg(model);
-                            ConsoleImpl.openAccountMenu(socket, writer, jwToken);
-                        } else {
-                            JavaFXUtil.getErrorMSg(model);
-                            ConsoleImpl.requestTimeLine(socket, writer, jwToken);
-                        }
-                        break;
-                    case TYPE_FOLLOW:
-                        if (model.message == ResponseOrErrorType.SUCCESSFUL) {
-                            ConsoleUtil.printFollowMessage();
-                            ConsoleImpl.showOthersProf(socket, (User) model.get(), writer, jwToken);
-                        } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                            JavaFXUtil.getErrorMSg(model);
-                            ConsoleImpl.openAccountMenu(socket, writer, jwToken);
-                        } else {
-                            JavaFXUtil.getErrorMSg(model);
-                            ConsoleImpl.showOthersProf(socket, (User) model.get(), writer, jwToken);
-                        }
-                        break;
-                    case TYPE_UNFOLLOW:
-                        if (model.message == ResponseOrErrorType.SUCCESSFUL) {
-                            ConsoleUtil.printUnFollowMessage();
-                            ConsoleImpl.showOthersProf(socket, (User) model.get(), writer, jwToken);
-                        } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                            JavaFXUtil.getErrorMSg(model);
-                            ConsoleImpl.openAccountMenu(socket, writer, jwToken);
-                        } else {
-                            JavaFXUtil.getErrorMSg(model);
-                            ConsoleImpl.showOthersProf(socket, (User) model.get(), writer, jwToken);
-                        }
-                        break;
-                    case TYPE_BLOCK:
-                        if (model.message == ResponseOrErrorType.SUCCESSFUL) {
-                            ConsoleUtil.printBlockMessage();
-                            ConsoleImpl.showOthersProf(socket, (User) model.get(), writer, jwToken);
-                        } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                            JavaFXUtil.getErrorMSg(model);
-                            ConsoleImpl.openAccountMenu(socket, writer, jwToken);
-                        } else {
-                            JavaFXUtil.getErrorMSg(model);
-                            ConsoleImpl.showOthersProf(socket, (User) model.get(), writer, jwToken);
-                        }
-                        break;
-                    case TYPE_UNBLOCK:
-                        if (model.message == ResponseOrErrorType.SUCCESSFUL) {
-                            ConsoleUtil.printUnBlockMessage();
-                            ConsoleImpl.showOthersProf(socket, (User) model.get(), writer, jwToken);
-                        } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                            JavaFXUtil.getErrorMSg(model);
-                            ConsoleImpl.openAccountMenu(socket, writer, jwToken);
-                        } else {
-                            JavaFXUtil.getErrorMSg(model);
-                            ConsoleImpl.showOthersProf(socket, (User) model.get(), writer, jwToken);
-                        }
-                        break;
                 }
+            }catch(ClassNotFoundException | ParseException | IOException e){
+            throw new RuntimeException(e);
+        }
+
+    }
+
+
+        public synchronized void write (SocketModel model){
+            try {
+                writer.writeObject(model);
+                writer.flush();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-        } catch (ClassNotFoundException | ParseException | IOException e) {
-            throw new RuntimeException(e);
         }
-
-    }
-
-    public synchronized void write(SocketModel model) {
-        try {
-            writer.writeObject(model);
-            writer.flush();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
 }
+
 

@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.client.ListenerForFX;
 import model.common.User;
+import model.common.UserToBeSigned;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -86,18 +87,20 @@ public class TwitterApplication extends Application {
         controller.setSignUpController(controller);
         return controller;
     }
-    public static HomePageController homePage(Stage stage ,Socket socket , ObjectOutputStream writer, String jwt){
+    public static HomePageController homePage(Stage stage , Socket socket , ObjectOutputStream writer, String jwt, String username){
         HomePageController controller = Util.changeScene(stage, "HomePage.fxml", "Home");
         controller.setSocket(socket);
         controller.setJwt(jwt);
         controller.setWriter(writer);
+        controller.setUsername(username);
         controller.setHomePageController(controller);
         return controller;
     }
-    public static AddTweetController addTweet(Stage stage ,Socket socket , ObjectOutputStream writer, String jwt){
+    public static AddTweetController addTweet(Stage stage ,Socket socket , ObjectOutputStream writer, String jwt, String username){
         AddTweetController controller = Util.changeScene(stage, "AddTweet.fxml", "Write a new tweet");
         controller.setSocket(socket);
         controller.setJwt(jwt);
+        controller.setUsername(username);
         controller.setWriter(writer);
         return controller;
     }

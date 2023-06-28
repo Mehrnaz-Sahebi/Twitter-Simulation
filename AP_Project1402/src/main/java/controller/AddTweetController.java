@@ -51,6 +51,12 @@ public class AddTweetController {
     private String jwt;
     private String imagePath;
 
+    private String username;
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public void setSocket(Socket socket) {
         this.socket = socket;
     }
@@ -78,7 +84,7 @@ public class AddTweetController {
 
     @FXML
     void goToHomePage(MouseEvent event) {
-        TwitterApplication.homePage((Stage) tweet_button.getScene().getWindow(),socket,writer,jwt);
+        TwitterApplication.homePage((Stage) tweet_button.getScene().getWindow(),socket,writer,jwt, username);
     }
 
     @FXML
