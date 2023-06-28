@@ -459,11 +459,11 @@ public class EditProfController implements Initializable {
         bio_txt.setText(bio_labl);
     }
 
-    public void setBirthdate_Labl(Date birthdate_Labl) {
-        String parts[] = birthdate_Labl.toString().split("-");
-        year_lbl.setText(parts[0]);
-        month_lbl.setText(parts[1]);
-        day_lbl.setText(parts[2]);
+    public void setBirthdate_Labl(Date birthdate_Labl) {//TODO , comented in order to prevent error
+//        String parts[] = birthdate_Labl.toString().split("-");
+//        year_lbl.setText(parts[0]);
+//        month_lbl.setText(parts[1]);
+//        day_lbl.setText(parts[2]);
     }
 
 
