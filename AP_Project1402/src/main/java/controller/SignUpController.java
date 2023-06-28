@@ -159,38 +159,37 @@ public class SignUpController implements Initializable {
         String username = rightside_usernameText.getText();
 
         username = rightside_usernameText.getText();
-        if(Validate.NotBlank(username)){
+        if(!Validate.NotBlank(username)){
             username_alert.setText("enter the username");
             isAllowedToRegister = false;
         }
         String firstName = null;
 
         firstName = rightside_firstnameText.getText();
-        if(Validate.NotBlank(firstName)) {
+        if(!Validate.NotBlank(firstName)) {
             first_name_alert.setText("enter your first name");
             isAllowedToRegister = false;
         }
         String lastName = null;
         lastName = rightside_lastnameText.getText();
-        if(Validate.NotBlank(lastName)) {
+        if(!Validate.NotBlank(lastName)) {
             last_name_alert.setText("enter your last name");
             isAllowedToRegister = false;
         }
         String email = null;
         email = rightside_emailText.getText();
-        if(Validate.NotBlank(email)) {
-            email_alert.setText("enter your email");
+        String phoneNumber = null;
+        phoneNumber = rightside_phonenumberText.getText();
+        if (!Validate.NotBlank(email) && !Validate.NotBlank(phoneNumber)){
+            phonenumber_alert.setText("you should fill at least one of the email or phone-number field");
+            email_alert.setText("you should fill at least one of the email or phone-number field");
             isAllowedToRegister = false;
-        }else if (Validate.validateEmail(email) != ResponseOrErrorType.SUCCESSFUL) {
+        }
+        if (Validate.NotBlank(email) && Validate.NotBlank(email) && Validate.validateEmail(email) != ResponseOrErrorType.SUCCESSFUL) {
             email_alert.setText("Invalid Email");
             isAllowedToRegister = false;
         }
-        String phoneNumber = null;
-        phoneNumber = rightside_phonenumberText.getText();
-        if(Validate.NotBlank(phoneNumber)) {
-            phonenumber_alert.setText("enter your phone number");
-            isAllowedToRegister = false;
-        }else if (phoneNumber.length()!=11 ) {
+        if (Validate.NotBlank(phoneNumber) && phoneNumber.length()!=11 ) {
             phonenumber_alert.setText("Invalid phone number");
             isAllowedToRegister = false;
             try {
@@ -200,12 +199,10 @@ public class SignUpController implements Initializable {
                 isAllowedToRegister = false;
             }
         }
-
-
         String password = null;
 
         password = rightside_passText.getText();
-        if(Validate.NotBlank(password)){
+        if(!Validate.NotBlank(password)){
             pass_alert.setText("enter your password");
             isAllowedToRegister = false;
         }else if (Validate.validPass(password) != ResponseOrErrorType.SUCCESSFUL) {
@@ -215,7 +212,7 @@ public class SignUpController implements Initializable {
         String repeatPass = null;
 
         repeatPass = rightside_passrepeatTxt.getText();
-        if(Validate.NotBlank(repeatPass)){
+        if(!Validate.NotBlank(repeatPass)){
             pass_repeat_alert.setText("repeat your password");
             isAllowedToRegister = false;
         }else if (!repeatPass.equals(repeatPass)) {
@@ -225,7 +222,7 @@ public class SignUpController implements Initializable {
         String region = null;
 
         region = chiceBox.getValue();
-        if(Validate.NotBlank(region)){
+        if(!Validate.NotBlank(region)){
             region_alert.setText("enter your country");
             isAllowedToRegister = false;
         }
@@ -243,7 +240,7 @@ public class SignUpController implements Initializable {
         birthdateSB.append("/");
         birthdateSB.append(day);
         Date birthdate =null;
-        if(Validate.NotBlank(day, month, year)){
+        if(!Validate.NotBlank(day, month, year)){
             birthdate_alert.setText("Enter your birth date completely");
             isAllowedToRegister = false;
         }else if(Validate.validateDateFormat(birthdateSB.toString()) != ResponseOrErrorType.SUCCESSFUL) {

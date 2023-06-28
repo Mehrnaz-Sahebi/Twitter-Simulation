@@ -73,3 +73,13 @@
 .circle_prof{
     -fx-background-color: linear-gradient(to bottom right, #17015e, #20cfe6);
 }
+. head-prof-label{
+    -fx-border-color: linear-gradient(to bottom right, #1a35e9, #20cfe6);
+    -fx-border-width: 0 0 0 2.5px;
+    -fx-padding: 0 0 0 5px;
+}
+. head-prof-label :focused{
+    -fx-border-color: linear-gradient(to bottom right, #1a35e9, #20cfe6);
+    -fx-border-width: 0 0 0 4.5px;
+    -fx-padding: 0 0 0 5px;
+}

@@ -76,7 +76,6 @@ public class ListenerForFX implements Runnable {
                                 }
                             });
 //                            TwitterApplication.signInPage(stage,socket,writer,jwToken);
-//                            LogInController.getInstance().addLabel(errorMessg);
                         }
                         break;
                     case TYPE_SIGNUP :

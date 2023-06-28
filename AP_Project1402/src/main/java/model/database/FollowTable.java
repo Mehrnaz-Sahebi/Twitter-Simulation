@@ -57,6 +57,7 @@ public class FollowTable extends AbstractTable{
         set.close();
         statement.close();
     }
+    // TODO duobtful about username , it shouldn't be int , i think
     public synchronized void updateUsername(int username, String newUsername) throws SQLException {
         String query1 = "UPDATE " + TABLE_NAME + " SET " + COLUMN_FOLLOWER + " = '"+newUsername+"'" + " WHERE "+ COLUMN_FOLLOWER + " = '"+username+"'";
         PreparedStatement statement1 = getConnection().prepareStatement(query1);

@@ -15,15 +15,16 @@ public class SafeRunning {
             return false;
         }
     }
-    public interface TypeSafeRunnable<T> {
-        T run() throws Exception;
-    }
-    public static <T> T safe(TypeSafeRunnable<T> runnable, T defaultValue) {
-        try {
-            return runnable.run();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return defaultValue;
-        }
-    }
+    //Useless
+//    public interface TypeSafeRunnable<T> {
+//        T run() throws Exception;
+//    }
+//    public static <T> T safe(TypeSafeRunnable<T> runnable, T defaultValue) {
+//        try {
+//            return runnable.run();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return defaultValue;
+//        }
+//    }
 }

@@ -82,4 +82,8 @@ public class UserToBeSigned implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public String getRegion() {
+        return region;
+    }
 }
