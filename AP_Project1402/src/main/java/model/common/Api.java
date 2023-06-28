@@ -5,6 +5,7 @@ public enum Api {
     TYPE_SEE_PROF,
     TYPE_CHANGE_PROF,
     TYPE_Update_PROF,
+    TYPE_GO_TO_EDIT_PROF,
     TYPE_USER_SEARCH,
     TYPE_USER_LEFT,
     TYPE_ADD_TWEET,

@@ -17,6 +17,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class TwitterApplication extends Application {
+    static Scene backScene = null;
     public TwitterApplication() {
 
     }
@@ -118,9 +119,13 @@ public class TwitterApplication extends Application {
         controller.setUserProfController(controller);
         controller.setUser(user);
         controller.prepareProf();
+        backScene = stage.getScene();
         Scene scene = null;
         scene = new Scene(root);
         stage.setScene(scene);
         return controller;
+    }
+    public static void goBack(Stage stage){
+        stage.setScene(backScene);
     }
 }

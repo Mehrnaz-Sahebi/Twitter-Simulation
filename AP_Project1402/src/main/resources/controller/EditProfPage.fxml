@@ -8,6 +8,7 @@
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -174,28 +175,45 @@
                   </Label>
                </children>
             </HBox>
+            <Label fx:id="alert_Lbl" text="-&gt;" textFill="#f822ff">
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="20.0" />
+               </VBox.margin>
+            </Label>
          </children>
       </VBox>
    </left>
    <center>
       <VBox prefHeight="579.0" prefWidth="442.0" style="-fx-background-color: #cae3e7;" BorderPane.alignment="CENTER">
          <children>
-            <Label prefHeight="35.0" prefWidth="193.0" styleClass="head-label" stylesheets="@style/Login.css" text="Edit">
+            <Label prefHeight="18.0" prefWidth="194.0" styleClass="head-label" stylesheets="@style/Login.css" text="Edit">
                <VBox.margin>
-                  <Insets left="15.0" top="20.0" />
+                  <Insets left="15.0" top="15.0" />
                </VBox.margin>
                <font>
                   <Font size="21.0" />
                </font>
             </Label>
-            <Label prefHeight="54.0" prefWidth="190.0" stylesheets="@style/Login.css" text="Bio">
-               <font>
-                  <Font name="Segoe Script" size="18.0" />
-               </font>
-               <VBox.margin>
-                  <Insets left="30.0" top="30.0" />
-               </VBox.margin>
-            </Label>
+            <HBox prefHeight="50.0" prefWidth="499.0">
+               <children>
+                  <Label prefHeight="34.0" prefWidth="150.0" stylesheets="@style/Login.css" text="Bio">
+                     <font>
+                        <Font name="Segoe Script" size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Button fx:id="dlt_bio_btn" mnemonicParsing="false" onAction="#deleteBio" prefHeight="30.0" prefWidth="107.0" styleClass="login-button" stylesheets="@style/Login.css" text="Delete bio">
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
             <TextField fx:id="bio_txt" prefHeight="26.0" prefWidth="546.0" promptText="enter your bio">
                <VBox.margin>
                   <Insets left="20.0" right="20.0" />
@@ -204,14 +222,23 @@
                   <Font name="MV Boli" size="12.0" />
                </font>
             </TextField>
-            <Label prefHeight="49.0" prefWidth="190.0" stylesheets="@style/Login.css" text="Link">
-               <font>
-                  <Font name="Segoe Script" size="18.0" />
-               </font>
-               <VBox.margin>
-                  <Insets left="30.0" />
-               </VBox.margin>
-            </Label>
+            <HBox prefHeight="50.0" prefWidth="499.0">
+               <children>
+                  <Label prefHeight="50.0" prefWidth="151.0" stylesheets="@style/Login.css" text="Link">
+                     <font>
+                        <Font name="Segoe Script" size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Button fx:id="dlt_link_btn" mnemonicParsing="false" onAction="#deleteLink" prefHeight="30.0" prefWidth="107.0" styleClass="login-button" stylesheets="@style/Login.css" text="Delete link">
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
             <TextField fx:id="link_txt" prefHeight="26.0" prefWidth="546.0" promptText="enter your link">
                <VBox.margin>
                   <Insets left="20.0" right="20.0" />
@@ -220,7 +247,57 @@
                   <Font name="MV Boli" size="12.0" />
                </font>
             </TextField>
-            <Label prefHeight="54.0" prefWidth="190.0" stylesheets="@style/Login.css" text="Location">
+            <HBox prefHeight="47.0" prefWidth="479.0">
+               <children>
+                  <Label prefHeight="38.0" prefWidth="150.0" stylesheets="@style/Login.css" text="Profile Photo">
+                     <font>
+                        <Font name="Segoe Script" size="18.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="dlt_avatar_btn" mnemonicParsing="false" onAction="#deleteAvatar" prefHeight="30.0" prefWidth="107.0" styleClass="login-button" stylesheets="@style/Login.css" text="Delete avatar">
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets left="20.0" />
+               </VBox.margin>
+            </HBox>
+            <TextField fx:id="profilePath_txt" onAction="#editProfilePhoto" prefHeight="30.0" prefWidth="443.0" promptText="enter the path of image">
+               <font>
+                  <Font name="MV Boli" size="12.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" />
+               </VBox.margin>
+            </TextField>
+            <HBox prefHeight="54.0" prefWidth="499.0">
+               <children>
+                  <Label prefHeight="44.0" prefWidth="148.0" stylesheets="@style/Login.css" text="Header Photo">
+                     <font>
+                        <Font name="Segoe Script" size="18.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="deleteHeader_btn" mnemonicParsing="false" onAction="#deleteHeader" prefHeight="30.0" prefWidth="107.0" styleClass="login-button" stylesheets="@style/Login.css" text="Delete header">
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets left="20.0" />
+               </VBox.margin>
+            </HBox>
+            <TextField fx:id="headerPath_txt" prefHeight="26.0" prefWidth="546.0" promptText="enter the path of image">
+               <font>
+                  <Font name="MV Boli" size="12.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" />
+               </VBox.margin>
+            </TextField>
+            <Label prefHeight="46.0" prefWidth="190.0" stylesheets="@style/Login.css" text="Location">
                <font>
                   <Font name="Segoe Script" size="18.0" />
                </font>
@@ -298,7 +375,7 @@
                   </RadioButton>
                </children>
             </HBox>
-            <Label prefHeight="54.0" prefWidth="190.0" stylesheets="@style/Login.css" text="Birthdate">
+            <Label prefHeight="37.0" prefWidth="190.0" stylesheets="@style/Login.css" text="Birthdate">
                <font>
                   <Font name="Segoe Script" size="18.0" />
                </font>
@@ -306,9 +383,9 @@
                   <Insets left="30.0" />
                </VBox.margin>
             </Label>
-            <HBox prefHeight="36.0" prefWidth="631.0">
+            <HBox prefHeight="69.0" prefWidth="499.0">
                <children>
-                  <Label prefHeight="26.0" prefWidth="151.0" text="Wanna keep in profile?" textFill="#003eff">
+                  <Label prefHeight="50.0" prefWidth="151.0" text="Wanna keep in profile?" textFill="#003eff">
                      <font>
                         <Font name="MV Boli" size="12.0" />
                      </font>
@@ -343,13 +420,13 @@
    <top>
       <HBox prefHeight="176.0" prefWidth="963.0" style="-fx-background-radius: 10px;" styleClass="left_dark_form" stylesheets="@style/Login.css" BorderPane.alignment="CENTER">
          <children>
-            <AnchorPane prefHeight="143.0" prefWidth="551.0">
+            <AnchorPane prefHeight="176.0" prefWidth="442.0">
                <children>
-                  <Circle fx:id="circle_prof" fill="#1e0079" layoutX="88.0" layoutY="81.0" onDragDetected="#editProfilePhoto" radius="62.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="2.0">
+                  <Circle fx:id="circle_prof" fill="#1e0079" layoutX="88.0" layoutY="69.0" radius="62.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="2.0">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></Circle>
-                  <Label fx:id="Name_Lbl" layoutX="184.0" layoutY="27.0" onDragDetected="#editName" prefHeight="38.0" prefWidth="95.0" styleClass="prof-withborder-label" stylesheets="@style/Login.css" text="Name" textFill="#6ce6ff">
+                  <Label fx:id="Name_Lbl" layoutX="221.0" layoutY="14.0" onDragDetected="#editName" prefHeight="38.0" prefWidth="95.0" styleClass="prof-withborder-label" stylesheets="@style/Login.css" text="Name" textFill="#6ce6ff">
                      <font>
                         <Font name="MT Extra" size="16.0" />
                      </font>
@@ -357,7 +434,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Label>
-                  <Label fx:id="Username_Lbl" layoutX="184.0" layoutY="88.0" onDragDetected="#editUsername" prefHeight="38.0" prefWidth="95.0" styleClass="prof-label" stylesheets="@style/Login.css" text="Username" textFill="#00ddff">
+                  <Label fx:id="Username_Lbl" layoutX="221.0" layoutY="69.0" onDragDetected="#editUsername" prefHeight="38.0" prefWidth="95.0" styleClass="prof-label" stylesheets="@style/Login.css" text="Username" textFill="#00ddff">
                      <font>
                         <Font name="Segoe UI Black" size="16.0" />
                      </font>
@@ -365,9 +442,11 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Label>
-                  <Button fx:id="Save_Btn" layoutX="159.0" layoutY="139.0" mnemonicParsing="false" onAction="#saveProfile" prefHeight="31.0" prefWidth="119.0" styleClass="signup-button" stylesheets="@style/Login.css" text="Save" />
+                  <Button fx:id="Save_Btn" layoutX="178.0" layoutY="130.0" mnemonicParsing="false" onAction="#saveProfile" prefHeight="31.0" prefWidth="99.0" styleClass="signup-button" stylesheets="@style/Login.css" text="Save" />
+                  <Button fx:id="Back_btn" layoutX="323.0" layoutY="130.0" mnemonicParsing="false" onAction="#GoBack" prefHeight="31.0" prefWidth="94.0" styleClass="signup-button" stylesheets="@style/Login.css" text="Back" />
                </children>
             </AnchorPane>
+            <ImageView fx:id="header_imgview" fitHeight="176.0" fitWidth="545.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </HBox>
    </top>

@@ -70,13 +70,21 @@ public class ClientHandler implements Runnable {
                         }
                         write(res);
                     }
-                        case TYPE_Update_PROF -> {
+                    case TYPE_GO_TO_EDIT_PROF -> {
+                        User user = (User) model.get();
+                        ResponseOrErrorType res = ResponseOrErrorType.SUCCESSFUL;
+                        if (!model.checkJwToken(secret)) {
+                            res = ResponseOrErrorType.INVALID_JWT;
+                        }
+                        write(new SocketModel(Api.TYPE_GO_TO_EDIT_PROF, res, user));
+                    }
+                    case TYPE_Update_PROF -> {
                         User user = (User) model.get();
                         ResponseOrErrorType res = PagesToBeShownToUser.updateProfile(user);
                         if (!model.checkJwToken(secret)) {
                             res = ResponseOrErrorType.INVALID_JWT;
                         }
-                        write(new SocketModel(Api.TYPE_Update_PROF, res));
+                        write(new SocketModel(Api.TYPE_Update_PROF, res, user));
                     }
                     case TYPE_USER_SEARCH -> {
                         String searchWord = (String) model.get();

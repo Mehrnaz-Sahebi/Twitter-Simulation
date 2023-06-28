@@ -24,4 +24,10 @@ public class JavaFXImpl {
         user.setUsername(username);
         SendMessage.write(socket, new SocketModel(Api.TYPE_SEE_PROF, user,jwt), writer);
     }
+    public synchronized static void changeProf(User user, Socket socket, ObjectOutputStream writer, String jwt){
+        SendMessage.write(socket, new SocketModel(Api.TYPE_Update_PROF, user,jwt), writer);
+    }
+    public synchronized static void goToEditProfPage(User user, Socket socket, ObjectOutputStream writer, String jwt){
+        SendMessage.write(socket, new SocketModel(Api.TYPE_GO_TO_EDIT_PROF, user,jwt), writer);
+    }
 }

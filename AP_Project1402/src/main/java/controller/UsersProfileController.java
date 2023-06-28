@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -10,6 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import model.common.User;
+import model.javafx_action.JavaFXImpl;
 
 
 import java.io.ObjectOutputStream;
@@ -81,7 +83,8 @@ public class UsersProfileController {
     private Label Name_Lbl;
     @FXML
     private Label Username_Lbl;
-
+    @FXML
+    private Label alert_lbl;
     @FXML
     private Circle circle_prof;
 
@@ -96,7 +99,7 @@ public class UsersProfileController {
 
     @FXML
     void EditProfile(ActionEvent event) {
-
+        JavaFXImpl.goToEditProfPage(user, socket, writer, jwt);
     }
 
     @FXML
@@ -180,6 +183,29 @@ public class UsersProfileController {
 
     public void setNum_of_followings(int numOfFollowings) {
         num_of_followings.setText(String.valueOf(numOfFollowings));
+    }
+
+    public void addLabel(String msg) {
+        alert_lbl.setText(msg);
+        Thread threadTask = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(1500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        alert_lbl.setText("");
+                    }
+                });
+            }
+        });
+        threadTask.start();
+
+
     }
 
 //   TODO public void setNum_of_tweets(Label num_of_tweets) {

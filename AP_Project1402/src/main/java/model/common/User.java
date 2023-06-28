@@ -38,6 +38,8 @@ public class User implements Serializable {
     private int numOfFollowers;
     private int numberOfTweets;
     private boolean toShowLocInProf = false;
+    private boolean toShowBirthInProf = false;
+    private boolean toShowRegInProf = false;
 
     public User(String username, String password, String firstName, String lastName, String email, String phoneNumber, String avatar, String header, String regionOrCountry, Date birthDate, Date signUpDate, Date lastModifiedDate, String bio, String location, String website) {
         this.username = username;
@@ -278,4 +280,27 @@ public class User implements Serializable {
     }
 
 
+    public void setToShowLocInProf(boolean toShowLocInProf) {
+        this.toShowLocInProf = toShowLocInProf;
+    }
+
+    public void setToShowBirthInProf(boolean toShowBirthInProf) {
+        this.toShowBirthInProf = toShowBirthInProf;
+    }
+
+    public void setToShowRegInProf(boolean toShowRegInProf) {
+        this.toShowRegInProf = toShowRegInProf;
+    }
+
+    public boolean isToShowLocInProf() {
+        return toShowLocInProf;
+    }
+
+    public boolean isToShowBirthInProf() {
+        return toShowBirthInProf;
+    }
+
+    public boolean isToShowRegInProf() {
+        return toShowRegInProf;
+    }
 }

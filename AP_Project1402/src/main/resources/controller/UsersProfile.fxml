@@ -67,7 +67,7 @@
             </Label>
             <ScrollPane prefHeight="190.0" prefWidth="253.0" style="-fx-background-radius: 10px; -fx-border-radius: 10px;" styleClass="dark-form" stylesheets="@style/Login.css">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="178.0" prefWidth="556.0" styleClass="dark-form" stylesheets="@style/Login.css" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="173.0" prefWidth="556.0" styleClass="dark-form" stylesheets="@style/Login.css" />
               </content>
                <VBox.margin>
                   <Insets left="2.0" right="2.0" />
@@ -158,6 +158,11 @@
                      </children>
                   </HBox>
                   <Button fx:id="EditProf_Btn" layoutX="838.0" layoutY="66.0" mnemonicParsing="false" onAction="#EditProfile" prefHeight="31.0" prefWidth="119.0" styleClass="signup-button" stylesheets="@style/Login.css" text="Edit Profile" />
+                  <Label fx:id="alert_lbl" layoutX="870.0" layoutY="26.0" textFill="RED">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
                </children>
             </AnchorPane>
          </children>
@@ -176,7 +181,7 @@
             </Label>
             <ScrollPane prefHeight="562.0" prefWidth="402.0">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="688.0" prefWidth="379.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="688.0" prefWidth="386.0" />
               </content>
             </ScrollPane>
          </children></VBox>

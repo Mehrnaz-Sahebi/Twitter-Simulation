@@ -12,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import model.common.SocketModel;
+import model.common.Validate;
 import model.javafx_action.JavaFXImpl;
 
 import java.io.IOException;
@@ -76,12 +77,18 @@ public class LogInController {
         boolean isAllowed = true;
         try {
             userName = rightside_usernameText.getText();
+            if (!Validate.NotBlank(userName)){
+                throw new NullPointerException();
+            }
         } catch (NullPointerException e) {
             username_alert.setText("enter the username");
             isAllowed = false;
         }
         try {
             pass = rightside_passText.getText();
+            if (!Validate.NotBlank(pass)){
+                throw new NullPointerException();
+            }
         } catch (NullPointerException e) {
             pass_alert.setText("enter the password");
             isAllowed = false;
@@ -110,9 +117,7 @@ public class LogInController {
     }
 
     public void addLabel(String errorMsg) {
-        if (errorMsg.equals("User not found") || errorMsg.equals(" This account is already online!")) {
-            login_alert.setText(errorMsg);
-        }
+        login_alert.setText(errorMsg);
         Thread threadTask = new Thread(new Runnable() {
             @Override
             public void run() {
