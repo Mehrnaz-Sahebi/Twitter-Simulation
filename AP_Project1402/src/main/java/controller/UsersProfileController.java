@@ -8,7 +8,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
@@ -19,6 +22,7 @@ import model.javafx_action.JavaFXImpl;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Date;
+import java.util.Iterator;
 
 public class UsersProfileController {
 
@@ -97,7 +101,13 @@ public class UsersProfileController {
     private Label num_of_followings;
 
     @FXML
+    private ImageView header_imgView;
+
+    @FXML
     private Label num_of_tweets;
+
+    @FXML
+    private AnchorPane showingAnchor_pane;
 
     @FXML
     void EditProfile(ActionEvent event) {
@@ -111,7 +121,27 @@ public class UsersProfileController {
 
     @FXML
     void showFollowers(MouseEvent event) {
+        Iterator<String> followersIt = user.getFollowers().iterator();
+        while (followersIt.hasNext()){
+            makeCircleProf(followersIt.next());
+        }
+    }
 
+    private void makeCircleProf(String username) {
+        User otherUser = Util.getUserFromDB(username, true);
+        Label userLabel = new Label();
+        userLabel.setText("@" + username + "\n" + otherUser.getFirstName() + " " + otherUser.getLastName());
+        Circle circle = new Circle();
+        Image image = null;
+        if (otherUser.getAvatar() == null || otherUser.getAvatar().equals("")){
+            image = new Image("images\\download2.png");
+        }else {
+            image = new Image(otherUser.getAvatar());
+        }
+        circle.setFill(new ImagePattern(image));
+        HBox hBox = new HBox();
+        hBox.getChildren().addAll(circle, userLabel);
+        showingAnchor_pane.getChildren().addAll(hBox);
     }
 
     @FXML
@@ -140,8 +170,8 @@ public class UsersProfileController {
         setLocation_Labl(user.getLocation());
         setNum_of_followers(user.getNumOfFollowers());
         setNum_of_followings(user.getNumOfFollowings());
-        setCircle_prof("C:\\Users\\TUF GAMING\\Desktop\\Java programing\\project\\AP_Project1402\\images\\popular-social-media-creative-Twitter-logo-png.png");
-//      TODO   user.getAvatar()
+        setCircle_prof(user.getAvatar());
+        setHeader_img(user.getHeader());
     }
 
 
@@ -157,7 +187,10 @@ public class UsersProfileController {
 //  TODO  public void setLink_hyper(Hyperlink link_hyper) {
 //        Link_hyper = link_hyper;
 //    }
-
+    public void setHeader_img(String img) {
+        Image image = new Image(img);
+        header_imgView.setImage(image);
+    }
     public void setLocation_Labl(String location_Labl) {
         Location_Labl.setText(location_Labl);
     }

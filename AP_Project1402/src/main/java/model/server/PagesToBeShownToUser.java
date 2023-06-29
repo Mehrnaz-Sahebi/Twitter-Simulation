@@ -195,15 +195,38 @@ public class PagesToBeShownToUser {
         }
         return new SocketModel(Api.TYPE_UNLIKE,ResponseOrErrorType.UNSUCCESSFUL_FILE);
     }
+    public static void setFollowingsOfUser(String username1 , String username2){
+
+        UsersTable out = SQLConnection.getUsers();
+        try {
+            User profileUser = out.getUserFromDatabase(username1);
+            profileUser.getFollowings().add(username2);
+        } catch (SQLException e) {
+            System.out.println("sql disconnected");
+        }
+    }
+    public static void setFollowersOfUser(String username1 , String username2){
+
+        UsersTable out = SQLConnection.getUsers();
+        try {
+            User profileUser = out.getUserFromDatabase(username1);
+            profileUser.getFollowers().add(username1);
+        } catch (SQLException e) {
+            System.out.println("sql disconnected");
+        }
+    }
     public static SocketModel firstFollowsSecond(String username1 , String username2){
         FollowTable followTable = new FollowTable();
         try {
             followTable.firstFollowsSecond(username1,username2);
+            setFollowersOfUser(username1, username2);
+            setFollowingsOfUser(username1, username2);
             return goToTheUsersProfile(username2, true);
         }catch (SQLException e){
             return new SocketModel(null, ResponseOrErrorType.UNSUCCESSFUL, false);
         }
-    }public static SocketModel firstUnFollowsSecond(String username1 , String username2){
+    }
+    public static SocketModel firstUnFollowsSecond(String username1 , String username2){
         FollowTable followTable = new FollowTable();
         try {
             followTable.firstUnfollowsSecond(username1,username2);
@@ -248,4 +271,5 @@ public class PagesToBeShownToUser {
             return new SocketModel(null, ResponseOrErrorType.USER_NOTFOUND, false);
         }
     }
+
 }

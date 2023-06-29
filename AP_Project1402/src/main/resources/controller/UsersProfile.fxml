@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -20,7 +21,7 @@
             <Insets left="1.0" top="1.0" />
          </BorderPane.margin>
          <children>
-            <Label fx:id="Bio_labl" prefHeight="58.0" prefWidth="190.0" stylesheets="@style/Login.css" text="Bio" textFill="WHITE">
+            <Label fx:id="Bio_labl" prefHeight="58.0" prefWidth="190.0" stylesheets="@style/Login.css" textFill="WHITE">
                <font>
                   <Font name="Times New Roman" size="13.0" />
                </font>
@@ -28,7 +29,31 @@
                   <Insets left="20.0" />
                </VBox.margin>
             </Label>
-            <Hyperlink fx:id="Link_hyper" onAction="#goToLink" prefHeight="14.0" prefWidth="35.0" text="Link" textFill="#00ddff">
+            <Label fx:id="Location_Labl" prefHeight="26.0" prefWidth="95.0" styleClass="prof-label" stylesheets="@style/Login.css" textFill="#00ddff">
+               <VBox.margin>
+                  <Insets left="30.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="MV Boli" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="Registeration_date_labl" prefHeight="26.0" prefWidth="95.0" styleClass="prof-label" stylesheets="@style/Login.css" textFill="#00ddff">
+               <VBox.margin>
+                  <Insets left="30.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="MV Boli" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="Birthdate_Labl" prefHeight="26.0" prefWidth="95.0" styleClass="prof-label" stylesheets="@style/Login.css" textFill="#cae3e7">
+               <VBox.margin>
+                  <Insets left="30.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="MV Boli" size="12.0" />
+               </font>
+            </Label>
+            <Hyperlink fx:id="Link_hyper" onAction="#goToLink" prefHeight="26.0" prefWidth="190.0" textFill="#00ddff">
                <VBox.margin>
                   <Insets left="30.0" />
                </VBox.margin>
@@ -36,30 +61,6 @@
                   <Font size="14.0" />
                </font>
             </Hyperlink>
-            <Label fx:id="Location_Labl" prefHeight="26.0" prefWidth="95.0" styleClass="prof-label" stylesheets="@style/Login.css" text="Location" textFill="#00ddff">
-               <VBox.margin>
-                  <Insets left="30.0" />
-               </VBox.margin>
-               <font>
-                  <Font name="MV Boli" size="12.0" />
-               </font>
-            </Label>
-            <Label fx:id="Registeration_date_labl" prefHeight="26.0" prefWidth="95.0" styleClass="prof-label" stylesheets="@style/Login.css" text="reg_date" textFill="#00ddff">
-               <VBox.margin>
-                  <Insets left="30.0" />
-               </VBox.margin>
-               <font>
-                  <Font name="MV Boli" size="12.0" />
-               </font>
-            </Label>
-            <Label fx:id="Birthdate_Labl" prefHeight="26.0" prefWidth="95.0" styleClass="prof-label" stylesheets="@style/Login.css" text="birthdate" textFill="#cae3e7">
-               <VBox.margin>
-                  <Insets left="30.0" />
-               </VBox.margin>
-               <font>
-                  <Font name="MV Boli" size="12.0" />
-               </font>
-            </Label>
             <Label fx:id="Followers_that_you_know_Labl" prefHeight="42.0" prefWidth="158.0" style="-fx-text-fill: #ffffff;" stylesheets="@style/Login.css" text="Followers that you know" textFill="#00ddff">
                <VBox.margin>
                   <Insets left="30.0" top="20.0" />
@@ -164,6 +165,7 @@
                      </font>
                   </Label>
                   <Button layoutX="838.0" layoutY="18.0" mnemonicParsing="false" onAction="#GoBack" prefHeight="31.0" prefWidth="119.0" styleClass="signup-button" stylesheets="@style/Login.css" text="Back" />
+                  <ImageView fx:id="header_imgView" fitHeight="111.0" fitWidth="608.0" layoutX="222.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </AnchorPane>
          </children>
@@ -182,7 +184,7 @@
             </Label>
             <ScrollPane prefHeight="562.0" prefWidth="402.0">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="688.0" prefWidth="386.0" />
+                <AnchorPane fx:id="showingAnchor_pane" minHeight="0.0" minWidth="0.0" prefHeight="688.0" prefWidth="386.0" />
               </content>
             </ScrollPane>
          </children></VBox>

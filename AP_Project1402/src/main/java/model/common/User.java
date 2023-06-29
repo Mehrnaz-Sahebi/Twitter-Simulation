@@ -31,10 +31,10 @@ public class User implements Serializable {
     private String location;
     private String website;
     private String linkProf;
-    private HashSet<String> followings;
+    private HashSet<String> followings = new HashSet<>();
     private int numOfFollowings;
-    private HashSet<String> followers;
-    private HashSet<String> blackList;
+    private HashSet<String> followers = new HashSet<>();
+    private HashSet<String> blackList = new HashSet<>();
     private int numOfFollowers;
     private int numberOfTweets;
     private boolean toShowLocInProf = false;
