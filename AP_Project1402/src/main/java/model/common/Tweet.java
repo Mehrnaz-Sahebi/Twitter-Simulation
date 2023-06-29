@@ -5,6 +5,8 @@ import java.util.HashSet;
 
 public class Tweet implements Serializable {
     private String authorUsername;
+    private String authorName;
+    private String profile;
     private String text;
     private String photo;//the url
     private HashSet<String> likes;
@@ -66,6 +68,14 @@ public class Tweet implements Serializable {
         this.authorUsername = authorUsername;
     }
 
+    public void setAuthorName(String firstName , String lastName) {
+        this.authorName = firstName + " " + lastName;
+    }
+
+    public void setProfile(String profile) {
+        this.profile = profile;
+    }
+
     public Date getDate() {
         return date;
     }
@@ -108,6 +118,14 @@ public class Tweet implements Serializable {
 
     public HashSet<QuoteTweet> getQuoteTweets() {
         return quoteTweets;
+    }
+
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public String getProfile() {
+        return profile;
     }
 
     public void setQuoteTweets(HashSet<QuoteTweet> quoteTweets) {

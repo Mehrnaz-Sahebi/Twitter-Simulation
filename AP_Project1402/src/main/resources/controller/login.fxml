@@ -27,7 +27,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <Button fx:id="rightside_loginBtn" layoutX="146.0" layoutY="422.0" mnemonicParsing="false" onAction="#setLog_in_button" prefHeight="35.0" prefWidth="122.0" styleClass="login-button" stylesheets="@style/Login.css" text="Login">
+            <Button fx:id="rightside_loginBtn" defaultButton="true" layoutX="146.0" layoutY="422.0" mnemonicParsing="false" onAction="#setLog_in_button" prefHeight="35.0" prefWidth="122.0" styleClass="login-button" stylesheets="@style/Login.css" text="Login">
                <font>
                   <Font size="16.0" />
                </font>

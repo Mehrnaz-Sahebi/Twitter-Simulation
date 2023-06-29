@@ -216,7 +216,9 @@ public class ListenerForFX implements Runnable {
                                         }
                                     });
                                 } else {
+
                                     String errorMessg = JavaFXUtil.getErrorMSg(model);
+                                    System.out.println(errorMessg);
                                     Platform.runLater(new Runnable() {
                                         @Override
                                         public void run() {
@@ -244,6 +246,7 @@ public class ListenerForFX implements Runnable {
                                 } else {
                                     //TODO add alert
                                     String errorMessg = JavaFXUtil.getErrorMSg(model);
+                                    System.out.println(errorMessg);
                                     Platform.runLater(new Runnable() {
                                         @Override
                                         public void run() {

@@ -115,7 +115,7 @@ public class HomePageController {
     public void setTimeline(ArrayList<Tweet> timeline){
         this.timeline=timeline;
         for (Tweet tweet: timeline) {
-            timeline_vbox.getChildren().add(new TweetWithoutImageComponent(tweet,getUsername()));
+            timeline_vbox.getChildren().add(new TweetWithoutImageComponent(tweet,getUsername(),socket,writer,jwt));
         }
     }
     public void setProfile(){
