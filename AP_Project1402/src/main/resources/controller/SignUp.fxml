@@ -103,7 +103,7 @@
                   <Label fx:id="birthdate_alert" layoutX="45.0" layoutY="693.0" prefHeight="23.0" prefWidth="214.0" textFill="RED" />
                   <Label fx:id="region_alert" layoutX="44.0" layoutY="752.0" prefHeight="23.0" prefWidth="214.0" textFill="RED" />
                   <Label fx:id="pass_repeat_alert" layoutX="45.0" layoutY="617.0" prefHeight="23.0" prefWidth="214.0" textFill="RED" />
-                  <Label fx:id="pass_alert" layoutX="44.0" layoutY="541.0" prefHeight="23.0" prefWidth="282.0" textFill="RED" />
+                  <Label fx:id="pass_alert" layoutY="541.0" prefHeight="23.0" prefWidth="378.0" textFill="RED" />
                   <Label fx:id="phonenumber_alert" layoutX="44.0" layoutY="463.0" prefHeight="23.0" prefWidth="214.0" textFill="RED" />
                   <Label fx:id="email_alert" layoutX="45.0" layoutY="386.0" prefHeight="23.0" prefWidth="214.0" textFill="RED" />
                   <Label fx:id="last_name_alert" layoutX="44.0" layoutY="313.0" prefHeight="23.0" prefWidth="214.0" textFill="RED" />

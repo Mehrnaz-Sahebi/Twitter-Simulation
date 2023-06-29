@@ -69,7 +69,7 @@ public class LogInController {
 
     public void setSign_up_button(ActionEvent event) {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Util.changeScene(stage, "SignUp.fxml", "sign up");
+        TwitterApplication.signUpPage(stage, socket, writer, jwt);
     }
 
     public void setLog_in_button(ActionEvent event) {

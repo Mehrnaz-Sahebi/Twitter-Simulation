@@ -231,9 +231,10 @@ public class UsersProfileController {
             File imagefile = new File(profUrl);
             prof = new Image(imagefile.toURI().toString());
             circle_prof.setFill(new ImagePattern(prof));
-        }else {
+        }else if (profUrl == null || profUrl.isBlank()){
             File imagefile = new File("images\\download2.png");
             prof = new Image(imagefile.toURI().toString());
+            circle_prof.setFill(new ImagePattern(prof));
         }
 
     }

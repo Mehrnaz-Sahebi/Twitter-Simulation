@@ -21,7 +21,7 @@
             <Button mnemonicParsing="false" onAction="#goToProfile" styleClass="search-button" stylesheets="@style/HomePage.css" text="Profile" />
             <Button fx:id="reload_button" layoutX="26.0" layoutY="600.0" mnemonicParsing="false" onAction="#reload" styleClass="search-button" stylesheets="@style/HomePage.css" text="Reload">
                <VBox.margin>
-                  <Insets top="350.0" />
+                  <Insets top="290.0" />
                </VBox.margin>
             </Button>
             <Button fx:id="search_button" mnemonicParsing="false" onAction="#goToSearch" styleClass="search-button" stylesheets="@style/HomePage.css" text="Search">
@@ -33,6 +33,7 @@
                   <Insets top="5.0" />
                </VBox.margin>
             </Button>
+            <Button fx:id="exitBtn" mnemonicParsing="false" onAction="#Exit" prefHeight="34.0" prefWidth="70.0" styleClass="search-button" stylesheets="@style/HomePage.css" text="Exit" />
          </children>
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
