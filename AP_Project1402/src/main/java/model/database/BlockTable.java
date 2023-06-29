@@ -63,11 +63,11 @@ public class BlockTable extends AbstractTable {
     public synchronized void updateUsername(int username, String newUsername) throws SQLException {
         String query1 = "UPDATE " + TABLE_NAME + " SET " + COLUMN_BLOCKER + " = '"+newUsername+"'" + " WHERE "+ COLUMN_BLOCKER + " = '"+username+"'";
         PreparedStatement statement1 = getConnection().prepareStatement(query1);
-        ResultSet set1 = statement1.executeQuery();
-        set1.close();
+        int set1 = statement1.executeUpdate();
+//        set1.close();
         String query2 = "UPDATE " + TABLE_NAME + " SET " + COLUMN_BLOCKING + " = '"+newUsername+"'" + " WHERE "+ COLUMN_BLOCKING + " = '"+username+"'";
         PreparedStatement statement2 = getConnection().prepareStatement(query2);
-        ResultSet set2 = statement2.executeQuery();
-        set2.close();
+        int set2 = statement2.executeUpdate();
+//        set2.close();
     }
 }

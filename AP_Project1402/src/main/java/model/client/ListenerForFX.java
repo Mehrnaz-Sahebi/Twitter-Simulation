@@ -173,23 +173,20 @@ public class ListenerForFX implements Runnable {
                                     TwitterApplication.profPage(stage, socket, writer, jwToken, (User) model.data);
                                 }
                             });
-                            if (model.message == ResponseOrErrorType.SUCCESSFUL) {
-                                ConsoleImpl.openChatPage(socket, writer, jwToken);
-                            } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                                JavaFXUtil.getErrorMSg(model);
-                                ConsoleImpl.openAccountMenu(socket, writer, jwToken);
-                            } else {
-                                String msg = JavaFXUtil.getErrorMSg(model);
-                                Platform.runLater(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        TwitterApplication.editProfPage(stage, socket, writer, jwToken, (User) model.data).addLabel(msg);
-                                    }
-                                });
+                        }else if (model.message == ResponseOrErrorType.INVALID_JWT) {
+                            JavaFXUtil.getErrorMSg(model);
+                            ConsoleImpl.openAccountMenu(socket, writer, jwToken);
+                        } else {
+                            String msg = JavaFXUtil.getErrorMSg(model);
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    TwitterApplication.editProfPage(stage, socket, writer, jwToken, (User) model.data).addLabel(msg);
+                                }
+                            });
 
-                            }
-                            break;
                         }
+                        break;
                             case TYPE_USER_SEARCH:
                                 if (model.message == ResponseOrErrorType.SUCCESSFUL) {
 

@@ -171,10 +171,13 @@ public class UsersProfileController {
         setName_Lbl(user.getFirstName() + " " + user.getLastName());
         setBio_labl(user.getBio());
         setLocation_Labl(user.getLocation());
+        setBirthdate_Labl(user.getBirthDate());
+        setRegisteration_date_labl(user.getSignUpDate());
         setNum_of_followers(user.getNumOfFollowers());
         setNum_of_followings(user.getNumOfFollowings());
         setCircle_prof(user.getAvatar());
         setHeader_img(user.getHeader());
+        setLink_hyper(user.getWebsite());
     }
 
 
@@ -182,27 +185,31 @@ public class UsersProfileController {
         Bio_labl.setText(bio_labl);
     }
 
-//   TODO public void setBirthdate_Labl(Label birthdate_Labl) {
-//        Birthdate_Labl = birthdate_Labl;
-//    }
+   public void setBirthdate_Labl(Date birthdate) {
+        if (user.isToShowBirthInProf())
+            Birthdate_Labl.setText(birthdate.toString());
+    }
 
 
-//  TODO  public void setLink_hyper(Hyperlink link_hyper) {
-//        Link_hyper = link_hyper;
-//    }
+  public void setLink_hyper(String link_hyper) {
+        Link_hyper.setText(link_hyper);
+    }
     public void setHeader_img(String img) {
         if (Validate.NotBlank(img)){
-            Image image = new Image(img);
+            File imagefile = new File(img);
+            Image image = new Image(imagefile.toURI().toString());
             header_imgView.setImage(image);
         }
 
     }
     public void setLocation_Labl(String location_Labl) {
-        Location_Labl.setText(location_Labl);
+        if (location_Labl != null)
+            Location_Labl.setText(location_Labl);
     }
 
     public void setRegisteration_date_labl(Date registeration_date_labl) {
-        Registeration_date_labl.setText(registeration_date_labl.toString());
+        if (user.isToShowRegInProf())
+            Registeration_date_labl.setText(registeration_date_labl.toString());
     }
 
 
@@ -219,11 +226,11 @@ public class UsersProfileController {
         if (profUrl != null && !profUrl.isBlank()){
             File imagefile = new File(profUrl);
             prof = new Image(imagefile.toURI().toString());
+            circle_prof.setFill(new ImagePattern(prof));
         }else {
             File imagefile = new File("images\\download2.png");
             prof = new Image(imagefile.toURI().toString());
         }
-        circle_prof.setFill(new ImagePattern(prof));
 
     }
 

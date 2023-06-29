@@ -103,10 +103,10 @@ public class UsersTable extends AbstractTable {
     }
 
     public synchronized void updateUsername(int userDbId, String newUsername) throws SQLException{
-        String query = "UPDATE " + TABLE_NAME + " SET " + COLUMN_USERNAME + " = '"+newUsername+"'" + " WHERE "+ COLUMN_USERNAME + " = '"+userDbId+"'";
+        String query = "UPDATE " + TABLE_NAME + " SET " + COLUMN_USERNAME + " = '"+newUsername+"'" + " WHERE "+ COLUMN_ID + " = '"+userDbId+"'";
         PreparedStatement statement = getConnection().prepareStatement(query);
-        ResultSet set = statement.executeQuery();
-        set.close();
+        int set = statement.executeUpdate();
+//        set.close();
         FollowTable followTable = new FollowTable();
         followTable.updateUsername(userDbId,newUsername);
         BlockTable blockTable = new BlockTable();
@@ -115,57 +115,57 @@ public class UsersTable extends AbstractTable {
     public synchronized void updatePassword(int userDbId, String newPassword) throws SQLException{
         String query = "UPDATE " + TABLE_NAME + " SET " + COLUMN_PASSWORD + " = '"+newPassword+"'" + " WHERE "+ COLUMN_ID + " = '"+userDbId+"'";
         PreparedStatement statement = getConnection().prepareStatement(query);
-        ResultSet set = statement.executeQuery();
-        set.close();
+        int set = statement.executeUpdate();
+//        set.close();
     }
     public synchronized void updateFirstName(int userDbId, String newFirstName) throws SQLException{
         String query = "UPDATE " + TABLE_NAME + " SET " + COLUMN_FIRSTNAME + " = '"+newFirstName+"'" + " WHERE "+ COLUMN_ID + " = '"+userDbId+"'";
         PreparedStatement statement = getConnection().prepareStatement(query);
-        ResultSet set = statement.executeQuery();
-        set.close();
+        int set = statement.executeUpdate();
+//        set.close();
     }
     public synchronized void updateLastName(int userDbId, String newLastName) throws SQLException{
         String query = "UPDATE " + TABLE_NAME + " SET " + COLUMN_LASTNAME + " = '"+newLastName+"'" + " WHERE "+ COLUMN_ID + " = '"+userDbId+"'";
         PreparedStatement statement = getConnection().prepareStatement(query);
-        ResultSet set = statement.executeQuery();
-        set.close();
+        int set = statement.executeUpdate();
+//        set.close();
     }
     public synchronized void updatePhoneNumber(int userDbId, String newPhoneNumber) throws SQLException{
         String query = "UPDATE " + TABLE_NAME + " SET " + COLUMN_PHONE_NUMBER + " = '"+newPhoneNumber+"'" + " WHERE "+ COLUMN_ID + " = '"+userDbId+"'";
         PreparedStatement statement = getConnection().prepareStatement(query);
-        ResultSet set = statement.executeQuery();
-        set.close();
+        int set = statement.executeUpdate();
+//        set.close();
     }
     public synchronized void updateEmail(int userDbId, String newEmail) throws SQLException{
         String query = "UPDATE " + TABLE_NAME + " SET " + COLUMN_EMAIL + " = '"+newEmail+"'" + " WHERE "+ COLUMN_ID + " = '"+userDbId+"'";
         PreparedStatement statement = getConnection().prepareStatement(query);
-        ResultSet set = statement.executeQuery();
-        set.close();
+        int set = statement.executeUpdate();
+//        set.close();
     }
     public synchronized void updateAvatar(int userDbId, String newAvatar) throws SQLException{
         String query = "UPDATE " + TABLE_NAME + " SET " + COLUMN_AVATAR + " = '"+newAvatar+"'" + " WHERE "+ COLUMN_ID + " = '"+userDbId+"'";
         PreparedStatement statement = getConnection().prepareStatement(query);
-        ResultSet set = statement.executeQuery();
-        set.close();
+        int set = statement.executeUpdate();
+//        set.close();
     }
     public synchronized void updateHeader(int userDbId, String newHeader) throws SQLException{
         String query = "UPDATE " + TABLE_NAME + " SET " + COLUMN_HEADER + " = '"+newHeader+"'" + " WHERE "+ COLUMN_ID + " = '"+userDbId+"'";
         PreparedStatement statement = getConnection().prepareStatement(query);
-        ResultSet set = statement.executeQuery();
-        set.close();
+        int set = statement.executeUpdate();
+//        set.close();
     }
     public synchronized void updateRegion(int userDbId, String newRegion) throws SQLException{
         String query = "UPDATE " + TABLE_NAME + " SET " + COLUMN_REGION + " = '"+newRegion+"'" + " WHERE "+ COLUMN_ID + " = '"+userDbId+"'";
         PreparedStatement statement = getConnection().prepareStatement(query);
-        ResultSet set = statement.executeQuery();
-        set.close();
+        int set = statement.executeUpdate();
+//        set.close();
     }
     //Reminder: check if the date works like this
     public synchronized void updateBirthDate(int userDbId, Date newDate) throws SQLException{
         String query = "UPDATE " + TABLE_NAME + " SET " + COLUMN_BIRTHDATE + " = '"+newDate+"'" + " WHERE "+ COLUMN_ID + " = '"+userDbId+"'";
         PreparedStatement statement = getConnection().prepareStatement(query);
-        ResultSet set = statement.executeQuery();
-        set.close();
+        int set = statement.executeUpdate();
+//        set.close();
     }
     // I think this is useless that I saved the sign up date in the table creation
 //    public synchronized void updateSignUp(String username, Date newSignUpDate) throws SQLException{
@@ -183,20 +183,20 @@ public class UsersTable extends AbstractTable {
     public synchronized void updateBio(int userDbId, String newBio) throws SQLException{
         String query = "UPDATE " + TABLE_NAME + " SET " + COLUMN_BIO + " = '"+newBio+"'" + " WHERE "+ COLUMN_ID + " = '"+userDbId+"'";
         PreparedStatement statement = getConnection().prepareStatement(query);
-        ResultSet set = statement.executeQuery();
-        set.close();
+        int set = statement.executeUpdate();
+//        set.close();
     }
     public synchronized void updateLocation(int userDbId, String newLocation) throws SQLException{
         String query = "UPDATE " + TABLE_NAME + " SET " + COLUMN_LOCATION + " = '"+newLocation+"'" + " WHERE "+ COLUMN_ID + " = '"+userDbId+"'";
         PreparedStatement statement = getConnection().prepareStatement(query);
-        ResultSet set = statement.executeQuery();
-        set.close();
+        int set = statement.executeUpdate();
+//        set.close();
     }
     public synchronized void updateWebsite(int userDbId, String newWebsite) throws SQLException{
         String query = "UPDATE " + TABLE_NAME + " SET " + COLUMN_WEBSITE + " = '"+newWebsite+"'" + " WHERE "+ COLUMN_ID + " = '"+userDbId+"'";
         PreparedStatement statement = getConnection().prepareStatement(query);
-        ResultSet set = statement.executeQuery();
-        set.close();
+        int set = statement.executeUpdate();
+//        set.close();
     }
     public <T> T select(UserToBeSigned userModel) throws SQLException {
         String query = "SELECT * FROM " + TABLE_NAME + " WHERE " +

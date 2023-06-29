@@ -31,7 +31,7 @@
                   <Font size="15.0" />
                </font>
             </Label>
-            <HBox prefHeight="74.0" prefWidth="463.0">
+            <HBox prefHeight="59.0" prefWidth="463.0">
                <children>
                   <Label prefHeight="26.0" prefWidth="95.0" text="Email" textFill="#f34fff">
                      <font>
@@ -54,7 +54,7 @@
                   </Label>
                </children>
             </HBox>
-            <HBox prefHeight="68.0" prefWidth="463.0">
+            <HBox prefHeight="57.0" prefWidth="463.0">
                <children>
                   <Label prefHeight="26.0" prefWidth="95.0" text="Phonenumber" textFill="#f34fff">
                      <font>
@@ -77,7 +77,7 @@
                   </Label>
                </children>
             </HBox>
-            <HBox prefHeight="68.0" prefWidth="463.0">
+            <HBox prefHeight="57.0" prefWidth="463.0">
                <children>
                   <Label prefHeight="26.0" prefWidth="95.0" text="Rgion" textFill="#f34fff">
                      <font>
@@ -108,7 +108,7 @@
                   </ChoiceBox>
                </children>
             </HBox>
-            <HBox prefHeight="68.0" prefWidth="463.0">
+            <HBox prefHeight="50.0" prefWidth="463.0">
                <children>
                   <Label prefHeight="26.0" prefWidth="95.0" text="BirthDate" textFill="#f34fff">
                      <font>
@@ -175,7 +175,7 @@
                   </Label>
                </children>
             </HBox>
-            <Label fx:id="alert_Lbl" text="-&gt;" textFill="#f822ff">
+            <Label fx:id="alert_Lbl" prefHeight="47.0" prefWidth="422.0" text="-&gt;" textFill="#f822ff">
                <font>
                   <Font size="20.0" />
                </font>
@@ -183,6 +183,26 @@
                   <Insets left="20.0" />
                </VBox.margin>
             </Label>
+            <TextField fx:id="username_Txt" prefHeight="38.0" prefWidth="423.0" promptText="Change username">
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="name_Txt" prefHeight="38.0" prefWidth="423.0" promptText="Change name">
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" top="15.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="email_Txt" prefHeight="38.0" prefWidth="423.0" promptText="Change email">
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" top="15.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="phone_Txt" prefHeight="38.0" prefWidth="423.0" promptText="Change phone_number">
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" top="15.0" />
+               </VBox.margin>
+            </TextField>
          </children>
       </VBox>
    </left>
@@ -305,9 +325,17 @@
                   <Insets left="30.0" />
                </VBox.margin>
             </Label>
+            <TextField fx:id="location_Txt" prefHeight="39.0" prefWidth="459.0" promptText="enter your location">
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="MV Boli" size="12.0" />
+               </font>
+            </TextField>
             <HBox prefHeight="36.0" prefWidth="631.0">
                <children>
-                  <Label prefHeight="26.0" prefWidth="151.0" text="Wanna keep in profile?" textFill="#003eff">
+                  <Label prefHeight="25.0" prefWidth="182.0" text="Wanna keep country in profile?" textFill="#003eff">
                      <font>
                         <Font name="MV Boli" size="12.0" />
                      </font>
@@ -317,7 +345,7 @@
                   </Label>
                   <RadioButton fx:id="yep_loc" mnemonicParsing="false" styleClass="my_radio_button" stylesheets="@style/Login.css" text="Yep">
                      <HBox.margin>
-                        <Insets left="30.0" top="10.0" />
+                        <Insets top="10.0" />
                      </HBox.margin>
                      <cursor>
                         <Cursor fx:constant="HAND" />
@@ -426,7 +454,7 @@
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></Circle>
-                  <Label fx:id="Name_Lbl" layoutX="221.0" layoutY="14.0" onDragDetected="#editName" prefHeight="38.0" prefWidth="95.0" styleClass="prof-withborder-label" stylesheets="@style/Login.css" text="Name" textFill="#6ce6ff">
+                  <Label fx:id="Name_Lbl" layoutX="221.0" layoutY="14.0" onDragDetected="#editName" prefHeight="38.0" prefWidth="197.0" styleClass="prof-withborder-label" stylesheets="@style/Login.css" text="Name" textFill="#6ce6ff">
                      <font>
                         <Font name="MT Extra" size="16.0" />
                      </font>
@@ -434,7 +462,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Label>
-                  <Label fx:id="Username_Lbl" layoutX="221.0" layoutY="69.0" onDragDetected="#editUsername" prefHeight="38.0" prefWidth="95.0" styleClass="prof-label" stylesheets="@style/Login.css" text="Username" textFill="#00ddff">
+                  <Label fx:id="Username_Lbl" layoutX="221.0" layoutY="69.0" onDragDetected="#editUsername" prefHeight="38.0" prefWidth="199.0" styleClass="prof-label" stylesheets="@style/Login.css" text="Username" textFill="#00ddff">
                      <font>
                         <Font name="Segoe UI Black" size="16.0" />
                      </font>

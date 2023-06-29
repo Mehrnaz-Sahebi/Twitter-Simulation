@@ -226,7 +226,7 @@ public class SignUpController implements Initializable {
             isAllowedToRegister = false;
         }
         try {
-            birthdate = new Date(Integer.parseInt(year),Integer.parseInt(month),Integer.parseInt(day));
+            birthdate = new Date(Integer.parseInt(year) - 1900 ,Integer.parseInt(month) - 1,Integer.parseInt(day));
         } catch (Exception e){
             isAllowedToRegister =false;
             birthdate_alert.setText("Invalid birth date");

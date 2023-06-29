@@ -140,6 +140,18 @@ public class EditProfController implements Initializable {
     private RadioButton yep_reg;
 
     @FXML
+    private TextField username_Txt;
+    @FXML
+    private TextField phone_Txt;
+    @FXML
+    private TextField name_Txt;
+
+    @FXML
+    private TextField email_Txt;
+    @FXML
+    private TextField location_Txt;
+
+    @FXML
     void EditBirthdate(MouseEvent event) {
 //        String year = null, month = null, day = null;
 //        boolean isAllowedToEdit = true;
@@ -300,8 +312,10 @@ public class EditProfController implements Initializable {
         String name = null;
         boolean isAllowedToEdit = true;
         try {
-            name = Name_Lbl.getText();
-            user.setPhoneNumber(name);
+            name = name_Txt.getText();
+            String parts[] = name.split(" ");
+            user.setFirstName(parts[0]);
+            user.setLastName(parts[1]);
         }catch (NullPointerException e){
             alert_Lbl.setText("*Alert* :" + "enter name");
             isAllowedToEdit = false;
@@ -310,7 +324,7 @@ public class EditProfController implements Initializable {
 
         String username = null;
         try {
-            username = Username_Lbl.getText();
+            username = username_Txt.getText();
             user.setUsername(username);
         }catch (NullPointerException e){
             alert_Lbl.setText(alert_Lbl.getText() + "\n" + "*Alert* :" + "enter username");
@@ -334,7 +348,7 @@ public class EditProfController implements Initializable {
 
         String email = null;
         try {
-            email = email_lbl.getText();
+            email = email_Txt.getText();
             user.setEmail(email);
         }catch (NullPointerException e){
             alert_Lbl.setText(alert_Lbl.getText() + "\n" + "*Alert* :" + "enter email");
@@ -343,7 +357,7 @@ public class EditProfController implements Initializable {
 
         String phone = null;
         try {
-            phone = phonenumber_lbl.getText();
+            phone = phone_Txt.getText();
             user.setPhoneNumber(phone);
         }catch (NullPointerException e){
             alert_Lbl.setText(alert_Lbl.getText() + "\n" + "*Alert* :" + "enter phone-number");
@@ -353,22 +367,34 @@ public class EditProfController implements Initializable {
         String region = null;
         try {
             region = chiceBox.getValue();
-            user.setLocation(region); // TODO Region is incomplete
+            user.setRegionOrCountry(region); // TODO Region is incomplete
         }catch (NullPointerException e){
             alert_Lbl.setText(alert_Lbl.getText() + "\n" + "*Alert* :" + "choose the country");
             isAllowedToEdit = false;
         }
 
-        String year = null, month = null, day = null;
+        String location = null;
         try {
-            year = year_lbl.getText();
-            month = month_lbl.getText();
-            day = day_lbl.getText();
-        }catch (NullPointerException e){
-            alert_Lbl.setText(alert_Lbl.getText() + "\n" + "*Alert* :" + "enter birthdate");
-            isAllowedToEdit = false;
+            location = location_Txt.getText();
+            user.setLocation(location);
+        }catch (NullPointerException ignored){
         }
+
+        String link = null;
+        try {
+            link = link_txt.getText();
+            user.setWebsite(link);
+        }catch (NullPointerException ignored){
+        }
+
+        String year = null;
+        String month = null;
+        String day = null;
         StringBuilder birthdateSB = new StringBuilder();
+
+        year = year_lbl.getText();
+        month = month_lbl.getText();
+        day = day_lbl.getText();
         birthdateSB.append(year);
         birthdateSB.append("/");
         birthdateSB.append(month);
@@ -376,39 +402,38 @@ public class EditProfController implements Initializable {
         birthdateSB.append(day);
         Date birthdate =null;
         if(!Validate.NotBlank(day, month, year)){
-            alert_Lbl.setText(alert_Lbl.getText() + "\n" + "*Alert* :" + "enter birthdate");
+            alert_Lbl.setText("Enter your birth date completely");
             isAllowedToEdit = false;
         }else if(Validate.validateDateFormat(birthdateSB.toString()) != ResponseOrErrorType.SUCCESSFUL) {
-            alert_Lbl.setText(alert_Lbl.getText() + "\n" + "*Alert* :" + "invalid birthdate format");
+            alert_Lbl.setText("Invalid birth date");
             isAllowedToEdit = false;
         }
         try {
-            birthdate = new SimpleDateFormat("yyyy/MM/dd").parse(birthdateSB.toString());
-            user.setBirthDate(birthdate);
+            birthdate = new Date(Integer.parseInt(year) - 1900 ,Integer.parseInt(month) - 1,Integer.parseInt(day));
         } catch (Exception e){
             isAllowedToEdit =false;
+            alert_Lbl.setText("Invalid birth date");
         }
 
 
         String bio = null;
         try {
             bio = bio_txt.getText();
+            if (bio.length() > 160){
+                alert_Lbl.setText(alert_Lbl.getText() + "\n" + "more than 160 chars in bio!");
+                isAllowedToEdit = false;
+                throw new NullPointerException();
+            }
             user.setBio(bio);
         }catch (NullPointerException ignored){
         }
 
-        String link = null;
-        try {
-            link = link_txt.getText();
-//            user.setPhoneNumber(phone); TODO
-        }catch (NullPointerException ignored){
-        }
-
-
         if(yep_loc.isSelected()){
             user.setToShowLocInProf(true);
+            user.setLocation(region);
         }else if (nope_loc.isSelected()){
             user.setToShowLocInProf(false);
+            user.setLocation(null);
         }
 
         if(yep_birth.isSelected()){
@@ -446,15 +471,16 @@ public class EditProfController implements Initializable {
         }
     }
     public void prepareProf() {
-        setUsername_Lbl("@" + user.getUsername());
+        setUsername_Lbl(user.getUsername());
         setName_Lbl(user.getFirstName() + " " + user.getLastName());
         setBio_labl(user.getBio());
-        setLocation_Labl(user.getLocation());
+        setCountry_Labl(user.getRegionOrCountry());
         setCircle_prof(user.getAvatar());
         setEmail_lbl(user.getEmail());
         setPhonenumber_lbl(user.getPhoneNumber());
         setBirthdate_Labl(user.getBirthDate());
         setHeader_prof(user.getHeader());
+        setLink_hyper(user.getWebsite());
     }
 
 
@@ -463,35 +489,47 @@ public class EditProfController implements Initializable {
     }
 
     public void setBirthdate_Labl(Date birthdate_Labl) {//TODO , comented in order to prevent error
-//        String parts[] = birthdate_Labl.toString().split("-");
-//        year_lbl.setText(parts[0]);
-//        month_lbl.setText(parts[1]);
-//        day_lbl.setText(parts[2]);
+        String parts[] = birthdate_Labl.toString().split("-");
+        year_lbl.setText(parts[0]);
+        month_lbl.setText(parts[1]);
+        day_lbl.setText(parts[2]);
     }
 
 
-//  TODO  public void setLink_hyper(Hyperlink link_hyper) {
-//        Link_hyper = link_hyper;
-//    }
+  public void setLink_hyper(String link_hyper) {
+        link_txt.setText(link_hyper);
+    }
 
-    public void setLocation_Labl(String location_Labl) {
+    public void setCountry_Labl(String location_Labl) {
             region_lbl.setText(location_Labl);
             chiceBox.setValue(location_Labl);
     }
 
+    public void setLocation_Labl(String location_Labl) {
+        try {
+            String rest = region_lbl.getText();
+            region_lbl.setText(rest + location_Labl);
+        }catch (NullPointerException e){
+            region_lbl.setText(location_Labl);
+        }
 
+    }
     public void setName_Lbl(String name_Lbl) {
         Name_Lbl.setText(name_Lbl);
+        name_Txt.setText(name_Lbl);
     }
 
     public void setUsername_Lbl(String  username_Lbl) {
         Username_Lbl.setText(username_Lbl);
+        username_Txt.setText(username_Lbl);
     }
     public void setEmail_lbl(String email) {
         email_lbl.setText(email);
+        email_Txt.setText(email);
     }
     public void setPhonenumber_lbl(String phonenumberLbl) {
         phonenumber_lbl.setText(phonenumberLbl);
+        phone_Txt.setText(phonenumberLbl);
     }
 
 
@@ -500,13 +538,16 @@ public class EditProfController implements Initializable {
             File imagefile = new File(profUrl);
             Image prof = new Image(imagefile.toURI().toString());
             circle_prof.setFill(new ImagePattern(prof));
+            profilePath_txt.setText(profUrl);
         }
 
     }
     public void setHeader_prof(String profUrl) {
         if (Validate.NotBlank(profUrl)){
-            Image prof = new Image(profUrl);
+            File imagefile = new File(profUrl);
+            Image prof = new Image(imagefile.toURI().toString());
             header_imgview.setImage(prof);
+            headerPath_txt.setText(profUrl);
         }
 
     }
