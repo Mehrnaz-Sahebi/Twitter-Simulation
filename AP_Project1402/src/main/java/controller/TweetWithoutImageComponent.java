@@ -81,7 +81,7 @@ public class TweetWithoutImageComponent extends AnchorPane{
         replies_label = new Label();
         fourth_layer_hbox = new HBox();
         fourth_layer_vbox = new VBox();
-        like_button = new Button("like");
+        like_button = new Button();
         retweet_button = new Button();
         quote_button = new Button();
         profile_photo = new Circle();
@@ -105,7 +105,7 @@ public class TweetWithoutImageComponent extends AnchorPane{
         //third-layer
         third_layer_vbox1.getChildren().add(fourth_layer_hbox);
         third_layer_vbox1.getChildren().add(fourth_layer_vbox);
-        third_layer_vbox2.getChildren().add(like_button);
+//        third_layer_vbox2.getChildren().add(like_button);
         third_layer_vbox2.getChildren().add(retweet_button);
         third_layer_vbox2.getChildren().add(quote_button);
         //fourth_layer
@@ -113,6 +113,7 @@ public class TweetWithoutImageComponent extends AnchorPane{
         fourth_layer_hbox.getChildren().add(name_label);
         fourth_layer_hbox.getChildren().add(username_label);
         fourth_layer_vbox.getChildren().add(tweet_text);
+        fourth_layer_vbox.getChildren().add(like_button);
 
         //nodes
         //AnchorPane
@@ -287,8 +288,9 @@ public class TweetWithoutImageComponent extends AnchorPane{
                 }
             });
         }
+        like_button.setVisible(true);
         like_button.setFont(Font.font("System",12));
-        like_button.setAlignment(Pos.CENTER_LEFT);
+        like_button.setAlignment(Pos.CENTER);
         like_button.setMinWidth(USE_PREF_SIZE);
         like_button.setMinHeight(USE_PREF_SIZE);
         like_button.setPrefWidth(82);
@@ -299,7 +301,7 @@ public class TweetWithoutImageComponent extends AnchorPane{
             @Override
             public void handle(ActionEvent actionEvent) {
                 if(!tweet.isLikedBy(myUsername)) {
-                    SendMessage.write(socket, new SocketModel(Api.TYPE_LIKE, ResponseOrErrorType.UNSUCCESSFUL_FILE), writer);
+                    SendMessage.write(socket, new SocketModel(Api.TYPE_LIKE,tweet),writer);
                     tweet.getLiked(myUsername);
                     like_button.setStyle("-fx-background-color: #ff005e;\n" +
                             "    -fx-background-radius: 5px;\n" +
@@ -310,7 +312,7 @@ public class TweetWithoutImageComponent extends AnchorPane{
                     like_button.setText("Unlike");
                 }
                 else{
-                    SendMessage.write(socket, new SocketModel(Api.TYPE_UNLIKE, ResponseOrErrorType.UNSUCCESSFUL_FILE), writer);
+                    SendMessage.write(socket, new SocketModel(Api.TYPE_UNLIKE,tweet),writer);
                     tweet.getUnLiked(myUsername);
                     like_button.setStyle("-fx-background-color: white;\n" +
                             "    -fx-background-radius: 5px;\n" +
@@ -328,22 +330,22 @@ public class TweetWithoutImageComponent extends AnchorPane{
         retweet_button.setFont(Font.font("System",12));
         retweet_button.setAlignment(Pos.CENTER_LEFT);
         retweet_button.setMinWidth(USE_PREF_SIZE);
-        retweet_button.setMinHeight(USE_COMPUTED_SIZE);
+        retweet_button.setMinHeight(USE_PREF_SIZE);
         retweet_button.setPrefWidth(82);
         retweet_button.setPrefHeight(27);
         retweet_button.setMaxWidth(USE_PREF_SIZE);
-        retweet_button.setMinHeight(USE_COMPUTED_SIZE);
+        retweet_button.setMinHeight(USE_PREF_SIZE);
 
         //quote_button
         quote_button.setText("Quote Tweet");
         quote_button.setFont(Font.font("System",12));
         quote_button.setAlignment(Pos.CENTER_LEFT);
         quote_button.setMinWidth(USE_PREF_SIZE);
-        quote_button.setMinHeight(USE_COMPUTED_SIZE);
+        quote_button.setMinHeight(USE_PREF_SIZE);
         quote_button.setPrefWidth(82);
         quote_button.setPrefHeight(27);
         quote_button.setMaxWidth(USE_PREF_SIZE);
-        quote_button.setMinHeight(USE_COMPUTED_SIZE);
+        quote_button.setMinHeight(USE_PREF_SIZE);
 
         //profile_photo
         profile_photo.setRadius(16);
@@ -351,8 +353,10 @@ public class TweetWithoutImageComponent extends AnchorPane{
             Image image = new Image(tweet.getProfile());
             profile_photo.setFill(new ImagePattern(image));
         } else {
-            Image image = new Image(".//.//.//.//images//download2.png");
-            profile_photo.setFill(new ImagePattern(image));
+            //TODO this doesn't work
+//            File imageFile = new File(".//.//.//.//images//download2.png");
+//            Image image = new Image(imageFile.getAbsolutePath());
+//            profile_photo.setFill(new ImagePattern(image));
         }
 
         //name_label

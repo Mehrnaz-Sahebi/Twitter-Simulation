@@ -125,6 +125,7 @@ public class HomePageController {
     }
     public void setProfile(){
         username_label.setText(getUsername());
+        //TODO profile
     }
     public String getUsername(){
         if(jwt ==null){

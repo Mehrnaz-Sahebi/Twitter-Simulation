@@ -40,7 +40,7 @@
             </TextArea>
             <VBox alignment="TOP_CENTER" spacing="15.0">
                <children>
-                  <Button fx:id="tweet_button" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#tweet" stylesheets="@style/AddTweet.css" text="Tweet" />
+                  <Button fx:id="tweet_button" defaultButton="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#tweet" stylesheets="@style/AddTweet.css" text="Tweet" />
                   <Button fx:id="upload_image_button" mnemonicParsing="false" onAction="#uploadImage" prefHeight="34.0" prefWidth="166.0" stylesheets="@style/AddTweet.css" text="Upload Image" />
                </children>
                <padding>
