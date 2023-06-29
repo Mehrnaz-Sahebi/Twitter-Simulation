@@ -1,0 +1,13 @@
+.like-button {
+    -fx-background-color: white;
+    -fx-background-radius: 5px;
+    -fx-text-fill: #ff005e;
+    -fx-border-width: 1px;
+    -fx-border-color: #ff005e;
+    -fx-border-radius: 5px;
+}
+.like-button:hover{
+    -fx-background-color: #ff005e;
+    -fx-text-fill: #ffffff;
+
+}

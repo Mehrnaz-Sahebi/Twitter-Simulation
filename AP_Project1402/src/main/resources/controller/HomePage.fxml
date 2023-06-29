@@ -13,7 +13,7 @@
    <children>
       <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="745.0" prefWidth="113.0" spacing="20.0" styleClass="gradient" stylesheets="@style/HomePage.css">
          <children>
-            <Circle fx:id="profile_circle" fill="DODGERBLUE" radius="30.0" stroke="WHITE" strokeType="INSIDE">
+            <Circle fx:id="profile_circle" fill="DODGERBLUE" onMouseClicked="#goToProfile" radius="30.0" stroke="WHITE" strokeType="INSIDE">
                <cursor>
                   <Cursor fx:constant="DEFAULT" />
                </cursor></Circle>
@@ -40,7 +40,7 @@
       </VBox>
       <ScrollPane fx:id="timeline_scroll_pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="745.0" prefWidth="851.0">
          <content>
-            <VBox fx:id="timeline_vbox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+            <VBox fx:id="timeline_vbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" />
          </content>
       </ScrollPane>
    </children>

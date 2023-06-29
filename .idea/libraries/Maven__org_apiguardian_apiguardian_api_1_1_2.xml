@@ -1,13 +1,17 @@
 <component name="libraryTable">
   <library name="Maven: org.apiguardian:apiguardian-api:1.1.2">
     <CLASSES>
-      <root url="jar://$MAVEN_REPOSITORY$/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar!/" />
+      <root url="file://$PROJECT_DIR$/AP_Project1402/src/main/java/model/lib" />
+      <root url="jar://$PROJECT_DIR$/AP_Project1402/src/main/java/model/lib/java-json.jar!/" />
+      <root url="jar://$PROJECT_DIR$/AP_Project1402/src/main/java/model/lib/mysql-connector-j-8.0.33.jar!/" />
+      <root url="jar://$PROJECT_DIR$/AP_Project1402/src/main/java/model/lib/fontawesomefx-8.9.jar!/" />
     </CLASSES>
-    <JAVADOC>
-      <root url="jar://$MAVEN_REPOSITORY$/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2-javadoc.jar!/" />
-    </JAVADOC>
+    <JAVADOC />
     <SOURCES>
-      <root url="jar://$MAVEN_REPOSITORY$/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2-sources.jar!/" />
+      <root url="file://$PROJECT_DIR$/AP_Project1402/src/main/java/model/lib" />
+      <root url="jar://$PROJECT_DIR$/AP_Project1402/src/main/java/model/lib/java-json.jar!/" />
     </SOURCES>
+    <jarDirectory url="file://$PROJECT_DIR$/AP_Project1402/src/main/java/model/lib" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/AP_Project1402/src/main/java/model/lib" recursive="false" type="SOURCES" />
   </library>
 </component>

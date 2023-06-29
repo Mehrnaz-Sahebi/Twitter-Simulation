@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.client.ListenerForFX;
+import model.common.Tweet;
 import model.common.User;
 import model.common.UserToBeSigned;
 
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -87,20 +89,19 @@ public class TwitterApplication extends Application {
         controller.setSignUpController(controller);
         return controller;
     }
-    public static HomePageController homePage(Stage stage , Socket socket , ObjectOutputStream writer, String jwt, String username){
+    public static HomePageController homePage(Stage stage , Socket socket , ObjectOutputStream writer, String jwt, ArrayList<Tweet> timeline){
         HomePageController controller = Util.changeScene(stage, "HomePage.fxml", "Home");
         controller.setSocket(socket);
         controller.setJwt(jwt);
         controller.setWriter(writer);
-        controller.setUsername(username);
         controller.setHomePageController(controller);
+        controller.start(timeline);
         return controller;
     }
-    public static AddTweetController addTweet(Stage stage ,Socket socket , ObjectOutputStream writer, String jwt, String username){
+    public static AddTweetController addTweet(Stage stage ,Socket socket , ObjectOutputStream writer, String jwt){
         AddTweetController controller = Util.changeScene(stage, "AddTweet.fxml", "Write a new tweet");
         controller.setSocket(socket);
         controller.setJwt(jwt);
-        controller.setUsername(username);
         controller.setWriter(writer);
         return controller;
     }
@@ -147,9 +148,6 @@ public class TwitterApplication extends Application {
     }
     public static void goBackProfilePage(Stage stage ,Socket socket , ObjectOutputStream writer, String jwt, User user){
         profPage(stage, socket, writer,jwt, user);
-    }
-    public static void goBackHomePage(Stage stage , Socket socket , ObjectOutputStream writer, String jwt, String username){
-        homePage(stage, socket, writer,jwt, username);
     }
     public static SearchController goSearchPage(Stage stage , Socket socket , ObjectOutputStream writer, String jwt, String username){
         FXMLLoader fxmlLoader = new FXMLLoader(TwitterApplication.class.getResource("SearchPage.fxml"));

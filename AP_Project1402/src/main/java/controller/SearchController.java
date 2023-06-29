@@ -13,6 +13,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
+import model.client.SendMessage;
+import model.common.Api;
+import model.common.SocketModel;
 import model.common.User;
 import model.javafx_action.JavaFXImpl;
 
@@ -69,7 +72,7 @@ public class SearchController implements Initializable {
     }
     @FXML
     void GoBack(ActionEvent event) {
-        TwitterApplication.goBackHomePage((Stage)((Node) event.getSource()).getScene().getWindow(), socket, writer, jwt, username);
+        SendMessage.write(socket, new SocketModel(Api.TYPE_LOADING_TIMELINE,username,jwt), writer);
     }
     public void addLabel(String msg) {
         search_txt.setText(msg);

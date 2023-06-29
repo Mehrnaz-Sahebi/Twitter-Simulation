@@ -16,6 +16,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
+import model.client.SendMessage;
+import model.common.Api;
+import model.common.SocketModel;
 import model.common.User;
 import model.common.Validate;
 import model.javafx_action.JavaFXImpl;
@@ -163,7 +166,8 @@ public class UsersProfileController {
     }
     @FXML
     void GoBack(ActionEvent event) {
-        TwitterApplication.goBackHomePage((Stage) ((Node) event.getSource()).getScene().getWindow(), socket, writer, jwt, user.getUsername());
+        SendMessage.write(socket, new SocketModel(Api.TYPE_LOADING_TIMELINE,user.getUsername(),jwt), writer);
+
     }
 
     public void prepareProf() {

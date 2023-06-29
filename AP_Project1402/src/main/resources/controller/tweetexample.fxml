@@ -45,7 +45,10 @@
                         </HBox>
                         <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="740.0" spacing="10.0">
                            <children>
-                              <TextArea maxHeight="-Infinity" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="39.0" prefWidth="715.0" text="hhhhhhhhhhhhhhhhhhhh" />
+                              <TextArea maxHeight="-Infinity" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="39.0" prefWidth="715.0">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font></TextArea>
                            </children>
                            <padding>
                               <Insets bottom="10.0" left="20.0" right="15.0" top="5.0" />
@@ -55,7 +58,7 @@
                   </VBox>
                   <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="112.0" spacing="15.0">
                      <children>
-                        <Button maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="82.0" style="-fx-shape: M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.26.1-9.3,16-12.1,16-21.2C32,3.8,28.2,\&quot;M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.26.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z\&quot;0,23.6,0z\;" text="Like" />
+                        <Button maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="82.0" styleClass="like-button" stylesheets="@style/tweetexample.css" text="Like" textFill="WHITE" />
                         <Button maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="82.0" text="Retweet" />
                         <Button maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="82.0" text="Quote tweet" />
                      </children>

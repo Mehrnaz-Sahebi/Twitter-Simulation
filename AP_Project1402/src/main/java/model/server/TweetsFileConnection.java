@@ -301,6 +301,7 @@ public class TweetsFileConnection {
         HashSet<Tweet> favestarTweets = TweetsFileConnection.findFaveStarredTweets();
         HashSet<Tweet> followingsTweets = TweetsFileConnection.findFollowingsTweets(username);
         HashSet<Tweet> blockingsTweets = TweetsFileConnection.findBlockingsTweets(username);
+        HashSet<Tweet> myTweets = TweetsFileConnection.findTweetWithUsername(username);
         for (Tweet loopTweet : favestarTweets) {
             tweets.add(loopTweet);
         }
@@ -316,11 +317,15 @@ public class TweetsFileConnection {
             }
             dates.add(loopTweet.getDate());
         }
+        for (Tweet loopTweet : myTweets) {
+            tweets.add(loopTweet);
+            dates.add(loopTweet.getDate());
+        }
         Collections.sort(dates);
         ArrayList<Tweet> sortedTweets = new ArrayList<Tweet>();
         for (Date loopDate : dates) {
             for (Tweet loopTweet : tweets) {
-                if (dates.equals(loopTweet.getDate())) {
+                if (loopDate.equals(loopTweet.getDate())) {
                     sortedTweets.add(loopTweet);
                 }
             }

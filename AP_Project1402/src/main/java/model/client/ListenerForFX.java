@@ -13,16 +13,17 @@ import model.console_action.ConsoleUtil;
 import model.javafx_action.JavaFXImpl;
 import model.javafx_action.JavaFXUtil;
 import model.common.Api;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Hashtable;
-import java.util.LinkedList;
+import java.util.*;
+
+import static model.console_action.ConsoleImpl.getUsername;
 
 public class ListenerForFX implements Runnable {
 
@@ -64,12 +65,7 @@ public class ListenerForFX implements Runnable {
                     case TYPE_SIGNIN:
                         if (model.message == ResponseOrErrorType.SUCCESSFUL) {
                             this.jwToken = model.getJwToken();
-                            Platform.runLater(new Runnable() {
-                                @Override
-                                public void run() {
-                                    TwitterApplication.homePage(stage, socket, writer, jwToken, ((UserToBeSigned)model.data).getUsername());
-                                }
-                            });
+                            SendMessage.write(socket, new SocketModel(Api.TYPE_LOADING_TIMELINE,getUsername(),jwToken), writer);
                         } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
                             String errorMessg = JavaFXUtil.getErrorMSg(model);
                             Platform.runLater(new Runnable() {
@@ -92,14 +88,7 @@ public class ListenerForFX implements Runnable {
                     case TYPE_SIGNUP:
                         if (model.message == ResponseOrErrorType.SUCCESSFUL) {
                             this.jwToken = model.getJwToken();
-                            Platform.runLater(new Runnable() {
-                                @Override
-                                public void run() {
-
-                                    TwitterApplication.homePage(stage, socket, writer, jwToken, ((UserToBeSigned)model.data).getUsername());
-                                }
-                            });
-
+                            SendMessage.write(socket, new SocketModel(Api.TYPE_LOADING_TIMELINE,getUsername(),jwToken), writer);
                         } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
                             String errorMessg = JavaFXUtil.getErrorMSg(model);
                             Platform.runLater(new Runnable() {
@@ -135,13 +124,8 @@ public class ListenerForFX implements Runnable {
                                 }
                             });
                         } else {
-                            Platform.runLater(new Runnable() {
-                                @Override
-                                public void run() {
-
-                                    TwitterApplication.homePage(stage, socket, writer, jwToken, ((User)model.data).getUsername());
-                                }
-                            });
+                            //TODO add alert
+                            SendMessage.write(socket, new SocketModel(Api.TYPE_LOADING_TIMELINE,getUsername(),jwToken), writer);
                         }
                         break;
                     case TYPE_GO_TO_EDIT_PROF:
@@ -154,6 +138,14 @@ public class ListenerForFX implements Runnable {
                                 }
                             });
 
+                        } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
+                            String errorMessg = JavaFXUtil.getErrorMSg(model);
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    TwitterApplication.welcomePage(stage, socket, writer, jwToken).addAlert(errorMessg);
+                                }
+                            });
                         } else {
                             String msg = JavaFXUtil.getErrorMSg(model);
                             Platform.runLater(new Runnable() {
@@ -173,9 +165,14 @@ public class ListenerForFX implements Runnable {
                                     TwitterApplication.profPage(stage, socket, writer, jwToken, (User) model.data);
                                 }
                             });
-                        }else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                            JavaFXUtil.getErrorMSg(model);
-                            ConsoleImpl.openAccountMenu(socket, writer, jwToken);
+                        } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
+                            String errorMessg = JavaFXUtil.getErrorMSg(model);
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    TwitterApplication.welcomePage(stage, socket, writer, jwToken).addAlert(errorMessg);
+                                }
+                            });
                         } else {
                             String msg = JavaFXUtil.getErrorMSg(model);
                             Platform.runLater(new Runnable() {
@@ -197,24 +194,19 @@ public class ListenerForFX implements Runnable {
                                         }
                                     });
                                 } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                                    String errorMsg = JavaFXUtil.getErrorMSg(model);
+                                    String errorMessg = JavaFXUtil.getErrorMSg(model);
                                     Platform.runLater(new Runnable() {
                                         @Override
                                         public void run() {
-                                            TwitterApplication.goSearchPage(stage, socket, writer, jwToken, username).addLabel(errorMsg);
+                                            TwitterApplication.welcomePage(stage, socket, writer, jwToken).addAlert(errorMessg);
                                         }
                                     });
-
                                 }
                                 break;
                             case TYPE_WRITING_TWEET:
                                 if (model.message == ResponseOrErrorType.SUCCESSFUL) {
-                                    Platform.runLater(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            TwitterApplication.homePage(stage, socket, writer, jwToken, username);
-                                        }
-                                    });
+                                    SendMessage.write(socket, new SocketModel(Api.TYPE_LOADING_TIMELINE,getUsername(),jwToken), writer);
+
                                 } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
                                     String errorMessg = JavaFXUtil.getErrorMSg(model);
                                     Platform.runLater(new Runnable() {
@@ -228,20 +220,36 @@ public class ListenerForFX implements Runnable {
                                     Platform.runLater(new Runnable() {
                                         @Override
                                         public void run() {
-                                            TwitterApplication.addTweet(stage, socket, writer, jwToken, username).addAlert(errorMessg);
+                                            TwitterApplication.addTweet(stage, socket, writer, jwToken).addAlert(errorMessg);
                                         }
                                     });
                                 }
                                 break;
                             case TYPE_LOADING_TIMELINE:
                                 if (model.message == ResponseOrErrorType.SUCCESSFUL) {
-                                    ConsoleImpl.timeLinePage(socket, writer, (ArrayList<Tweet>) model.data, jwToken);
+                                    Platform.runLater(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            TwitterApplication.homePage(stage, socket, writer, jwToken,(ArrayList<Tweet>) model.data);
+                                        }
+                                    });
                                 } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                                    JavaFXUtil.getErrorMSg(model);
-                                    ConsoleImpl.openAccountMenu(socket, writer, jwToken);
+                                    String errorMessg = JavaFXUtil.getErrorMSg(model);
+                                    Platform.runLater(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            TwitterApplication.welcomePage(stage, socket, writer, jwToken).addAlert(errorMessg);
+                                        }
+                                    });
                                 } else {
-                                    JavaFXUtil.getErrorMSg(model);
-                                    ConsoleImpl.openChatPage(socket, writer, jwToken);
+                                    //TODO add alert
+                                    String errorMessg = JavaFXUtil.getErrorMSg(model);
+                                    Platform.runLater(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            TwitterApplication.homePage(stage, socket, writer, jwToken,(ArrayList<Tweet>) model.data);
+                                        }
+                                    });
                                 }
                                 break;
                             case TYPE_UNLIKE:
@@ -382,7 +390,23 @@ public class ListenerForFX implements Runnable {
         }
 
     }
-
+    public String getUsername(){
+        if(jwToken ==null){
+            return null;
+        }
+        String[] parts = jwToken.split("\\.");
+        JSONObject payload = null;
+        try {
+            payload = new JSONObject(decode(parts[1]));
+            return payload.getString("username");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    private static String decode(String encodedString) {
+        return new String(Base64.getUrlDecoder().decode(encodedString));
+    }
 
         public synchronized void write (SocketModel model){
             try {

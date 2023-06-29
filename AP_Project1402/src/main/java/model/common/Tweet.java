@@ -23,6 +23,7 @@ public class Tweet implements Serializable {
         likes = new HashSet<String>();
         replies = new HashSet<Reply>();
         retweets = new HashSet<String>();
+        quoteTweets = new HashSet<QuoteTweet>();
         date = new Date();
         favStar = false;
         hashtags = new HashSet<String>();

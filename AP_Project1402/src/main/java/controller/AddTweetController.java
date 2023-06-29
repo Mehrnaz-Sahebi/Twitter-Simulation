@@ -12,6 +12,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import model.client.SendMessage;
+import model.common.Api;
+import model.common.SocketModel;
 import model.common.Tweet;
 import model.javafx_action.JavaFXImpl;
 import org.json.JSONException;
@@ -28,6 +31,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Base64;
+
+import static model.console_action.ConsoleImpl.getUsername;
 
 public class AddTweetController {
 
@@ -50,12 +55,6 @@ public class AddTweetController {
     private ObjectOutputStream writer;
     private String jwt;
     private String imagePath;
-
-    private String username;
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     public void setSocket(Socket socket) {
         this.socket = socket;
@@ -84,7 +83,7 @@ public class AddTweetController {
 
     @FXML
     void goToHomePage(MouseEvent event) {
-        TwitterApplication.homePage((Stage) tweet_button.getScene().getWindow(),socket,writer,jwt, username);
+        SendMessage.write(socket, new SocketModel(Api.TYPE_LOADING_TIMELINE,getUsername(),jwt), writer);
     }
 
     @FXML

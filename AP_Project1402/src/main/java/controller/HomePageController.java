@@ -14,14 +14,22 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
+import model.client.SendMessage;
+import model.common.Api;
+import model.common.SocketModel;
+import model.common.Tweet;
 import model.javafx_action.JavaFXImpl;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Base64;
 import java.util.ResourceBundle;
 
-public class HomePageController implements Initializable {
+public class HomePageController {
 
     @FXML
     private Button add_tweet_button;
@@ -45,12 +53,8 @@ public class HomePageController implements Initializable {
     private Socket socket;
     private ObjectOutputStream writer;
     private String jwt;
-    private String username;
+    private ArrayList<Tweet> timeline;
     private static HomePageController homePageController;
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     public void setSocket(Socket socket) {
         this.socket = socket;
@@ -87,25 +91,52 @@ public class HomePageController implements Initializable {
 
     @FXML
     public void goToAddTweet(ActionEvent event) {
-        TwitterApplication.addTweet((Stage) add_tweet_button.getScene().getWindow(),socket,writer,jwt, username);
+        TwitterApplication.addTweet((Stage) add_tweet_button.getScene().getWindow(),socket,writer,jwt);
     }
 
     @FXML
     public void goToProfile(ActionEvent event) {
-        JavaFXImpl.seeThisUserProf(username, socket, writer, jwt);
+        JavaFXImpl.seeThisUserProf(getUsername(), socket, writer, jwt);
     }
 
     @FXML
     public void goToSearch(ActionEvent event) {
-        TwitterApplication.goSearchPage((Stage) ((Node) event.getSource()).getScene().getWindow(), socket, writer, jwt, username);
+        TwitterApplication.goSearchPage((Stage) ((Node) event.getSource()).getScene().getWindow(), socket, writer, jwt, getUsername());
     }
     @FXML
     public void reload(ActionEvent event){
-        TwitterApplication.homePage((Stage) username_label.getScene().getWindow(),socket,writer,jwt, username);
+        SendMessage.write(socket, new SocketModel(Api.TYPE_LOADING_TIMELINE,getUsername(),jwt), writer);
+
     }
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-//        Image image = new Image();
-//        profile_circle.setFill(new ImagePattern(image));
+    public void start(ArrayList timeline){
+        setTimeline(timeline);
+        setProfile();
     }
+    public void setTimeline(ArrayList<Tweet> timeline){
+        this.timeline=timeline;
+        for (Tweet tweet: timeline) {
+            timeline_vbox.getChildren().add(new TweetWithoutImageComponent(tweet,getUsername()));
+        }
+    }
+    public void setProfile(){
+        username_label.setText(getUsername());
+    }
+    public String getUsername(){
+        if(jwt ==null){
+            return null;
+        }
+        String[] parts = jwt.split("\\.");
+        JSONObject payload = null;
+        try {
+            payload = new JSONObject(decode(parts[1]));
+            return payload.getString("username");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    private static String decode(String encodedString) {
+        return new String(Base64.getUrlDecoder().decode(encodedString));
+    }
+
 }
