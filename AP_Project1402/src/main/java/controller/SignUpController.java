@@ -193,7 +193,7 @@ public class SignUpController implements Initializable {
         if(!Validate.NotBlank(repeatPass)){
             pass_repeat_alert.setText("repeat your password");
             isAllowedToRegister = false;
-        }else if (!repeatPass.equals(repeatPass)) {
+        }else if (!repeatPass.equals(password)) {
             pass_repeat_alert.setText("Password doesn't match with its repetition");
             isAllowedToRegister = false;
         }

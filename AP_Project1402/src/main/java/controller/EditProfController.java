@@ -283,6 +283,7 @@ public class EditProfController implements Initializable {
         Image image = new Image(imagefile.toURI().toString());
 
         circle_prof.setFill(new ImagePattern(image));
+        profilePath_txt.setText("");
         user.setAvatar(null);
     }
 
@@ -291,6 +292,7 @@ public class EditProfController implements Initializable {
 //        Image image = new Image("images\\R6wDve.jpg");
 //        header_imgview.setImage(image);
         header_imgview.setImage(null); // TODO doubtful
+        headerPath_txt.setText("");
         user.setHeader(null);
     }
     @FXML
@@ -539,6 +541,10 @@ public class EditProfController implements Initializable {
             Image prof = new Image(imagefile.toURI().toString());
             circle_prof.setFill(new ImagePattern(prof));
             profilePath_txt.setText(profUrl);
+        }else {
+            File imagefile = new File("images\\download2.png");
+            Image prof = new Image(imagefile.toURI().toString());
+            circle_prof.setFill(new ImagePattern(prof));
         }
 
     }

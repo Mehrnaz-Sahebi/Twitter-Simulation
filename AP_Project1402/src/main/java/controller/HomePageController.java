@@ -39,6 +39,8 @@ public class HomePageController {
 
     @FXML
     private Button search_button;
+    @FXML
+    private Button exitBtn;
 
     @FXML
     private ScrollPane timeline_scroll_pane;
@@ -88,7 +90,10 @@ public class HomePageController {
     public String getJwt() {
         return jwt;
     }
-
+    @FXML
+    void Exit(ActionEvent event) {
+        TwitterApplication.signInPage((Stage)((Node) event.getSource()).getScene().getWindow(), socket, writer, jwt);
+    }
     @FXML
     public void goToAddTweet(ActionEvent event) {
         TwitterApplication.addTweet((Stage) add_tweet_button.getScene().getWindow(),socket,writer,jwt);
