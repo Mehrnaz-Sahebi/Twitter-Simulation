@@ -20,6 +20,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.LinkedList;
 
@@ -191,10 +192,22 @@ public class ListenerForFX implements Runnable {
                         }
                             case TYPE_USER_SEARCH:
                                 if (model.message == ResponseOrErrorType.SUCCESSFUL) {
-                                    ConsoleImpl.showSearchWords(model.get());
+
+                                    Platform.runLater(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            TwitterApplication.goSearchPage(stage, socket, writer, jwToken, username).prepareScene(model.get());
+                                        }
+                                    });
                                 } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                                    JavaFXUtil.getErrorMSg(model);
-                                    ConsoleImpl.openAccountMenu(socket, writer, jwToken);
+                                    String errorMsg = JavaFXUtil.getErrorMSg(model);
+                                    Platform.runLater(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            TwitterApplication.goSearchPage(stage, socket, writer, jwToken, username).addLabel(errorMsg);
+                                        }
+                                    });
+
                                 }
                                 break;
                             case TYPE_WRITING_TWEET:

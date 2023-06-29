@@ -18,6 +18,7 @@ import model.common.User;
 import model.common.Validate;
 import model.javafx_action.JavaFXImpl;
 
+import java.io.File;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.URL;
@@ -266,7 +267,9 @@ public class EditProfController implements Initializable {
 
     @FXML
     void deleteAvatar(ActionEvent event) {
-        Image image = new Image("images\\download2.png");
+        File imagefile = new File("images\\download2.png");
+        Image image = new Image(imagefile.toURI().toString());
+
         circle_prof.setFill(new ImagePattern(image));
         user.setAvatar(null);
     }
@@ -494,7 +497,8 @@ public class EditProfController implements Initializable {
 
     public void setCircle_prof(String profUrl) {
         if (Validate.NotBlank(profUrl)){
-            Image prof = new Image(profUrl);
+            File imagefile = new File(profUrl);
+            Image prof = new Image(imagefile.toURI().toString());
             circle_prof.setFill(new ImagePattern(prof));
         }
 

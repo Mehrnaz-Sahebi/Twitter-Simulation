@@ -183,9 +183,9 @@
                </font>
             </Label>
             <ScrollPane prefHeight="562.0" prefWidth="402.0">
-              <content>
-                <AnchorPane fx:id="showingAnchor_pane" minHeight="0.0" minWidth="0.0" prefHeight="688.0" prefWidth="386.0" />
-              </content>
+               <content>
+                  <VBox fx:id="showingAnchor_pane" prefHeight="604.0" prefWidth="385.0" />
+               </content>
             </ScrollPane>
          </children></VBox>
    </center>

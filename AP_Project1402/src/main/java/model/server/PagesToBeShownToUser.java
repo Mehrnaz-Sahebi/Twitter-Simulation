@@ -252,7 +252,7 @@ public class PagesToBeShownToUser {
             return new SocketModel(null, ResponseOrErrorType.UNSUCCESSFUL, false);
         }
     }
-    public static HashSet<String> searchInUsers(String key) throws SQLException {
+    public static HashSet<User> searchInUsers(String key) throws SQLException {
         UsersTable out = SQLConnection.getUsers();
         return out.searchInUsers(key);
     }

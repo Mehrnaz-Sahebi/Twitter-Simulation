@@ -30,4 +30,7 @@ public class JavaFXImpl {
     public synchronized static void addTweet(Tweet tweet, Socket socket, ObjectOutputStream writer, String jwt){
         SendMessage.write(socket, new SocketModel(Api.TYPE_WRITING_TWEET, tweet,jwt), writer);
     }
+    public synchronized static void searchWord(Socket socket, String word, ObjectOutputStream writer){
+        SendMessage.write(socket, new SocketModel(Api.TYPE_USER_SEARCH,word), writer);
+    }
 }

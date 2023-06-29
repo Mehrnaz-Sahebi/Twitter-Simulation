@@ -12,13 +12,16 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import model.common.User;
+import model.common.Validate;
 import model.javafx_action.JavaFXImpl;
 
 
+import java.io.File;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Date;
@@ -107,7 +110,7 @@ public class UsersProfileController {
     private Label num_of_tweets;
 
     @FXML
-    private AnchorPane showingAnchor_pane;
+    private VBox showingAnchor_pane;
 
     @FXML
     void EditProfile(ActionEvent event) {
@@ -188,8 +191,11 @@ public class UsersProfileController {
 //        Link_hyper = link_hyper;
 //    }
     public void setHeader_img(String img) {
-        Image image = new Image(img);
-        header_imgView.setImage(image);
+        if (Validate.NotBlank(img)){
+            Image image = new Image(img);
+            header_imgView.setImage(image);
+        }
+
     }
     public void setLocation_Labl(String location_Labl) {
         Location_Labl.setText(location_Labl);
@@ -209,10 +215,15 @@ public class UsersProfileController {
     }
 
     public void setCircle_prof(String profUrl) {
+        Image prof = null;
         if (profUrl != null && !profUrl.isBlank()){
-            Image prof = new Image(profUrl);
-            circle_prof.setFill(new ImagePattern(prof));
+            File imagefile = new File(profUrl);
+            prof = new Image(imagefile.toURI().toString());
+        }else {
+            File imagefile = new File("images\\download2.png");
+            prof = new Image(imagefile.toURI().toString());
         }
+        circle_prof.setFill(new ImagePattern(prof));
 
     }
 

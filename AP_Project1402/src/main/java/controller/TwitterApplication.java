@@ -151,4 +151,24 @@ public class TwitterApplication extends Application {
     public static void goBackHomePage(Stage stage , Socket socket , ObjectOutputStream writer, String jwt, String username){
         homePage(stage, socket, writer,jwt, username);
     }
+    public static SearchController goSearchPage(Stage stage , Socket socket , ObjectOutputStream writer, String jwt, String username){
+        FXMLLoader fxmlLoader = new FXMLLoader(TwitterApplication.class.getResource("SearchPage.fxml"));
+        Parent root;
+        try {
+            root = fxmlLoader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        SearchController controller = fxmlLoader.getController();
+        controller.setSocket(socket);
+        controller.setJwt(jwt);
+        controller.setWriter(writer);
+        controller.setUserProfController(controller);
+        controller.setUser(username);
+        backScene = stage.getScene();
+        Scene scene = null;
+        scene = new Scene(root);
+        stage.setScene(scene);
+        return controller;
+    }
 }

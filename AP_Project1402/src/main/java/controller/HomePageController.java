@@ -3,6 +3,7 @@ package controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -96,7 +97,7 @@ public class HomePageController implements Initializable {
 
     @FXML
     public void goToSearch(ActionEvent event) {
-
+        TwitterApplication.goSearchPage((Stage) ((Node) event.getSource()).getScene().getWindow(), socket, writer, jwt, username);
     }
     @FXML
     public void reload(ActionEvent event){

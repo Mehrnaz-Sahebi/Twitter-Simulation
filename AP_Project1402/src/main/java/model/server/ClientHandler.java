@@ -81,6 +81,7 @@ public class ClientHandler implements Runnable {
                     case TYPE_Update_PROF -> {
                         User user = (User) model.get();
                         ResponseOrErrorType res = PagesToBeShownToUser.updateProfile(user);
+
                         if (!model.checkJwToken(secret)) {
                             res = ResponseOrErrorType.INVALID_JWT;
                         }
@@ -88,7 +89,7 @@ public class ClientHandler implements Runnable {
                     }
                     case TYPE_USER_SEARCH -> {
                         String searchWord = (String) model.get();
-                        HashSet<String> res = PagesToBeShownToUser.searchInUsers(searchWord);
+                        HashSet<User> res = PagesToBeShownToUser.searchInUsers(searchWord);
                         if (!model.checkJwToken(secret)) {
                             write(new SocketModel(Api.TYPE_USER_SEARCH, ResponseOrErrorType.INVALID_JWT, res));
                         } else {
