@@ -63,16 +63,19 @@ public class TweetsFileConnection {
                 try {
                     Tweet currentTweet = (Tweet) inputStream.readObject();
                     if (currentTweet.getAuthorUsername().equals(username)) {
+                        System.out.println(username);
                         tweetsWithUsername.add(currentTweet);
                     }
                     if (currentTweet.isRetweetedBy(username)) {
-                        currentTweet.getSpecials().add(username);
+                        System.out.println(username);
+                        currentTweet.addSpecial(username);
+                        tweetsWithUsername.add(currentTweet);
                     }
                 } catch (EOFException e) {
                     break;
                 }
             }
-        }
+        };
         return tweetsWithUsername;
     }
 
@@ -308,8 +311,11 @@ public class TweetsFileConnection {
     public static synchronized ArrayList<Tweet> makeATimeLine(String username) throws Exception {
         HashSet<Tweet> tweets = new HashSet<Tweet>();
         HashSet<Tweet> favestarTweets = TweetsFileConnection.findFaveStarredTweets();
+        System.out.println("fave"+favestarTweets.size());
         HashSet<Tweet> followingsTweets = TweetsFileConnection.findFollowingsTweets(username);
+        System.out.println("following"+followingsTweets.size());
         HashSet<Tweet> blockingsTweets = TweetsFileConnection.findBlockingsTweets(username);
+        System.out.println("block"+blockingsTweets.size());
         HashSet<Tweet> myTweets = TweetsFileConnection.findTweetWithUsername(username);
         for (Tweet loopTweet : favestarTweets) {
             tweets.add(loopTweet);
@@ -326,19 +332,32 @@ public class TweetsFileConnection {
             }
             dates.add(loopTweet.getDate());
         }
+        System.out.println("withoutmy"+tweets.size());
+        System.out.println("my"+myTweets.size());
         for (Tweet loopTweet : myTweets) {
             tweets.add(loopTweet);
             dates.add(loopTweet.getDate());
         }
+        System.out.println("withmy"+tweets.size());
+        System.out.println("dates"+dates.size());
         Collections.sort(dates);
         ArrayList<Tweet> sortedTweets = new ArrayList<Tweet>();
         for (Date loopDate : dates) {
             for (Tweet loopTweet : tweets) {
                 if (loopDate.equals(loopTweet.getDate())) {
-                    sortedTweets.add(loopTweet);
+                    boolean doesExist = false;
+                    for (Tweet sorted:sortedTweets) {
+                        if(loopTweet.equals(sorted)){
+                            doesExist = true;
+                        }
+                    }
+                    if(!doesExist) {
+                        sortedTweets.add(loopTweet);
+                    }
                 }
             }
         }
+        System.out.println("size"+sortedTweets.size());
         return sortedTweets;
     }
 }

@@ -25,9 +25,7 @@ import org.json.JSONObject;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class HomePageController {
 
@@ -119,6 +117,7 @@ public class HomePageController {
         setProfile();
     }
     public void setTimeline(ArrayList<Tweet> timeline){
+        Collections.reverse(timeline);
         this.timeline=timeline;
         timelineComponents = new ArrayList<TweetWithoutImageComponent>();
         for (Tweet tweet: timeline) {

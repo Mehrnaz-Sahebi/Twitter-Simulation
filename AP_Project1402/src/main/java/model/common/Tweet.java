@@ -189,5 +189,8 @@ public class Tweet implements Serializable {
         specials = new HashSet<String>();
     }
 
+    public void addSpecial(String username){
+        specials.add(username);
+    }
 }
 
