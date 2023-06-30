@@ -176,6 +176,7 @@ public class ClientHandler implements Runnable {
                     case TYPE_FOLLOW -> {
                         User user = (User) model.get();
                         SocketModel res = PagesToBeShownToUser.firstFollowsSecond(model.getUsername(), user.getUsername());
+                        res.eventType = Api.TYPE_FOLLOW;
                         if (!model.checkJwToken(secret)) {
                             res.setMessage(ResponseOrErrorType.INVALID_JWT);
                         }

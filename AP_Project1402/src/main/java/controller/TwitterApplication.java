@@ -125,7 +125,7 @@ public class TwitterApplication extends Application {
         stage.setScene(scene);
         return controller;
     }
-    public static ProfileOfOthersController profOthersPage(Stage stage ,Socket socket , ObjectOutputStream writer, String jwt, User user){
+    public static ProfileOfOthersController profOthersPage(Stage stage ,Socket socket , ObjectOutputStream writer, String jwt, User user, String usernameThis){
         FXMLLoader fxmlLoader = new FXMLLoader(TwitterApplication.class.getResource("OthersProfile.fxml"));
         Parent root = null;
         try {
@@ -139,6 +139,7 @@ public class TwitterApplication extends Application {
         controller.setWriter(writer);
         controller.setUserProfController(controller);
         controller.setUser(user);
+        controller.setUsernameOfThisUser(usernameThis);
         controller.prepareProf();
         Scene scene = null;
         scene = new Scene(root);
