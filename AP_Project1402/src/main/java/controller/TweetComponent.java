@@ -119,8 +119,6 @@ public class TweetComponent extends AnchorPane{
         fourth_layer_vbox.getChildren().add(tweet_text);
         if(tweet.getPhoto()!=null&&(new File(tweet.getPhoto())).exists()) {
             fourth_layer_vbox.getChildren().add(image_pane);
-            //fifth_layer
-            image_pane.getChildren().add(image);
         }
 
         //nodes
@@ -290,7 +288,7 @@ public class TweetComponent extends AnchorPane{
         quote_button.setMinHeight(USE_PREF_SIZE);
 
         //reply_button
-        reply_button.setText("Quote Tweet");
+        reply_button.setText("Reply");
         reply_button.setFont(Font.font("System",12));
         reply_button.setAlignment(Pos.CENTER);
         reply_button.setMinWidth(USE_PREF_SIZE);
