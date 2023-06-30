@@ -11,6 +11,7 @@ import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import model.common.User;
 import model.common.Validate;
+import model.javafx_action.JavaFXImpl;
 
 import java.io.File;
 import java.io.ObjectOutputStream;
@@ -24,6 +25,7 @@ public class UserItemHboxSearch {
 //    private String jwt;
 //    private User user;
     private SearchController searchController;
+
     private User user;
     private String usernameOfThisUser;
     private String buttonsTxt;
@@ -38,6 +40,23 @@ public class UserItemHboxSearch {
 //    public void setWriter(ObjectOutputStream writer) {
 //        this.writer = writer;
 //    }
+private Socket socket;
+    private ObjectOutputStream writer;
+    private String jwt;
+
+    public void setSocket(Socket socket) {
+        this.socket = socket;
+    }
+
+    public void setWriter(ObjectOutputStream writer) {
+        this.writer = writer;
+    }
+
+    public void setJwt(String jwt) {
+        this.jwt = jwt;
+    }
+
+
 //
 //    public void setJwt(String jwt) {
 //        this.jwt = jwt;
@@ -68,7 +87,11 @@ public class UserItemHboxSearch {
 
     @FXML
     void FollowUser(ActionEvent event) {
-
+        if (followBtn.getText().equals("Follow")){
+            JavaFXImpl.follow(searchController.getSocket(), searchController.getJwt(), searchController.getWriter(), user);
+        }else if (followBtn.getText().equals("Following")){
+            JavaFXImpl.unfollow(searchController.getSocket(), searchController.getJwt(), searchController.getWriter(), user);
+        }
     }
 
     @FXML

@@ -3,6 +3,7 @@ package controller;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
@@ -21,12 +22,16 @@ import model.common.Api;
 import model.common.SocketModel;
 import model.common.User;
 import model.common.Validate;
+import model.database.SQLConnection;
 import model.javafx_action.JavaFXImpl;
+import model.server.PagesToBeShownToUser;
 
 
 import java.io.File;
+import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.Iterator;
 
@@ -116,6 +121,9 @@ public class UsersProfileController {
     private VBox showingAnchor_pane;
 
     @FXML
+    private Label resultLbl;
+
+    @FXML
     void EditProfile(ActionEvent event) {
         JavaFXImpl.goToEditProfPage(user, socket, writer, jwt);
     }
@@ -126,13 +134,69 @@ public class UsersProfileController {
     }
 
     @FXML
-    void showFollowers(MouseEvent event) {
+    void showFollowers(MouseEvent event) throws SQLException, ClassNotFoundException {
+        SQLConnection.getInstance().connect();
+        resultLbl.setText("Followers");
         Iterator<String> followersIt = user.getFollowers().iterator();
         while (followersIt.hasNext()){
-            makeCircleProf(followersIt.next());
+            SocketModel socketModel = PagesToBeShownToUser.goToTheUsersProfile(followersIt.next(), true);
+//            makeCircleProf(followersIt.next());
+            FXMLLoader fxmlLoader = new FXMLLoader(SearchController.class.getResource("userItemHboxSearch.fxml"));
+//                fxmlLoader.setLocation(getClass().getResource());
+
+
+            try {
+                User thatUser = (User) socketModel.get();
+                HBox hBox = fxmlLoader.load();
+                UserItemHboxSearch uis = fxmlLoader.getController();
+                uis.setJwt(jwt);
+                uis.setSocket(socket);
+                uis.setWriter(writer);
+                if (thatUser.getFollowers().contains(user.getUsername())){
+                    uis.setButtonsTxt("Following");
+                }else {
+                    uis.setButtonsTxt("Follow");
+                }
+
+                uis.setData(thatUser);
+                showingAnchor_pane.getChildren().add(hBox);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
+    @FXML
+    void showFollowings(MouseEvent event) throws SQLException, ClassNotFoundException {
+        SQLConnection.getInstance().connect();
+        resultLbl.setText("Followings");
+        Iterator<String> followersIt = user.getFollowings().iterator();
+        while (followersIt.hasNext()){
+            SocketModel socketModel = PagesToBeShownToUser.goToTheUsersProfile(followersIt.next(), true);
+//            makeCircleProf(followersIt.next());
+            FXMLLoader fxmlLoader = new FXMLLoader(SearchController.class.getResource("userItemHboxSearch.fxml"));
+//                fxmlLoader.setLocation(getClass().getResource());
 
+
+            try {
+                User thatUser = (User) socketModel.get();
+                HBox hBox = fxmlLoader.load();
+                UserItemHboxSearch uis = fxmlLoader.getController();
+                uis.setJwt(jwt);
+                uis.setSocket(socket);
+                uis.setWriter(writer);
+                if (thatUser.getFollowers().contains(user.getUsername())){
+                    uis.setButtonsTxt("Following");
+                }else {
+                    uis.setButtonsTxt("Follow");
+                }
+
+                uis.setData(thatUser);
+                showingAnchor_pane.getChildren().add(hBox);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
     private void makeCircleProf(String username) {
         User otherUser = Util.getUserFromDB(username, true);
         Label userLabel = new Label();
@@ -150,15 +214,7 @@ public class UsersProfileController {
         showingAnchor_pane.getChildren().addAll(hBox);
     }
 
-    @FXML
-    void showFollowings(MouseEvent event) {
 
-    }
-
-    @FXML
-    void showProfilePhoto(MouseEvent event) {
-
-    }
 
     @FXML
     void showTweets(MouseEvent event) {
