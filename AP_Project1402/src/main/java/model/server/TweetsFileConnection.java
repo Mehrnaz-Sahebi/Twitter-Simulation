@@ -1,6 +1,8 @@
 package model.server;
+
 import model.common.*;
 import model.database.*;
+
 import java.io.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -61,13 +63,19 @@ public class TweetsFileConnection {
                 try {
                     Tweet currentTweet = (Tweet) inputStream.readObject();
                     if (currentTweet.getAuthorUsername().equals(username)) {
+                        System.out.println(username);
+                        tweetsWithUsername.add(currentTweet);
+                    }
+                    if (currentTweet.isRetweetedBy(username)) {
+                        System.out.println(username);
+                        currentTweet.addSpecial(username);
                         tweetsWithUsername.add(currentTweet);
                     }
                 } catch (EOFException e) {
                     break;
                 }
             }
-        }
+        };
         return tweetsWithUsername;
     }
 
@@ -195,15 +203,12 @@ public class TweetsFileConnection {
         } catch (IOException | ClassNotFoundException e) {
             return false;
         }
-
         for (Tweet loopTweet : tweets) {
-            if (loopTweet.equals(tweet)) {
+            if (loopTweet.getAuthorUsername().equals(tweet.getAuthorUsername())&&loopTweet.getDate().equals(tweet.getDate())) {
                 loopTweet.getRetweeted(retweeterUsername);
                 break;
             }
         }
-        Retweet newRetweet = new Retweet(tweet, retweeterUsername);
-        tweets.add(newRetweet);
         try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("tweets.bin"))) {
             for (Tweet loopTweet : tweets) {
                 outputStream.writeObject(loopTweet);
@@ -229,13 +234,11 @@ public class TweetsFileConnection {
             return false;
         }
         for (Tweet loopTweet : tweets) {
-            if (loopTweet.equals(tweet)) {
+            if (loopTweet.getAuthorUsername().equals(tweet.getAuthorUsername())&&loopTweet.getDate().equals(tweet.getDate())) {
                 loopTweet.getUnRetweeted(retweeterUsername);
                 break;
             }
         }
-        Retweet newRetweet = new Retweet(tweet, retweeterUsername);
-        tweets.remove(newRetweet);
         try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("tweets.bin"))) {
             for (Tweet loopTweet : tweets) {
                 outputStream.writeObject(loopTweet);
@@ -250,10 +253,10 @@ public class TweetsFileConnection {
     public static synchronized boolean tweetGetsQuoted(QuoteTweet quoteTweet) {
         HashSet<Tweet> tweets = new HashSet<Tweet>();
         try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("tweets.bin"))) {
-            while (true){
+            while (true) {
                 try {
                     tweets.add((Tweet) inputStream.readObject());
-                }catch (EOFException e) {
+                } catch (EOFException e) {
                     break;
                 }
             }
@@ -308,8 +311,11 @@ public class TweetsFileConnection {
     public static synchronized ArrayList<Tweet> makeATimeLine(String username) throws Exception {
         HashSet<Tweet> tweets = new HashSet<Tweet>();
         HashSet<Tweet> favestarTweets = TweetsFileConnection.findFaveStarredTweets();
+        System.out.println("fave"+favestarTweets.size());
         HashSet<Tweet> followingsTweets = TweetsFileConnection.findFollowingsTweets(username);
+        System.out.println("following"+followingsTweets.size());
         HashSet<Tweet> blockingsTweets = TweetsFileConnection.findBlockingsTweets(username);
+        System.out.println("block"+blockingsTweets.size());
         HashSet<Tweet> myTweets = TweetsFileConnection.findTweetWithUsername(username);
         for (Tweet loopTweet : favestarTweets) {
             tweets.add(loopTweet);
@@ -320,25 +326,38 @@ public class TweetsFileConnection {
         ArrayList<Date> dates = new ArrayList<Date>();
         for (Tweet loopTweet : tweets) {
             for (Tweet blockTweet : blockingsTweets) {
-                if (loopTweet.equals(blockTweet)) {
+                if (loopTweet.getAuthorUsername().equals(blockTweet.getAuthorUsername()) && loopTweet.getDate().equals(blockTweet.getDate())) {
                     tweets.remove(loopTweet);
                 }
             }
             dates.add(loopTweet.getDate());
         }
+        System.out.println("withoutmy"+tweets.size());
+        System.out.println("my"+myTweets.size());
         for (Tweet loopTweet : myTweets) {
             tweets.add(loopTweet);
             dates.add(loopTweet.getDate());
         }
+        System.out.println("withmy"+tweets.size());
+        System.out.println("dates"+dates.size());
         Collections.sort(dates);
         ArrayList<Tweet> sortedTweets = new ArrayList<Tweet>();
         for (Date loopDate : dates) {
             for (Tweet loopTweet : tweets) {
                 if (loopDate.equals(loopTweet.getDate())) {
-                    sortedTweets.add(loopTweet);
+                    boolean doesExist = false;
+                    for (Tweet sorted:sortedTweets) {
+                        if(loopTweet.equals(sorted)){
+                            doesExist = true;
+                        }
+                    }
+                    if(!doesExist) {
+                        sortedTweets.add(loopTweet);
+                    }
                 }
             }
         }
+        System.out.println("size"+sortedTweets.size());
         return sortedTweets;
     }
 }

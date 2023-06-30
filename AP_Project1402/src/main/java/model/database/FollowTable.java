@@ -62,6 +62,10 @@ public class FollowTable extends AbstractTable{
 
         // execute the preparedstatement
         preparedStmt.execute();
+<<<<<<< HEAD
+=======
+
+>>>>>>> 365ec575a657c8ca448ab6e539b2ebad0b488123
     }
     // TODO duobtful about username , it shouldn't be int , i think
     public synchronized void updateUsername(int username, String newUsername) throws SQLException {

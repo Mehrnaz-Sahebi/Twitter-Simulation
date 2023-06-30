@@ -167,33 +167,33 @@ public class PagesToBeShownToUser {
     }
     public static SocketModel likeTweet(Tweet tweet , String likerUsername){
         if(TweetsFileConnection.tweetGetLiked(tweet,likerUsername)){
-            return new SocketModel(Api.TYPE_UNLIKE,ResponseOrErrorType.SUCCESSFUL);
+            return new SocketModel(Api.TYPE_LIKE,ResponseOrErrorType.SUCCESSFUL);
         }
-        return new SocketModel(Api.TYPE_UNLIKE,ResponseOrErrorType.UNSUCCESSFUL_FILE);
+        return new SocketModel(Api.TYPE_LIKE,ResponseOrErrorType.UNSUCCESSFUL_FILE);
     }
     public static SocketModel undoReTweet(Tweet tweet , String username){
         if(TweetsFileConnection.tweetGetUnRetweeted(tweet,username)){
-            return new SocketModel(Api.TYPE_UNLIKE,ResponseOrErrorType.SUCCESSFUL);
+            return new SocketModel(Api.TYPE_UNDO_RETWEET,ResponseOrErrorType.SUCCESSFUL);
         }
-        return new SocketModel(Api.TYPE_UNLIKE,ResponseOrErrorType.UNSUCCESSFUL_FILE);
+        return new SocketModel(Api.TYPE_UNDO_RETWEET,ResponseOrErrorType.UNSUCCESSFUL_FILE);
     }
     public static SocketModel reTweet(Tweet tweet , String username){
         if(TweetsFileConnection.tweetGetRetweeted(tweet,username)){
-            return new SocketModel(Api.TYPE_UNLIKE,ResponseOrErrorType.SUCCESSFUL);
+            return new SocketModel(Api.TYPE_RETWEET,ResponseOrErrorType.SUCCESSFUL);
         }
-        return new SocketModel(Api.TYPE_UNLIKE,ResponseOrErrorType.UNSUCCESSFUL_FILE);
+        return new SocketModel(Api.TYPE_RETWEET,ResponseOrErrorType.UNSUCCESSFUL_FILE);
     }
     public static SocketModel quoteTweet(QuoteTweet quoteTweet){
         if(TweetsFileConnection.tweetGetsQuoted(quoteTweet)){
-            return new SocketModel(Api.TYPE_UNLIKE,ResponseOrErrorType.SUCCESSFUL);
+            return new SocketModel(Api.TYPE_QUOTE_TWEET,ResponseOrErrorType.SUCCESSFUL);
         }
-        return new SocketModel(Api.TYPE_UNLIKE,ResponseOrErrorType.UNSUCCESSFUL_FILE);
+        return new SocketModel(Api.TYPE_QUOTE_TWEET,ResponseOrErrorType.UNSUCCESSFUL_FILE);
     }
     public static SocketModel reply(Reply reply){
         if(TweetsFileConnection.tweetRecievesAReply(reply)){
-            return new SocketModel(Api.TYPE_UNLIKE,ResponseOrErrorType.SUCCESSFUL);
+            return new SocketModel(Api.TYPE_REPLY,ResponseOrErrorType.SUCCESSFUL);
         }
-        return new SocketModel(Api.TYPE_UNLIKE,ResponseOrErrorType.UNSUCCESSFUL_FILE);
+        return new SocketModel(Api.TYPE_REPLY,ResponseOrErrorType.UNSUCCESSFUL_FILE);
     }
     public static void setFollowingsOfUser(String username1 , String username2){
 

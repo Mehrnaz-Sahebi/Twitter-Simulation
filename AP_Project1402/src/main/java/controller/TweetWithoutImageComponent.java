@@ -21,10 +21,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import model.client.SendMessage;
-import model.common.Api;
-import model.common.ResponseOrErrorType;
-import model.common.SocketModel;
-import model.common.Tweet;
+import model.common.*;
 
 import java.io.File;
 import java.io.ObjectOutputStream;
@@ -60,6 +57,7 @@ public class TweetWithoutImageComponent extends AnchorPane{
     private Circle profile_photo;
     private Label name_label;
     private Label username_label;
+    private Label r_label;
     private TextArea tweet_text;
     private Tweet tweet;
 
@@ -87,6 +85,7 @@ public class TweetWithoutImageComponent extends AnchorPane{
         profile_photo = new Circle();
         name_label = new Label();
         username_label = new Label();
+        r_label = new Label();
         tweet_text = new TextArea();
         //container
         this.getChildren().add(first_layer_vbox);
@@ -106,15 +105,16 @@ public class TweetWithoutImageComponent extends AnchorPane{
         third_layer_vbox1.getChildren().add(fourth_layer_hbox);
         third_layer_vbox1.getChildren().add(fourth_layer_vbox);
 //        third_layer_vbox2.getChildren().add(like_button);
-        third_layer_vbox2.getChildren().add(retweet_button);
+//        third_layer_vbox2.getChildren().add(retweet_button);
         third_layer_vbox2.getChildren().add(quote_button);
         //fourth_layer
         fourth_layer_hbox.getChildren().add(profile_photo);
         fourth_layer_hbox.getChildren().add(name_label);
         fourth_layer_hbox.getChildren().add(username_label);
+        fourth_layer_hbox.getChildren().add(r_label);
         fourth_layer_vbox.getChildren().add(tweet_text);
         fourth_layer_vbox.getChildren().add(like_button);
-
+        fourth_layer_vbox.getChildren().add(retweet_button);
         //nodes
         //AnchorPane
         this.setMinWidth(USE_PREF_SIZE);
@@ -192,7 +192,6 @@ public class TweetWithoutImageComponent extends AnchorPane{
         third_layer_vbox2.setStyle("-fx-border-color: black");
 
         //likes_label
-        likes_label.textProperty().bind(new SimpleStringProperty(tweet.getLikes().size()+" Likes"));
         likes_label.setFont(Font.font("System",13));
         likes_label.setMinWidth(USE_COMPUTED_SIZE);
         likes_label.setMinHeight(USE_COMPUTED_SIZE);
@@ -202,7 +201,6 @@ public class TweetWithoutImageComponent extends AnchorPane{
         likes_label.setMinHeight(USE_COMPUTED_SIZE);
 
         //retweets_label
-        retweets_label.textProperty().bind(new SimpleStringProperty(tweet.getRetweets().size()+" Retweets"));
         retweets_label.setFont(Font.font("System",13));
         retweets_label.setMinWidth(USE_COMPUTED_SIZE);
         retweets_label.setMinHeight(USE_COMPUTED_SIZE);
@@ -212,7 +210,6 @@ public class TweetWithoutImageComponent extends AnchorPane{
         retweets_label.setMinHeight(USE_COMPUTED_SIZE);
 
         //quotes_label
-        quotes_label.textProperty().bind(new SimpleStringProperty(tweet.getQuoteTweets().size()+" Quotes"));
         quotes_label.setFont(Font.font("System",13));
         quotes_label.setMinWidth(USE_COMPUTED_SIZE);
         quotes_label.setMinHeight(USE_COMPUTED_SIZE);
@@ -222,7 +219,6 @@ public class TweetWithoutImageComponent extends AnchorPane{
         quotes_label.setMinHeight(USE_COMPUTED_SIZE);
 
         //replies_label
-        replies_label.textProperty().bind(new SimpleStringProperty(tweet.getReplies().size()+" Replies"));
         replies_label.setFont(Font.font("System",13));
         replies_label.setMinWidth(USE_COMPUTED_SIZE);
         replies_label.setMinHeight(USE_COMPUTED_SIZE);
@@ -253,41 +249,6 @@ public class TweetWithoutImageComponent extends AnchorPane{
         fourth_layer_vbox.setMinHeight(USE_PREF_SIZE);
 
         //like_button
-        if(!tweet.isLikedBy(myUsername)){
-            like_button.setText("Like");
-            like_button.setStyle("-fx-background-color: white;\n" +
-                    "    -fx-background-radius: 5px;\n" +
-                    "    -fx-text-fill: #ff005e;\n" +
-                    "    -fx-border-width: 1px;\n" +
-                    "    -fx-border-color: #ff005e;\n" +
-                    "    -fx-border-radius: 5px;");
-            like_button.setOnMouseEntered(new EventHandler<MouseEvent>(){
-
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    like_button.setStyle("-fx-background-color: #ff005e;\n" +
-                            "    -fx-text-fill: #ffffff;");
-                }
-            });
-
-        }
-        else {
-            like_button.setText("Unlike");
-            like_button.setStyle("-fx-background-color: #ff005e;\n" +
-                    "    -fx-background-radius: 5px;\n" +
-                    "    -fx-text-fill: white;\n" +
-                    "    -fx-border-width: 1px;\n" +
-                    "    -fx-border-color: #ff005e;\n" +
-                    "    -fx-border-radius: 5px;");
-            like_button.setOnMouseEntered(new EventHandler<MouseEvent>(){
-
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    like_button.setStyle("-fx-background-color: white;\n" +
-                            "    -fx-text-fill: #ff005e;");
-                }
-            });
-        }
         like_button.setVisible(true);
         like_button.setFont(Font.font("System",12));
         like_button.setAlignment(Pos.CENTER);
@@ -297,38 +258,12 @@ public class TweetWithoutImageComponent extends AnchorPane{
         like_button.setPrefHeight(USE_COMPUTED_SIZE);
         like_button.setMaxWidth(USE_PREF_SIZE);
         like_button.setMinHeight(USE_PREF_SIZE);
-        like_button.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                if(!tweet.isLikedBy(myUsername)) {
-                    SendMessage.write(socket, new SocketModel(Api.TYPE_LIKE,tweet),writer);
-                    tweet.getLiked(myUsername);
-                    like_button.setStyle("-fx-background-color: #ff005e;\n" +
-                            "    -fx-background-radius: 5px;\n" +
-                            "    -fx-text-fill: white;\n" +
-                            "    -fx-border-width: 1px;\n" +
-                            "    -fx-border-color: #ff005e;\n" +
-                            "    -fx-border-radius: 5px;");
-                    like_button.setText("Unlike");
-                }
-                else{
-                    SendMessage.write(socket, new SocketModel(Api.TYPE_UNLIKE,tweet),writer);
-                    tweet.getUnLiked(myUsername);
-                    like_button.setStyle("-fx-background-color: white;\n" +
-                            "    -fx-background-radius: 5px;\n" +
-                            "    -fx-text-fill: #ff005e;\n" +
-                            "    -fx-border-width: 1px;\n" +
-                            "    -fx-border-color: #ff005e;\n" +
-                            "    -fx-border-radius: 5px;");
-                    like_button.setText("Like");
-                }
-            }
-        });
+
 
         //retweet_button
         retweet_button.setText("Retweet");
         retweet_button.setFont(Font.font("System",12));
-        retweet_button.setAlignment(Pos.CENTER_LEFT);
+        retweet_button.setAlignment(Pos.CENTER);
         retweet_button.setMinWidth(USE_PREF_SIZE);
         retweet_button.setMinHeight(USE_PREF_SIZE);
         retweet_button.setPrefWidth(82);
@@ -339,7 +274,7 @@ public class TweetWithoutImageComponent extends AnchorPane{
         //quote_button
         quote_button.setText("Quote Tweet");
         quote_button.setFont(Font.font("System",12));
-        quote_button.setAlignment(Pos.CENTER_LEFT);
+        quote_button.setAlignment(Pos.CENTER);
         quote_button.setMinWidth(USE_PREF_SIZE);
         quote_button.setMinHeight(USE_PREF_SIZE);
         quote_button.setPrefWidth(82);
@@ -398,6 +333,25 @@ public class TweetWithoutImageComponent extends AnchorPane{
         username_label.setMaxWidth(USE_COMPUTED_SIZE);
         username_label.setMinHeight(USE_COMPUTED_SIZE);
 
+        //r_label
+         if (tweet instanceof Reply) {
+            r_label.setText("Replied to "+((Reply)tweet).getOriginalTweet().getAuthorUsername());
+        }else {
+             r_label.setText("");
+             for (String retweeter:tweet.getSpecials()) {
+                 if(retweeter.equals(myUsername)){
+                     r_label.setText("You Retweeted");
+                 }
+                 else {
+                     r_label.setText(retweeter+" Retweeted");
+                 }
+             }
+        }
+        r_label.setFont(Font.font("System",14));
+        r_label.setTextFill(Paint.valueOf("#22a3e3"));
+        r_label.setOpacity(0.9);
+        HBox.setMargin(r_label,new Insets(8,0,0,40));
+
         //tweet_text
         tweet_text.setEditable(false);
         tweet_text.setText(tweet.getText());
@@ -408,6 +362,147 @@ public class TweetWithoutImageComponent extends AnchorPane{
         tweet_text.setPrefHeight(39);
         tweet_text.setMaxWidth(USE_PREF_SIZE);
         tweet_text.setMinHeight(USE_PREF_SIZE);
+
+        setTweet(tweet,myUsername,socket,writer,jwt);
+    }
+    public void setTweet(Tweet newTweet , String myUsername , Socket socket, ObjectOutputStream writer, String jwt){
+        this.tweet = newTweet;
+        //likes_label
+        likes_label.setText(newTweet.getLikes().size()+" Likes");
+
+        //retweets_label
+        retweets_label.setText(newTweet.getRetweets().size()+" Retweets");
+
+        //quotes_label
+        quotes_label.setText(newTweet.getQuoteTweets().size()+" Quotes");
+
+        //replies_label
+        replies_label.setText(newTweet.getReplies().size()+ " Replies");
+
+        //like_button
+        if(!tweet.isLikedBy(myUsername)){
+            like_button.setText("Like");
+            like_button.setStyle("-fx-background-color: white;\n" +
+                    "    -fx-background-radius: 5px;\n" +
+                    "    -fx-text-fill: #ff005e;\n" +
+                    "    -fx-border-width: 1px;\n" +
+                    "    -fx-border-color: #ff005e;\n" +
+                    "    -fx-border-radius: 5px;");
+            like_button.setOnMouseEntered(new EventHandler<MouseEvent>(){
+
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    like_button.setStyle("-fx-background-color: #ff005e;\n" +
+                            "    -fx-text-fill: white ;");
+                }
+            });
+            like_button.setOnMouseExited(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    like_button.setStyle("-fx-background-color: white;\n" +
+                            "    -fx-text-fill: #ff005e;");
+                }
+            });
+        }
+        else {
+            like_button.setText("Unlike");
+            like_button.setStyle("-fx-background-color: #ff005e;\n" +
+                    "    -fx-background-radius: 5px;\n" +
+                    "    -fx-text-fill: white;\n" +
+                    "    -fx-border-width: 1px;\n" +
+                    "    -fx-border-color: #ff005e;\n" +
+                    "    -fx-border-radius: 5px;");
+            like_button.setOnMouseEntered(new EventHandler<MouseEvent>(){
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    like_button.setStyle("-fx-background-color: white;\n" +
+                            "    -fx-text-fill: #ff005e;");
+                }
+            });
+            like_button.setOnMouseExited(new EventHandler<MouseEvent>(){
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    like_button.setStyle("-fx-background-color: #ff005e;\n" +
+                            "    -fx-text-fill: white;");
+                }
+            });
+        }
+        like_button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                if(!tweet.isLikedBy(myUsername)) {
+                    SendMessage.write(socket, new SocketModel(Api.TYPE_LIKE,tweet,jwt),writer);
+                }
+                else{
+                    SendMessage.write(socket, new SocketModel(Api.TYPE_UNLIKE,tweet,jwt),writer);
+                }
+            }
+        });
+        //retweet_button
+        if(!tweet.isRetweetedBy(myUsername)){
+            retweet_button.setText("Retweet");
+            retweet_button.setFont(Font.font("System",12));
+            retweet_button.setStyle("-fx-background-color: white;\n" +
+                    "    -fx-background-radius: 5px;\n" +
+                    "    -fx-text-fill: #0cfc18;\n" +
+                    "    -fx-border-width: 1px;\n" +
+                    "    -fx-border-color: #0cfc18;\n" +
+                    "    -fx-border-radius: 5px;");
+            retweet_button.setOnMouseEntered(new EventHandler<MouseEvent>(){
+
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    retweet_button.setStyle("-fx-background-color: #0cfc18;\n" +
+                            "    -fx-text-fill: white ;");
+                }
+            });
+            retweet_button.setOnMouseExited(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    retweet_button.setStyle("-fx-background-color: white;\n" +
+                            "    -fx-text-fill: #0cfc18;");
+                }
+            });
+        }
+        else {
+            retweet_button.setText("Undo Retweet");
+            retweet_button.setFont(Font.font("System",10));
+            retweet_button.setStyle("-fx-background-color: #0cfc18;\n" +
+                    "    -fx-background-radius: 5px;\n" +
+                    "    -fx-text-fill: white;\n" +
+                    "    -fx-border-width: 1px;\n" +
+                    "    -fx-border-color: #0cfc18;\n" +
+                    "    -fx-border-radius: 5px;");
+            retweet_button.setOnMouseEntered(new EventHandler<MouseEvent>(){
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    retweet_button.setStyle("-fx-background-color: white;\n" +
+                            "    -fx-text-fill: #0cfc18;");
+                }
+            });
+            retweet_button.setOnMouseExited(new EventHandler<MouseEvent>(){
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    retweet_button.setStyle("-fx-background-color: #0cfc18;\n" +
+                            "    -fx-text-fill: white;");
+                }
+            });
+        }
+        retweet_button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                tweet.resetSpecials();
+                if(!tweet.isRetweetedBy(myUsername)) {
+                    SendMessage.write(socket, new SocketModel(Api.TYPE_RETWEET,tweet,jwt),writer);
+                }
+                else{
+                    SendMessage.write(socket, new SocketModel(Api.TYPE_UNDO_RETWEET,tweet,jwt),writer);
+                }
+            }
+        });
     }
 
+    public Tweet getTweet() {
+        return tweet;
+    }
 }

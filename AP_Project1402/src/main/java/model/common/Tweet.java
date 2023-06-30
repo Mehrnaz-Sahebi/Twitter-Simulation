@@ -17,6 +17,7 @@ public class Tweet implements Serializable {
     //retweet ?!?! which field
     private boolean favStar;
     private HashSet<String> hashtags;
+    private HashSet<String> specials;
 
     public Tweet(String authorUsername, String text, String photo) {
         this.authorUsername = authorUsername;
@@ -26,6 +27,7 @@ public class Tweet implements Serializable {
         replies = new HashSet<Reply>();
         retweets = new HashSet<String>();
         quoteTweets = new HashSet<QuoteTweet>();
+        specials = new HashSet<String>();
         date = new Date();
         favStar = false;
         hashtags = new HashSet<String>();
@@ -178,6 +180,17 @@ public class Tweet implements Serializable {
             }
         }
         return false;
+    }
+
+    public HashSet<String> getSpecials() {
+        return specials;
+    }
+    public void resetSpecials(){
+        specials = new HashSet<String>();
+    }
+
+    public void addSpecial(String username){
+        specials.add(username);
     }
 }
 
