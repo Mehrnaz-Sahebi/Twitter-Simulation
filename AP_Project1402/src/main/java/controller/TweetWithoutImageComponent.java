@@ -111,7 +111,7 @@ public class TweetWithoutImageComponent extends AnchorPane{
         fourth_layer_hbox.getChildren().add(profile_photo);
         fourth_layer_hbox.getChildren().add(name_label);
         fourth_layer_hbox.getChildren().add(username_label);
-        fourth_layer_hbox.getChildren().add(r_label)
+        fourth_layer_hbox.getChildren().add(r_label);
         fourth_layer_vbox.getChildren().add(tweet_text);
         fourth_layer_vbox.getChildren().add(like_button);
         fourth_layer_vbox.getChildren().add(retweet_button);
@@ -263,7 +263,7 @@ public class TweetWithoutImageComponent extends AnchorPane{
         //retweet_button
         retweet_button.setText("Retweet");
         retweet_button.setFont(Font.font("System",12));
-        retweet_button.setAlignment(Pos.CENTER_LEFT);
+        retweet_button.setAlignment(Pos.CENTER);
         retweet_button.setMinWidth(USE_PREF_SIZE);
         retweet_button.setMinHeight(USE_PREF_SIZE);
         retweet_button.setPrefWidth(82);
@@ -274,7 +274,7 @@ public class TweetWithoutImageComponent extends AnchorPane{
         //quote_button
         quote_button.setText("Quote Tweet");
         quote_button.setFont(Font.font("System",12));
-        quote_button.setAlignment(Pos.CENTER_LEFT);
+        quote_button.setAlignment(Pos.CENTER);
         quote_button.setMinWidth(USE_PREF_SIZE);
         quote_button.setMinHeight(USE_PREF_SIZE);
         quote_button.setPrefWidth(82);
@@ -334,16 +334,18 @@ public class TweetWithoutImageComponent extends AnchorPane{
         username_label.setMinHeight(USE_COMPUTED_SIZE);
 
         //r_label
-        if(tweet instanceof Retweet){
-            if(((Retweet) tweet).getRetweeterUsername().equals(myUsername)){
-                r_label.setText("You Retweeted");
-            }else {
-                r_label.setText(((Retweet) tweet).getRetweeterUsername()+" Retweeted");
-            }
-        } else if (tweet instanceof Reply) {
+         if (tweet instanceof Reply) {
             r_label.setText("Replied to "+((Reply)tweet).getOriginalTweet().getAuthorUsername());
         }else {
-            r_label.setText("");
+             r_label.setText("");
+             for (String retweeter:tweet.getSpecials()) {
+                 if(retweeter.equals(myUsername)){
+                     r_label.setText("You Retweeted");
+                 }
+                 else {
+                     r_label.setText(retweeter+" Retweeted");
+                 }
+             }
         }
         r_label.setFont(Font.font("System",14));
         r_label.setTextFill(Paint.valueOf("#22a3e3"));
@@ -437,61 +439,64 @@ public class TweetWithoutImageComponent extends AnchorPane{
             }
         });
         //retweet_button
-        if(!tweet.isLikedBy(myUsername)){
-            like_button.setText("Like");
-            like_button.setStyle("-fx-background-color: white;\n" +
+        if(!tweet.isRetweetedBy(myUsername)){
+            retweet_button.setText("Retweet");
+            retweet_button.setFont(Font.font("System",12));
+            retweet_button.setStyle("-fx-background-color: white;\n" +
                     "    -fx-background-radius: 5px;\n" +
-                    "    -fx-text-fill: #ff005e;\n" +
+                    "    -fx-text-fill: #0cfc18;\n" +
                     "    -fx-border-width: 1px;\n" +
-                    "    -fx-border-color: #ff005e;\n" +
+                    "    -fx-border-color: #0cfc18;\n" +
                     "    -fx-border-radius: 5px;");
-            like_button.setOnMouseEntered(new EventHandler<MouseEvent>(){
+            retweet_button.setOnMouseEntered(new EventHandler<MouseEvent>(){
 
                 @Override
                 public void handle(MouseEvent mouseEvent) {
-                    like_button.setStyle("-fx-background-color: #ff005e;\n" +
+                    retweet_button.setStyle("-fx-background-color: #0cfc18;\n" +
                             "    -fx-text-fill: white ;");
                 }
             });
-            like_button.setOnMouseExited(new EventHandler<MouseEvent>() {
+            retweet_button.setOnMouseExited(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
-                    like_button.setStyle("-fx-background-color: white;\n" +
-                            "    -fx-text-fill: #ff005e;");
+                    retweet_button.setStyle("-fx-background-color: white;\n" +
+                            "    -fx-text-fill: #0cfc18;");
                 }
             });
         }
         else {
-            like_button.setText("Unlike");
-            like_button.setStyle("-fx-background-color: #ff005e;\n" +
+            retweet_button.setText("Undo Retweet");
+            retweet_button.setFont(Font.font("System",10));
+            retweet_button.setStyle("-fx-background-color: #0cfc18;\n" +
                     "    -fx-background-radius: 5px;\n" +
                     "    -fx-text-fill: white;\n" +
                     "    -fx-border-width: 1px;\n" +
-                    "    -fx-border-color: #ff005e;\n" +
+                    "    -fx-border-color: #0cfc18;\n" +
                     "    -fx-border-radius: 5px;");
-            like_button.setOnMouseEntered(new EventHandler<MouseEvent>(){
+            retweet_button.setOnMouseEntered(new EventHandler<MouseEvent>(){
                 @Override
                 public void handle(MouseEvent mouseEvent) {
-                    like_button.setStyle("-fx-background-color: white;\n" +
-                            "    -fx-text-fill: #ff005e;");
+                    retweet_button.setStyle("-fx-background-color: white;\n" +
+                            "    -fx-text-fill: #0cfc18;");
                 }
             });
-            like_button.setOnMouseExited(new EventHandler<MouseEvent>(){
+            retweet_button.setOnMouseExited(new EventHandler<MouseEvent>(){
                 @Override
                 public void handle(MouseEvent mouseEvent) {
-                    like_button.setStyle("-fx-background-color: #ff005e;\n" +
+                    retweet_button.setStyle("-fx-background-color: #0cfc18;\n" +
                             "    -fx-text-fill: white;");
                 }
             });
         }
-        like_button.setOnAction(new EventHandler<ActionEvent>() {
+        retweet_button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                if(!tweet.isLikedBy(myUsername)) {
-                    SendMessage.write(socket, new SocketModel(Api.TYPE_LIKE,tweet,jwt),writer);
+                tweet.resetSpecials();
+                if(!tweet.isRetweetedBy(myUsername)) {
+                    SendMessage.write(socket, new SocketModel(Api.TYPE_RETWEET,tweet,jwt),writer);
                 }
                 else{
-                    SendMessage.write(socket, new SocketModel(Api.TYPE_UNLIKE,tweet,jwt),writer);
+                    SendMessage.write(socket, new SocketModel(Api.TYPE_UNDO_RETWEET,tweet,jwt),writer);
                 }
             }
         });

@@ -301,26 +301,36 @@ public class ListenerForFX implements Runnable {
                                 break;
                             case TYPE_UNDO_RETWEET:
                                 if (model.message == ResponseOrErrorType.SUCCESSFUL) {
-                                    ConsoleUtil.printTweetUnRetweetedMessage();
-                                    ConsoleImpl.tweetPage(socket, writer, (Tweet) model.get(), jwToken);
+                                    System.out.println("undo");
+                                    SendMessage.write(socket, new SocketModel(Api.TYPE_LOADING_TIMELINE,getUsername(),jwToken), writer);
+
                                 } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                                    JavaFXUtil.getErrorMSg(model);
-                                    ConsoleImpl.openAccountMenu(socket, writer, jwToken);
+                                    String errorMessg = JavaFXUtil.getErrorMSg(model);
+                                    Platform.runLater(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            TwitterApplication.welcomePage(stage, socket, writer, jwToken).addAlert(errorMessg);
+                                        }
+                                    });
                                 } else {
-                                    JavaFXUtil.getErrorMSg(model);
-                                    ConsoleImpl.tweetPage(socket, writer, (Tweet) model.get(), jwToken);
+                                    //TODO add alert
                                 }
                                 break;
                             case TYPE_RETWEET:
                                 if (model.message == ResponseOrErrorType.SUCCESSFUL) {
-                                    ConsoleUtil.printTweetRetweetedMessage();
-                                    ConsoleImpl.tweetPage(socket, writer, (Tweet) model.get(), jwToken);
+                                    System.out.println("retweet");
+                                    SendMessage.write(socket, new SocketModel(Api.TYPE_LOADING_TIMELINE,getUsername(),jwToken), writer);
+
                                 } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                                    JavaFXUtil.getErrorMSg(model);
-                                    ConsoleImpl.openAccountMenu(socket, writer, jwToken);
+                                    String errorMessg = JavaFXUtil.getErrorMSg(model);
+                                    Platform.runLater(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            TwitterApplication.welcomePage(stage, socket, writer, jwToken).addAlert(errorMessg);
+                                        }
+                                    });
                                 } else {
-                                    JavaFXUtil.getErrorMSg(model);
-                                    ConsoleImpl.tweetPage(socket, writer, (Tweet) model.get(), jwToken);
+                                    //TODO add alert
                                 }
                                 break;
                             case TYPE_QUOTE_TWEET:

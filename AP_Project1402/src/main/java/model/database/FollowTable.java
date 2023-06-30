@@ -51,11 +51,17 @@ public class FollowTable extends AbstractTable{
         statement.close();
     }
     public synchronized void firstFollowsSecond(String follower, String following) throws SQLException {
-        String query = "INSERT INTO " + TABLE_NAME +  " VALUES " + " ( '"+follower+"'" + " , '"+following+"')" ;
-        PreparedStatement statement = getConnection().prepareStatement(query);
-        ResultSet set = statement.executeQuery();
-        set.close();
-        statement.close();
+        String query = " insert into follow_table (follower , following)"
+                + " values (?, ?)";
+
+        // create the mysql insert preparedstatement
+        PreparedStatement preparedStmt = getConnection().prepareStatement(query);
+        preparedStmt.setString (1, follower);
+        preparedStmt.setString (2, following);
+
+        // execute the preparedstatement
+        preparedStmt.execute();
+
     }
     // TODO duobtful about username , it shouldn't be int , i think
     public synchronized void updateUsername(int username, String newUsername) throws SQLException {
