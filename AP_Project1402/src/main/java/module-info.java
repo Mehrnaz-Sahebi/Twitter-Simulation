@@ -6,5 +6,10 @@ module com.example.ap_project1402 {
 
 
     opens controller to javafx.fxml;
+    opens model.common to javafx.fxml;
+//table view error
+
     exports controller;
+    exports model.common;
+
 }

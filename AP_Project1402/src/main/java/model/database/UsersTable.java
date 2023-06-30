@@ -267,94 +267,126 @@ public class UsersTable extends AbstractTable {
         return exists;
     }
     public synchronized HashSet<User> searchInUsers(String searchKey) throws SQLException {
-        String query1 = "SELECT * FROM " + TABLE_NAME +  " WHERE " + COLUMN_USERNAME + " LIKE " + "'%" + searchKey + "%'" ;
-        String query2 = "SELECT * FROM " + TABLE_NAME +  " WHERE " + COLUMN_FIRSTNAME + " LIKE " + "'%" + searchKey + "%'" ;
-        String query3 = "SELECT * FROM " + TABLE_NAME +  " WHERE " + COLUMN_LASTNAME + " LIKE " + "'%" + searchKey + "%'" ;
-        PreparedStatement statement1 = getConnection().prepareStatement(query1);
-        PreparedStatement statement2 = getConnection().prepareStatement(query2);
-        PreparedStatement statement3 = getConnection().prepareStatement(query3);
-        ResultSet set1 = statement1.executeQuery();
-        ResultSet set2 = statement2.executeQuery();
-        ResultSet set3 = statement3.executeQuery();
+//        String query1 = "SELECT * FROM " + TABLE_NAME +  " WHERE " + COLUMN_USERNAME + " LIKE " + "'%" + searchKey + "%'" ;
+//        String query2 = "SELECT * FROM " + TABLE_NAME +  " WHERE " + COLUMN_FIRSTNAME + " LIKE " + "'%" + searchKey + "%'" ;
+//        String query3 = "SELECT * FROM " + TABLE_NAME +  " WHERE " + COLUMN_LASTNAME + " LIKE " + "'%" + searchKey + "%'" ;
+
+        String query = "SELECT * FROM " + TABLE_NAME;
+        PreparedStatement statement = getConnection().prepareStatement(query);
+        ResultSet set = statement.executeQuery();
+//        PreparedStatement statement1 = getConnection().prepareStatement(query1);
+//        PreparedStatement statement2 = getConnection().prepareStatement(query2);
+//        PreparedStatement statement3 = getConnection().prepareStatement(query3);
+//        ResultSet set1 = statement1.executeQuery();
+//        ResultSet set2 = statement2.executeQuery();
+//        ResultSet set3 = statement3.executeQuery();
         HashSet<User> users = new HashSet<>();
-        while (set1.next()){
-            User user = new User(set1.getString("username"),
+        while (set.next()){
+            if (set.getString("username").toLowerCase().contains(searchKey.toLowerCase()) ||
+                    set.getString("first_name").toLowerCase().contains(searchKey.toLowerCase()) ||
+                    set.getString("last_name").toLowerCase().contains(searchKey.toLowerCase())){
+                User user = new User(set.getString("username"),
                     null,
-                    set1.getString("first_name"),
-                    set1.getString("last_name"),
+                    set.getString("first_name"),
+                    set.getString("last_name"),
                     null,
                     null,
-                    set1.getString("avatar"),
-                    set1.getString("header"),
+                    set.getString("avatar"),
+                    set.getString("header"),
                     null//set1.getString("country")
                      , //TODO
-                    set1.getDate("birthdate"),
-                    set1.getDate("signUpDate"),
-                    set1.getDate("lastModifiedDate"),
-                    set1.getString("bio"),
-                    set1.getString("location"),
-                    set1.getString("website"));
+                    set.getDate("birthdate"),
+                    set.getDate("signUpDate"),
+                    set.getDate("lastModifiedDate"), //TODO sth about showing dates in prof of others
+                    set.getString("bio"),
+                    set.getString("location"),
+                    set.getString("website"));
             FollowTable followTable = SQLConnection.getFollowTable();
             user.setFollowers(followTable.getFollowers(user.getUsername()));
             user.setFollowings(followTable.getFollowings(user.getUsername()));
             user.setBlackList(SQLConnection.getBlockTable().getBlockings(user.getUsername()));
-            user.setDatabaseId(set1.getInt("id"));
+            user.setDatabaseId(set.getInt("id"));
             users.add(user);
+            }
         }
-        while (set2.next()){
-            User user = new User(set2.getString("username"),
-                    null,
-                    set2.getString("first_name"),
-                    set2.getString("last_name"),
-                    null,
-                    null,
-                    set2.getString("avatar"),
-                    set2.getString("header"),
-                    null//set1.getString("country")
-                    , //TODO
-                    set2.getDate("birthdate"),
-                    set2.getDate("signUpDate"),
-                    set2.getDate("lastModifiedDate"),
-                    set2.getString("bio"),
-                    set2.getString("location"),
-                    set2.getString("website"));
-            FollowTable followTable = SQLConnection.getFollowTable();
-            user.setFollowers(followTable.getFollowers(user.getUsername()));
-            user.setFollowings(followTable.getFollowings(user.getUsername()));
-            user.setBlackList(SQLConnection.getBlockTable().getBlockings(user.getUsername()));
-            user.setDatabaseId(set2.getInt("id"));
-            users.add(user);
-        }
-        while (set3.next()){
-            User user = new User(set3.getString("username"),
-                    null,
-                    set3.getString("first_name"),
-                    set3.getString("last_name"),
-                    null,
-                    null,
-                    set3.getString("avatar"),
-                    set3.getString("header"),
-                    null//set1.getString("country")
-                    , //TODO
-                    set3.getDate("birthdate"),
-                    set3.getDate("signUpDate"),
-                    set3.getDate("lastModifiedDate"),
-                    set3.getString("bio"),
-                    set3.getString("location"),
-                    set3.getString("website"));
-            FollowTable followTable = SQLConnection.getFollowTable();
-            user.setFollowers(followTable.getFollowers(user.getUsername()));
-            user.setFollowings(followTable.getFollowings(user.getUsername()));
-            user.setBlackList(SQLConnection.getBlockTable().getBlockings(user.getUsername()));
-            user.setDatabaseId(set3.getInt("id"));
-            users.add(user);
-        }
-        set1.close();
-        set2.close();
-        set3.close();
-        statement1.close();
-        statement2.close();
-        statement3.close();
+//        while (set1.next()){
+//            User user = new User(set1.getString("username"),
+//                    null,
+//                    set1.getString("first_name"),
+//                    set1.getString("last_name"),
+//                    null,
+//                    null,
+//                    set1.getString("avatar"),
+//                    set1.getString("header"),
+//                    null//set1.getString("country")
+//                     , //TODO
+//                    set1.getDate("birthdate"),
+//                    set1.getDate("signUpDate"),
+//                    set1.getDate("lastModifiedDate"),
+//                    set1.getString("bio"),
+//                    set1.getString("location"),
+//                    set1.getString("website"));
+//            FollowTable followTable = SQLConnection.getFollowTable();
+//            user.setFollowers(followTable.getFollowers(user.getUsername()));
+//            user.setFollowings(followTable.getFollowings(user.getUsername()));
+//            user.setBlackList(SQLConnection.getBlockTable().getBlockings(user.getUsername()));
+//            user.setDatabaseId(set1.getInt("id"));
+//            users.add(user);
+//        }
+//        while (set2.next()){
+//            User user = new User(set2.getString("username"),
+//                    null,
+//                    set2.getString("first_name"),
+//                    set2.getString("last_name"),
+//                    null,
+//                    null,
+//                    set2.getString("avatar"),
+//                    set2.getString("header"),
+//                    null//set1.getString("country")
+//                    , //TODO
+//                    set2.getDate("birthdate"),
+//                    set2.getDate("signUpDate"),
+//                    set2.getDate("lastModifiedDate"),
+//                    set2.getString("bio"),
+//                    set2.getString("location"),
+//                    set2.getString("website"));
+//            FollowTable followTable = SQLConnection.getFollowTable();
+//            user.setFollowers(followTable.getFollowers(user.getUsername()));
+//            user.setFollowings(followTable.getFollowings(user.getUsername()));
+//            user.setBlackList(SQLConnection.getBlockTable().getBlockings(user.getUsername()));
+//            user.setDatabaseId(set2.getInt("id"));
+//            users.add(user);
+//        }
+//        while (set3.next()){
+//            User user = new User(set3.getString("username"),
+//                    null,
+//                    set3.getString("first_name"),
+//                    set3.getString("last_name"),
+//                    null,
+//                    null,
+//                    set3.getString("avatar"),
+//                    set3.getString("header"),
+//                    null//set1.getString("country")
+//                    , //TODO
+//                    set3.getDate("birthdate"),
+//                    set3.getDate("signUpDate"),
+//                    set3.getDate("lastModifiedDate"),
+//                    set3.getString("bio"),
+//                    set3.getString("location"),
+//                    set3.getString("website"));
+//            FollowTable followTable = SQLConnection.getFollowTable();
+//            user.setFollowers(followTable.getFollowers(user.getUsername()));
+//            user.setFollowings(followTable.getFollowings(user.getUsername()));
+//            user.setBlackList(SQLConnection.getBlockTable().getBlockings(user.getUsername()));
+//            user.setDatabaseId(set3.getInt("id"));
+//            users.add(user);
+//        }
+//        set1.close();
+//        set2.close();
+//        set3.close();
+//        statement1.close();
+//        statement2.close();
+//        statement3.close();
         return users;
     }
     public User getUserFromDatabase(String username) throws SQLException {
