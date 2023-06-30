@@ -64,7 +64,7 @@ public class TweetWithoutImageComponent extends AnchorPane implements Initializa
         replies_label = new Label();
         fourth_layer_hbox = new HBox();
         fourth_layer_vbox = new VBox();
-        like_button = new Button();
+        like_button = new Button("like");
         retweet_button = new Button();
         quote_button = new Button();
         profile_photo = new Circle();

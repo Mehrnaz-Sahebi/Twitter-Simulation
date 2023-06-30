@@ -90,7 +90,7 @@
             </Label>
             <ScrollPane prefHeight="562.0" prefWidth="402.0">
                <content>
-                  <VBox fx:id="showingAnchor_pane" prefHeight="604.0" prefWidth="385.0" />
+                  <VBox fx:id="showingAnchor_pane" prefHeight="604.0" prefWidth="518.0" />
                </content>
             </ScrollPane>
          </children>

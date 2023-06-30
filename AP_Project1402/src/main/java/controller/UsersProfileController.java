@@ -140,7 +140,7 @@ public class UsersProfileController {
         Circle circle = new Circle();
         Image image = null;
         if (otherUser.getAvatar() == null || otherUser.getAvatar().equals("")){
-            image = new Image("images\\download2.png");
+            image = new Image("AP_Project1402\\images\\download2.png");
         }else {
             image = new Image(otherUser.getAvatar());
         }
@@ -232,7 +232,7 @@ public class UsersProfileController {
             prof = new Image(imagefile.toURI().toString());
             circle_prof.setFill(new ImagePattern(prof));
         }else if (profUrl == null || profUrl.isBlank()){
-            File imagefile = new File("images\\download2.png");
+            File imagefile = new File("AP_Project1402\\images\\download2.png");
             prof = new Image(imagefile.toURI().toString());
             circle_prof.setFill(new ImagePattern(prof));
         }
