@@ -54,6 +54,7 @@ public class TweetWithoutImageComponent extends AnchorPane{
     private Button like_button;
     private Button retweet_button;
     private Button quote_button;
+    private Button reply_button;
     private Circle profile_photo;
     private Label name_label;
     private Label username_label;
@@ -82,6 +83,7 @@ public class TweetWithoutImageComponent extends AnchorPane{
         like_button = new Button("like");
         retweet_button = new Button();
         quote_button = new Button();
+        reply_button = new Button();
         profile_photo = new Circle();
         name_label = new Label();
         username_label = new Label();
@@ -104,17 +106,17 @@ public class TweetWithoutImageComponent extends AnchorPane{
         //third-layer
         third_layer_vbox1.getChildren().add(fourth_layer_hbox);
         third_layer_vbox1.getChildren().add(fourth_layer_vbox);
-//        third_layer_vbox2.getChildren().add(like_button);
-//        third_layer_vbox2.getChildren().add(retweet_button);
+        third_layer_vbox2.getChildren().add(like_button);
+        third_layer_vbox2.getChildren().add(retweet_button);
         third_layer_vbox2.getChildren().add(quote_button);
+        third_layer_vbox2.getChildren().add(reply_button);
         //fourth_layer
         fourth_layer_hbox.getChildren().add(profile_photo);
         fourth_layer_hbox.getChildren().add(name_label);
         fourth_layer_hbox.getChildren().add(username_label);
         fourth_layer_hbox.getChildren().add(r_label);
         fourth_layer_vbox.getChildren().add(tweet_text);
-        fourth_layer_vbox.getChildren().add(like_button);
-        fourth_layer_vbox.getChildren().add(retweet_button);
+
         //nodes
         //AnchorPane
         this.setMinWidth(USE_PREF_SIZE);
@@ -181,15 +183,14 @@ public class TweetWithoutImageComponent extends AnchorPane{
 
         //third_layer_vbox2
         third_layer_vbox2.setAlignment(Pos.TOP_CENTER);
-        third_layer_vbox2.setPadding(new Insets(58,20,10,5));
+        third_layer_vbox2.setPadding(new Insets(30,20,10,0));
         third_layer_vbox2.setSpacing(15);
         third_layer_vbox2.setMinWidth(USE_PREF_SIZE);
         third_layer_vbox2.setMinHeight(USE_PREF_SIZE);
-        third_layer_vbox2.setPrefWidth(740);
+        third_layer_vbox2.setPrefWidth(112);
         third_layer_vbox2.setPrefHeight(USE_COMPUTED_SIZE);
         third_layer_vbox2.setMaxWidth(USE_PREF_SIZE);
         third_layer_vbox2.setMaxHeight(USE_PREF_SIZE);
-        third_layer_vbox2.setStyle("-fx-border-color: black");
 
         //likes_label
         likes_label.setFont(Font.font("System",13));
@@ -281,6 +282,17 @@ public class TweetWithoutImageComponent extends AnchorPane{
         quote_button.setPrefHeight(27);
         quote_button.setMaxWidth(USE_PREF_SIZE);
         quote_button.setMinHeight(USE_PREF_SIZE);
+
+        //reply_button
+        reply_button.setText("Quote Tweet");
+        reply_button.setFont(Font.font("System",12));
+        reply_button.setAlignment(Pos.CENTER);
+        reply_button.setMinWidth(USE_PREF_SIZE);
+        reply_button.setMinHeight(USE_PREF_SIZE);
+        reply_button.setPrefWidth(82);
+        reply_button.setPrefHeight(27);
+        reply_button.setMaxWidth(USE_PREF_SIZE);
+        reply_button.setMinHeight(USE_PREF_SIZE);
 
         //profile_photo
         profile_photo.setRadius(16);
@@ -393,14 +405,22 @@ public class TweetWithoutImageComponent extends AnchorPane{
                 @Override
                 public void handle(MouseEvent mouseEvent) {
                     like_button.setStyle("-fx-background-color: #ff005e;\n" +
-                            "    -fx-text-fill: white ;");
+                            "    -fx-background-radius: 5px;\n" +
+                            "    -fx-text-fill: white;\n" +
+                            "    -fx-border-width: 1px;\n" +
+                            "    -fx-border-color: #ff005e;\n" +
+                            "    -fx-border-radius: 5px;");
                 }
             });
             like_button.setOnMouseExited(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
                     like_button.setStyle("-fx-background-color: white;\n" +
-                            "    -fx-text-fill: #ff005e;");
+                            "    -fx-background-radius: 5px;\n" +
+                            "    -fx-text-fill: #ff005e;\n" +
+                            "    -fx-border-width: 1px;\n" +
+                            "    -fx-border-color: #ff005e;\n" +
+                            "    -fx-border-radius: 5px;");
                 }
             });
         }
@@ -416,14 +436,22 @@ public class TweetWithoutImageComponent extends AnchorPane{
                 @Override
                 public void handle(MouseEvent mouseEvent) {
                     like_button.setStyle("-fx-background-color: white;\n" +
-                            "    -fx-text-fill: #ff005e;");
+                            "    -fx-background-radius: 5px;\n" +
+                            "    -fx-text-fill: #ff005e;\n" +
+                            "    -fx-border-width: 1px;\n" +
+                            "    -fx-border-color: #ff005e;\n" +
+                            "    -fx-border-radius: 5px;");
                 }
             });
             like_button.setOnMouseExited(new EventHandler<MouseEvent>(){
                 @Override
                 public void handle(MouseEvent mouseEvent) {
                     like_button.setStyle("-fx-background-color: #ff005e;\n" +
-                            "    -fx-text-fill: white;");
+                            "    -fx-background-radius: 5px;\n" +
+                            "    -fx-text-fill: white;\n" +
+                            "    -fx-border-width: 1px;\n" +
+                            "    -fx-border-color: #ff005e;\n" +
+                            "    -fx-border-radius: 5px;");
                 }
             });
         }
@@ -453,14 +481,22 @@ public class TweetWithoutImageComponent extends AnchorPane{
                 @Override
                 public void handle(MouseEvent mouseEvent) {
                     retweet_button.setStyle("-fx-background-color: #0cfc18;\n" +
-                            "    -fx-text-fill: white ;");
+                            "    -fx-background-radius: 5px;\n" +
+                            "    -fx-text-fill: white;\n" +
+                            "    -fx-border-width: 1px;\n" +
+                            "    -fx-border-color: #0cfc18;\n" +
+                            "    -fx-border-radius: 5px;");
                 }
             });
             retweet_button.setOnMouseExited(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
                     retweet_button.setStyle("-fx-background-color: white;\n" +
-                            "    -fx-text-fill: #0cfc18;");
+                            "    -fx-background-radius: 5px;\n" +
+                            "    -fx-text-fill: #0cfc18;\n" +
+                            "    -fx-border-width: 1px;\n" +
+                            "    -fx-border-color: #0cfc18;\n" +
+                            "    -fx-border-radius: 5px;");
                 }
             });
         }
@@ -477,14 +513,22 @@ public class TweetWithoutImageComponent extends AnchorPane{
                 @Override
                 public void handle(MouseEvent mouseEvent) {
                     retweet_button.setStyle("-fx-background-color: white;\n" +
-                            "    -fx-text-fill: #0cfc18;");
+                            "    -fx-background-radius: 5px;\n" +
+                            "    -fx-text-fill: #0cfc18;\n" +
+                            "    -fx-border-width: 1px;\n" +
+                            "    -fx-border-color: #0cfc18;\n" +
+                            "    -fx-border-radius: 5px;");
                 }
             });
             retweet_button.setOnMouseExited(new EventHandler<MouseEvent>(){
                 @Override
                 public void handle(MouseEvent mouseEvent) {
                     retweet_button.setStyle("-fx-background-color: #0cfc18;\n" +
-                            "    -fx-text-fill: white;");
+                            "    -fx-background-radius: 5px;\n" +
+                            "    -fx-text-fill: white;\n" +
+                            "    -fx-border-width: 1px;\n" +
+                            "    -fx-border-color: #0cfc18;\n" +
+                            "    -fx-border-radius: 5px;");
                 }
             });
         }
@@ -498,6 +542,38 @@ public class TweetWithoutImageComponent extends AnchorPane{
                 else{
                     SendMessage.write(socket, new SocketModel(Api.TYPE_UNDO_RETWEET,tweet,jwt),writer);
                 }
+            }
+        });
+
+        //quote_button
+        quote_button.setFont(Font.font("System",12));
+        retweet_button.setStyle("-fx-background-color: white;\n" +
+                "    -fx-background-radius: 5px;\n" +
+                "    -fx-text-fill: #0cfc18;\n" +
+                "    -fx-border-width: 1px;\n" +
+                "    -fx-border-color: #0cfc18;\n" +
+                "    -fx-border-radius: 5px;");
+        retweet_button.setOnMouseEntered(new EventHandler<MouseEvent>(){
+
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                retweet_button.setStyle("-fx-background-color: #0cfc18;\n" +
+                        "    -fx-background-radius: 5px;\n" +
+                        "    -fx-text-fill: white;\n" +
+                        "    -fx-border-width: 1px;\n" +
+                        "    -fx-border-color: #0cfc18;\n" +
+                        "    -fx-border-radius: 5px;");
+            }
+        });
+        retweet_button.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                retweet_button.setStyle("-fx-background-color: white;\n" +
+                        "    -fx-background-radius: 5px;\n" +
+                        "    -fx-text-fill: #0cfc18;\n" +
+                        "    -fx-border-width: 1px;\n" +
+                        "    -fx-border-color: #0cfc18;\n" +
+                        "    -fx-border-radius: 5px;");
             }
         });
     }
