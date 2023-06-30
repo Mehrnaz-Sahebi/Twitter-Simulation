@@ -1,5 +1,6 @@
 package model.client;
 
+import controller.HomePageController;
 import controller.LogInController;
 import controller.TwitterApplication;
 import controller.Util;
@@ -35,6 +36,7 @@ public class ListenerForFX implements Runnable {
     private String jwToken;
     private Stage stage;
     private String username;
+    private HomePageController controller;
 
 //    public static Listener getInstance(Socket socket, ObjectOutputStream writer) throws IOException {
 //        if (instance == null) {
@@ -232,7 +234,7 @@ public class ListenerForFX implements Runnable {
                                     Platform.runLater(new Runnable() {
                                         @Override
                                         public void run() {
-                                            TwitterApplication.homePage(stage, socket, writer, jwToken,(ArrayList<Tweet>) model.data);
+                                            controller = TwitterApplication.homePage(stage, socket, writer, jwToken,(ArrayList<Tweet>) model.data);
                                         }
                                     });
                                 } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
@@ -250,7 +252,7 @@ public class ListenerForFX implements Runnable {
                                     Platform.runLater(new Runnable() {
                                         @Override
                                         public void run() {
-                                            TwitterApplication.homePage(stage, socket, writer, jwToken,(ArrayList<Tweet>) model.data);
+                                            controller = TwitterApplication.homePage(stage, socket, writer, jwToken,(ArrayList<Tweet>) model.data);
                                         }
                                     });
                                 }
@@ -258,7 +260,12 @@ public class ListenerForFX implements Runnable {
                             case TYPE_UNLIKE:
                                 if (model.message == ResponseOrErrorType.SUCCESSFUL) {
                                     System.out.println("unlike");
-
+                                    Platform.runLater(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            controller.replaceTweet((Tweet) model.data);
+                                        }
+                                    });
                                 } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
                                     String errorMessg = JavaFXUtil.getErrorMSg(model);
                                     Platform.runLater(new Runnable() {
@@ -274,7 +281,12 @@ public class ListenerForFX implements Runnable {
                             case TYPE_LIKE:
                                 if (model.message == ResponseOrErrorType.SUCCESSFUL) {
                                     System.out.println("like");
-
+                                    Platform.runLater(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            controller.replaceTweet((Tweet) model.data);
+                                        }
+                                    });
                                 } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
                                     String errorMessg = JavaFXUtil.getErrorMSg(model);
                                     Platform.runLater(new Runnable() {

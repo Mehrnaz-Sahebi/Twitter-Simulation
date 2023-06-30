@@ -9,5 +9,7 @@
 .like-button:hover{
     -fx-background-color: #ff005e;
     -fx-text-fill: #ffffff;
+}
+.retweet-button{
 
 }

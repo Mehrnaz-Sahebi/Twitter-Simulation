@@ -56,6 +56,7 @@ public class HomePageController {
     private ObjectOutputStream writer;
     private String jwt;
     private ArrayList<Tweet> timeline;
+    private ArrayList<TweetWithoutImageComponent> timelineComponents;
     private static HomePageController homePageController;
 
     public void setSocket(Socket socket) {
@@ -119,13 +120,23 @@ public class HomePageController {
     }
     public void setTimeline(ArrayList<Tweet> timeline){
         this.timeline=timeline;
+        timelineComponents = new ArrayList<TweetWithoutImageComponent>();
         for (Tweet tweet: timeline) {
-            timeline_vbox.getChildren().add(new TweetWithoutImageComponent(tweet,getUsername(),socket,writer,jwt));
+            TweetWithoutImageComponent component = new TweetWithoutImageComponent(tweet,getUsername(),socket,writer,jwt);
+            timeline_vbox.getChildren().add(component);
+            timelineComponents.add(component);
         }
     }
     public void setProfile(){
         username_label.setText(getUsername());
         //TODO profile
+    }
+    public void replaceTweet(Tweet newTweet){
+        for (TweetWithoutImageComponent component:timelineComponents) {
+            if(component.getTweet().getAuthorUsername().equals(newTweet.getAuthorUsername())&&component.getTweet().getDate().equals(newTweet.getDate())){
+                component.setTweet(newTweet,newTweet.getAuthorUsername(),socket,writer,jwt);
+            }
+        }
     }
     public String getUsername(){
         if(jwt ==null){
