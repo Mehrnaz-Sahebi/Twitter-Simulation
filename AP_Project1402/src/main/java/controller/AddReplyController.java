@@ -10,12 +10,15 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.client.SendMessage;
 import model.common.Api;
+import model.common.Reply;
 import model.common.SocketModel;
 import model.common.Tweet;
+import model.console_action.ConsoleUtil;
 import model.javafx_action.JavaFXImpl;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,37 +27,47 @@ import java.io.File;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Base64;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
-import static model.console_action.ConsoleImpl.getUsername;
+public class AddReplyController {
 
-public class AddTweetController {
+    @FXML
+    private Label alert_label;
+
+    @FXML
+    private ImageView image;
+
+    @FXML
+    private Label name;
+
+    @FXML
+    private Circle profile;
+
+    @FXML
+    private Button reply_button;
 
     @FXML
     private AnchorPane return_button;
 
     @FXML
-    private Button tweet_button;
-
-    @FXML
     private TextArea tweet_text_area;
-
+    @FXML
+    private TextArea original_tweet_text_area;
     @FXML
     private Button upload_image_button;
+
     @FXML
-    private ImageView image;
-    @FXML
-    private Label alert_label;
+    private Label username;
     private Socket socket;
     private ObjectOutputStream writer;
     private String jwt;
     private String imagePath;
+    private Tweet originalTweet;
 
     public void setSocket(Socket socket) {
         this.socket = socket;
@@ -80,15 +93,14 @@ public class AddTweetController {
         return jwt;
     }
 
-
     @FXML
     void goToHomePage(MouseEvent event) {
         SendMessage.write(socket, new SocketModel(Api.TYPE_LOADING_TIMELINE,getUsername(),jwt), writer);
     }
 
     @FXML
-    void tweet(ActionEvent event) throws URISyntaxException, IOException {
-        Tweet tweet = null;
+    void reply(ActionEvent event) throws IOException {
+        Reply reply = null;
         String tweetText = tweet_text_area.getText();
         String newImageFileName = getUsername();
         String newImageFilePath = "AP_Project1402//images//"+newImageFileName+".png";
@@ -103,13 +115,15 @@ public class AddTweetController {
             }
             File newImageFile = new File(newImageFilePath);
             Files.copy(new File(imagePath).toPath(),newImageFile.toPath(),StandardCopyOption.REPLACE_EXISTING);
-            tweet = new Tweet(getUsername(),tweetText,newImageFilePath);
+            reply = new Reply(getUsername(),tweet_text_area.getText(),newImageFilePath,originalTweet);
         }
         else {
-            tweet = new Tweet(getUsername(),tweetText,null);
+            reply = new Reply(getUsername(),tweet_text_area.getText(),null,originalTweet);
         }
-        JavaFXImpl.addTweet(tweet,socket,writer,jwt);
+
+        SendMessage.write(socket,new SocketModel(Api.TYPE_REPLY,reply),writer);
     }
+
 
     @FXML
     void uploadImage(ActionEvent event) {
@@ -121,6 +135,29 @@ public class AddTweetController {
             imagePath = file.getAbsolutePath();
         }
         image.setImage(new Image(imagePath));
+    }
+    public void start(Tweet tweet){
+        originalTweet = tweet;
+        //TODO set prof
+        name.setText(tweet.getAuthorName());
+        String dateToShow = null;
+        Date now = new Date();
+        long differenceOFDays = now.getTime() - tweet.getDate().getTime();
+        differenceOFDays = TimeUnit.MINUTES.convert(differenceOFDays, TimeUnit.MILLISECONDS);
+        if(differenceOFDays<60){
+            dateToShow = differenceOFDays + "m";
+        } else if (differenceOFDays>=60 && differenceOFDays <24*60) {
+            dateToShow = differenceOFDays/60 + "h";
+        }else {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(tweet.getDate());
+            int month = calendar.get(Calendar.MONTH);
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
+            String[] monthNames = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+            dateToShow = day +" " + monthNames[month];
+        }
+        username.setText("@"+tweet.getAuthorUsername()+ " . " + dateToShow);
+        original_tweet_text_area.setText(tweet.getText());
     }
     public String getUsername(){
         if(jwt ==null){
@@ -139,7 +176,8 @@ public class AddTweetController {
     private static String decode(String encodedString) {
         return new String(Base64.getUrlDecoder().decode(encodedString));
     }
-    public void addAlert(String alert){
+
+    public void addAlert(String alert) {
         alert_label.setText(alert);
         Thread threadTask = new Thread(new Runnable() {
             @Override

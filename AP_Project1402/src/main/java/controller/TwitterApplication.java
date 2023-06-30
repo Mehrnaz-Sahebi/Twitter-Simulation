@@ -105,6 +105,14 @@ public class TwitterApplication extends Application {
         controller.setWriter(writer);
         return controller;
     }
+    public static AddReplyController addReply(Stage stage ,Socket socket , ObjectOutputStream writer, String jwt , Tweet tweet){
+        AddReplyController controller = Util.changeScene(stage, "AddReply.fxml", "Reply");
+        controller.setSocket(socket);
+        controller.setJwt(jwt);
+        controller.setWriter(writer);
+        controller.start(tweet);
+        return controller;
+    }
     public static UsersProfileController profPage(Stage stage ,Socket socket , ObjectOutputStream writer, String jwt, User user){
         FXMLLoader fxmlLoader = new FXMLLoader(TwitterApplication.class.getResource("UsersProfile.fxml"));
         Parent root = null;

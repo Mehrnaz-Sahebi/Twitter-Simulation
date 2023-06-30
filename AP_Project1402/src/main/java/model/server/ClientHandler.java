@@ -119,7 +119,9 @@ public class ClientHandler implements Runnable {
                         if (!model.checkJwToken(secret)) {
                             res.setMessage(ResponseOrErrorType.INVALID_JWT);
                         }
-                        tweetToUnlike.getUnLiked(model.getUsername());
+                        if(res.message == ResponseOrErrorType.SUCCESSFUL) {
+                            tweetToUnlike.getUnLiked(model.getUsername());
+                        }
                         res.data = tweetToUnlike;
                         write(res);
                     }
@@ -129,7 +131,9 @@ public class ClientHandler implements Runnable {
                         if (!model.checkJwToken(secret)) {
                             res.setMessage(ResponseOrErrorType.INVALID_JWT);
                         }
-                        tweetToLike.getLiked(model.getUsername());
+                        if(res.message == ResponseOrErrorType.SUCCESSFUL){
+                            tweetToLike.getLiked(model.getUsername());
+                        }
                         res.data = tweetToLike;
                         write(res);
                     }
@@ -139,7 +143,9 @@ public class ClientHandler implements Runnable {
                         if (!model.checkJwToken(secret)) {
                             res.setMessage(ResponseOrErrorType.INVALID_JWT);
                         }
-                        tweetToUndoRetweet.getUnRetweeted(model.getUsername());
+                        if(res.message == ResponseOrErrorType.SUCCESSFUL){
+                            tweetToUndoRetweet.getUnRetweeted(model.getUsername());
+                        }
                         res.data = tweetToUndoRetweet;
                         write(res);
                     }
@@ -149,7 +155,9 @@ public class ClientHandler implements Runnable {
                         if (!model.checkJwToken(secret)) {
                             res.setMessage(ResponseOrErrorType.INVALID_JWT);
                         }
-                        tweetToReTweet.getRetweeted(model.getUsername());
+                        if(res.message == ResponseOrErrorType.SUCCESSFUL){
+                            tweetToReTweet.getRetweeted(model.getUsername());
+                        }
                         res.data = tweetToReTweet;
                         write(res);
                     }
@@ -160,7 +168,7 @@ public class ClientHandler implements Runnable {
                             res.setMessage(ResponseOrErrorType.INVALID_JWT);
                         }
                         quoteTweet.getOriginalTweet().getsAQuote(quoteTweet);
-                        res.data = quoteTweet.getOriginalTweet();
+                        res.data = quoteTweet;
                         write(res);
                     }
                     case TYPE_REPLY -> {
@@ -170,7 +178,7 @@ public class ClientHandler implements Runnable {
                             res.setMessage(ResponseOrErrorType.INVALID_JWT);
                         }
                         reply.getOriginalTweet().recievesAReply(reply);
-                        res.data = reply.getOriginalTweet();
+                        res.data = reply;
                         write(res);
                     }
                     case TYPE_FOLLOW -> {

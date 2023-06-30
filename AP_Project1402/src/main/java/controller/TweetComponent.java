@@ -19,6 +19,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
 import model.client.SendMessage;
 import model.common.*;
 
@@ -351,7 +352,15 @@ public class TweetComponent extends AnchorPane{
 
         //r_label
          if (tweet instanceof Reply) {
-            r_label.setText("Replied to "+((Reply)tweet).getOriginalTweet().getAuthorUsername());
+            r_label.setText("Replied to @"+((Reply)tweet).getOriginalTweet().getAuthorUsername());
+             for (String retweeter:tweet.getSpecials()) {
+                 if(retweeter.equals(myUsername)){
+                     r_label.setText(r_label.getText() + " (You Retweeted)");
+                 }
+                 else {
+                     r_label.setText(r_label.getText() + " ("+retweeter+" Retweeted)");
+                 }
+             }
         }else {
              r_label.setText("");
              for (String retweeter:tweet.getSpecials()) {
@@ -393,7 +402,6 @@ public class TweetComponent extends AnchorPane{
             File imageFile = new File(tweet.getPhoto());
             image.setImage(new Image(imageFile.getAbsolutePath()));
         }
-
         setTweet(tweet,myUsername,socket,writer,jwt);
     }
     public void setTweet(Tweet newTweet , String myUsername , Socket socket, ObjectOutputStream writer, String jwt){
@@ -636,7 +644,7 @@ public class TweetComponent extends AnchorPane{
         reply_button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-
+                TwitterApplication.addReply((Stage) reply_button.getScene().getWindow(),socket,writer,jwt,tweet);
             }
         });
     }

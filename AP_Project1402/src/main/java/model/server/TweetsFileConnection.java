@@ -170,10 +170,12 @@ public class TweetsFileConnection {
         } catch (IOException | ClassNotFoundException e) {
             return false;
         }
+        System.out.println("test reply");
         Tweet originalTweet = reply.getOriginalTweet();
         for (Tweet loopTweet : tweets) {
-            if (loopTweet.equals(originalTweet)) {
+            if (loopTweet.getAuthorUsername().equals(originalTweet.getAuthorUsername())&&loopTweet.getDate().equals(originalTweet.getDate())) {
                 loopTweet.recievesAReply(reply);
+                System.out.println("reply recieved");
                 break;
             }
         }

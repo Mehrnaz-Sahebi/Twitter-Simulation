@@ -62,9 +62,9 @@
                                  </font></TextArea>
                               <BorderPane maxWidth="-Infinity" minWidth="-Infinity" prefHeight="200.0">
                                  <center>
-                                    <ImageView fitHeight="200.0" fitWidth="568.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                                    <ImageView fitHeight="200.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
                                        <image>
-                                          <Image url="@../../../../../../2.jpg" />
+                                          <Image url="@../../../../../../4.jpg" />
                                        </image>
                                     </ImageView>
                                  </center>
