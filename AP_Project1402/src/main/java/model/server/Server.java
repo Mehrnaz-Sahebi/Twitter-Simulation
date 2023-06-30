@@ -17,11 +17,14 @@ public class Server {
             SQLConnection.getInstance().connect();
             UsersTable usersTable = new UsersTable();
             ExecutorService executorService = Executors.newCachedThreadPool();
+//            FollowTable followTable = new FollowTable();
+//            followTable.firstFollowsSecond("m","z");
             while (true) {
                 Socket socket = socketServer.accept();
                 ClientHandler clientHandler = new ClientHandler(socket);
                 executorService.execute(clientHandler);
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }

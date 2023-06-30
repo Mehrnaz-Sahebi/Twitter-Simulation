@@ -90,13 +90,13 @@ public class AddTweetController {
     void tweet(ActionEvent event) throws URISyntaxException, IOException {
         String tweetText = tweet_text_area.getText();
         String newImageFileName = getUsername();
-        String newImageFilePath = ".//.//.//.//images//tweet-images//"+newImageFileName+".png";
+        String newImageFilePath = "AP_Project1402//images//"+newImageFileName+".png";
         if(image.getImage()!=null){
             File checkFile = new File(newImageFilePath);
             int i = 1;
             while(checkFile.exists()){
                 newImageFileName =newImageFileName + i;
-                newImageFilePath = ".//.//.//.//images//tweet-images//"+newImageFileName+".png";
+                newImageFilePath = "AP_Project1402//images//"+newImageFileName+".png";
                 checkFile = new File(newImageFilePath);
                 i++;
             }
