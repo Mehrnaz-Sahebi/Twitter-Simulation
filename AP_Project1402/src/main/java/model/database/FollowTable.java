@@ -44,20 +44,24 @@ public class FollowTable extends AbstractTable{
         return userNames;
     }
     public synchronized void firstUnfollowsSecond(String follower, String following) throws SQLException {
-        String query = "DELETE FROM " + TABLE_NAME +  " WHERE " + COLUMN_FOLLOWER + " = '"+follower+"'" + " AND "+ COLUMN_FOLLOWING + " = '"+following+"'" ;
+//        String query = " DELETE FROM " + TABLE_NAME +  " WHERE " + COLUMN_FOLLOWER + " = '"+follower+"'" + " AND "+ COLUMN_FOLLOWING + " = '"+following+"'" ;
+        String query = " delete  from follo" ;
         PreparedStatement statement = getConnection().prepareStatement(query);
         ResultSet set = statement.executeQuery();
         set.close();
         statement.close();
     }
     public synchronized void firstFollowsSecond(String follower, String following) throws SQLException {
-        String query = " insert into follow_table (follower, following)" + " values (?, ?)" ;
-        PreparedStatement statement = getConnection().prepareStatement(query);
-        statement.setString(1, follower);
-        statement.setString(2, following);
-        ResultSet set = statement.executeQuery();
-        set.close();
-        statement.close();
+        String query = " insert into follow_table (follower , following)"
+                + " values (?, ?)";
+
+        // create the mysql insert preparedstatement
+        PreparedStatement preparedStmt = getConnection().prepareStatement(query);
+        preparedStmt.setString (1, follower);
+        preparedStmt.setString (2, following);
+
+        // execute the preparedstatement
+        preparedStmt.execute();
     }
     // TODO duobtful about username , it shouldn't be int , i think
     public synchronized void updateUsername(int username, String newUsername) throws SQLException {

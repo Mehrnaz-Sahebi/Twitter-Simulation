@@ -185,6 +185,7 @@ public class ClientHandler implements Runnable {
                     case TYPE_UNFOLLOW -> {
                         User user = (User) model.get();
                         SocketModel res = PagesToBeShownToUser.firstUnFollowsSecond(model.getUsername(), user.getUsername());
+                        res.eventType = Api.TYPE_UNFOLLOW;
                         if (!model.checkJwToken(secret)) {
                             res.setMessage(ResponseOrErrorType.INVALID_JWT);
                         }

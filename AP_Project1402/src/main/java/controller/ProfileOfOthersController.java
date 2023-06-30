@@ -115,7 +115,12 @@ public class ProfileOfOthersController {
 
     @FXML
     void follow(ActionEvent event) {
-        JavaFXImpl.follow(socket, jwt, writer, user);
+        if (un_follow_Btn.getText().equals("Follow")){
+            JavaFXImpl.follow(socket, jwt, writer, user);
+        }else if (un_follow_Btn.getText().equals("Following")){
+            JavaFXImpl.unfollow(socket, jwt, writer, user);
+        }
+
     }
 
     @FXML
@@ -168,6 +173,11 @@ public class ProfileOfOthersController {
     }
 
     public void prepareProf() {
+        if (user.getFollowers().contains(usernameOfThisUser)){
+            un_follow_Btn.setText("Following");
+        }else {
+            un_follow_Btn.setText("Follow");
+        }
         setUsername_Lbl("@" + user.getUsername());
         setName_Lbl(user.getFirstName() + " " + user.getLastName());
         setBio_labl(user.getBio());

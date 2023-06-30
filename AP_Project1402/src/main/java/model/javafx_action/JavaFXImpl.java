@@ -36,4 +36,8 @@ public class JavaFXImpl {
     public synchronized static void follow(Socket socket, String jwt, ObjectOutputStream writer, User toFollow){
         SendMessage.write(socket, new SocketModel(Api.TYPE_FOLLOW,toFollow, jwt), writer);
     }
+
+    public static void unfollow(Socket socket, String jwt, ObjectOutputStream writer, User toUnFollow) {
+        SendMessage.write(socket, new SocketModel(Api.TYPE_UNFOLLOW,toUnFollow, jwt), writer);
+    }
 }

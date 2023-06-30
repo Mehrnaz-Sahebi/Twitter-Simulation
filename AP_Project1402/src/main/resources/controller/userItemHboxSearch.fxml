@@ -36,7 +36,7 @@
             <Insets top="25.0" />
          </HBox.margin>
       </Label>
-      <Button mnemonicParsing="false" onAction="#FollowUser" styleClass="login-button" stylesheets="@style/Login.css" text="Follow">
+      <Button fx:id="followBtn" mnemonicParsing="false" onAction="#FollowUser" styleClass="login-button" stylesheets="@style/Login.css" text="Follow">
          <HBox.margin>
             <Insets top="25.0" />
          </HBox.margin>
