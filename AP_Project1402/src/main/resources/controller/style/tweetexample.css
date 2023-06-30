@@ -25,8 +25,16 @@
 .quote-button{
     -fx-background-color: white;
     -fx-background-radius: 5px;
-    -fx-text-fill: #0cfc18;
+    -fx-text-fill: #079602;
     -fx-border-width: 1px;
-    -fx-border-color: #0cfc18;
+    -fx-border-color: #079602;
+    -fx-border-radius: 5px;
+}
+.reply-button{
+    -fx-background-color: white;
+    -fx-background-radius: 5px;
+    -fx-text-fill: #ff9c00;
+    -fx-border-width: 1px;
+    -fx-border-color: #ff9c00;
     -fx-border-radius: 5px;
 }

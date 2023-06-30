@@ -370,10 +370,10 @@ public class TweetWithoutImageComponent extends AnchorPane{
         tweet_text.setFont(Font.font("System",15));
         tweet_text.setMinWidth(USE_PREF_SIZE);
         tweet_text.setMinHeight(USE_COMPUTED_SIZE);
-        tweet_text.setPrefWidth(715);
-        tweet_text.setPrefHeight(39);
-        tweet_text.setMaxWidth(USE_PREF_SIZE);
-        tweet_text.setMinHeight(USE_PREF_SIZE);
+        tweet_text.setPrefWidth(USE_COMPUTED_SIZE);
+        tweet_text.setPrefHeight(125);
+        tweet_text.setMaxWidth(704);
+        tweet_text.setMinHeight(125);
 
         setTweet(tweet,myUsername,socket,writer,jwt);
     }
@@ -546,34 +546,78 @@ public class TweetWithoutImageComponent extends AnchorPane{
         });
 
         //quote_button
-        quote_button.setFont(Font.font("System",12));
-        retweet_button.setStyle("-fx-background-color: white;\n" +
+        quote_button.setFont(Font.font("System",11));
+        quote_button.setStyle("-fx-background-color: white;\n" +
                 "    -fx-background-radius: 5px;\n" +
-                "    -fx-text-fill: #0cfc18;\n" +
+                "    -fx-text-fill: #079602;\n" +
                 "    -fx-border-width: 1px;\n" +
-                "    -fx-border-color: #0cfc18;\n" +
+                "    -fx-border-color: #079602;\n" +
                 "    -fx-border-radius: 5px;");
-        retweet_button.setOnMouseEntered(new EventHandler<MouseEvent>(){
+        quote_button.setOnMouseEntered(new EventHandler<MouseEvent>(){
 
             @Override
             public void handle(MouseEvent mouseEvent) {
-                retweet_button.setStyle("-fx-background-color: #0cfc18;\n" +
+                quote_button.setStyle("-fx-background-color: #079602;\n" +
                         "    -fx-background-radius: 5px;\n" +
                         "    -fx-text-fill: white;\n" +
                         "    -fx-border-width: 1px;\n" +
-                        "    -fx-border-color: #0cfc18;\n" +
+                        "    -fx-border-color: #079602;\n" +
                         "    -fx-border-radius: 5px;");
             }
         });
-        retweet_button.setOnMouseExited(new EventHandler<MouseEvent>() {
+        quote_button.setOnMouseExited(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                retweet_button.setStyle("-fx-background-color: white;\n" +
+                quote_button.setStyle("-fx-background-color: white;\n" +
                         "    -fx-background-radius: 5px;\n" +
-                        "    -fx-text-fill: #0cfc18;\n" +
+                        "    -fx-text-fill: #079602;\n" +
                         "    -fx-border-width: 1px;\n" +
-                        "    -fx-border-color: #0cfc18;\n" +
+                        "    -fx-border-color: #079602;\n" +
                         "    -fx-border-radius: 5px;");
+            }
+        });
+        quote_button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+
+            }
+        });
+
+        //reply_button
+        reply_button.setFont(Font.font("System",12));
+        reply_button.setStyle("-fx-background-color: white;\n" +
+                "    -fx-background-radius: 5px;\n" +
+                "    -fx-text-fill: #ff9c00;\n" +
+                "    -fx-border-width: 1px;\n" +
+                "    -fx-border-color: #ff9c00;\n" +
+                "    -fx-border-radius: 5px;");
+        reply_button.setOnMouseEntered(new EventHandler<MouseEvent>(){
+
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                reply_button.setStyle("-fx-background-color: #ff9c00;\n" +
+                        "    -fx-background-radius: 5px;\n" +
+                        "    -fx-text-fill: white;\n" +
+                        "    -fx-border-width: 1px;\n" +
+                        "    -fx-border-color: #ff9c00;\n" +
+                        "    -fx-border-radius: 5px;");
+            }
+        });
+        reply_button.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                reply_button.setStyle("-fx-background-color: white;\n" +
+                        "    -fx-background-radius: 5px;\n" +
+                        "    -fx-text-fill: #ff9c00;\n" +
+                        "    -fx-border-width: 1px;\n" +
+                        "    -fx-border-color: #ff9c00;\n" +
+                        "    -fx-border-radius: 5px;");
+            }
+        });
+        reply_button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+
             }
         });
     }
