@@ -388,7 +388,10 @@ public class TweetComponent extends AnchorPane{
             image_pane.setPrefHeight(200);
             image_pane.setMaxWidth(USE_PREF_SIZE);
             image_pane.setMaxHeight(USE_COMPUTED_SIZE);
-            image.setImage(new Image(tweet.getPhoto()));
+            image.setFitHeight(200);
+            image.setPreserveRatio(true);
+            File imageFile = new File(tweet.getPhoto());
+            image.setImage(new Image(imageFile.getAbsolutePath()));
         }
 
         setTweet(tweet,myUsername,socket,writer,jwt);

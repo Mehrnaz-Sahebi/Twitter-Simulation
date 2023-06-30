@@ -31,10 +31,12 @@ public class Tweet implements Serializable {
         date = new Date();
         favStar = false;
         hashtags = new HashSet<String>();
-        String[] words = text.split(" ");
-        for (String word : words) {
-            if (Character.toString(word.charAt(0)).equals("#")) {
-                hashtags.add(word.substring(1, word.length()));
+        if(text!=null && !text.equals(" ")&&!text.equals("")) {
+            String[] words = text.split(" ");
+            for (String word : words) {
+                if (Character.toString(word.charAt(0)).equals("#")) {
+                    hashtags.add(word.substring(1, word.length()));
+                }
             }
         }
     }
