@@ -3,6 +3,7 @@ package controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
@@ -25,6 +26,10 @@ public class UserItemHboxSearch {
     private SearchController searchController;
     private User user;
     private String usernameOfThisUser;
+    private String buttonsTxt;
+
+    @FXML
+    private Button followBtn;
 
 //    public void setSocket(Socket socket) {
 //        this.socket = socket;
@@ -47,6 +52,10 @@ public class UserItemHboxSearch {
     }
     public void setUsernameOfThisUser(String usernameOfThisUser) {
         this.usernameOfThisUser = usernameOfThisUser;
+    }
+
+    public void setButtonsTxt(String buttonsTxt) {
+        this.buttonsTxt = buttonsTxt;
     }
 
     @FXML
@@ -81,5 +90,6 @@ public class UserItemHboxSearch {
 
         name_Lbl.setText(user.getFirstName() + " " + user.getLastName());
         username_Lbl.setText(user.getUsername());
+        followBtn.setText(buttonsTxt);
     }
 }

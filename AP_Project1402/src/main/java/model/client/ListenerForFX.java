@@ -192,7 +192,7 @@ public class ListenerForFX implements Runnable {
                                     Platform.runLater(new Runnable() {
                                         @Override
                                         public void run() {
-                                            TwitterApplication.goSearchPage(stage, socket, writer, jwToken, username).prepareScene(model.get());
+                                            TwitterApplication.goSearchPage(stage, socket, writer, jwToken, getUsername()).prepareScene(model.get());
                                         }
                                     });
                                 } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
@@ -392,14 +392,28 @@ public class ListenerForFX implements Runnable {
                                 break;
                             case TYPE_UNFOLLOW:
                                 if (model.message == ResponseOrErrorType.SUCCESSFUL) {
-                                    ConsoleUtil.printUnFollowMessage();
-                                    ConsoleImpl.showOthersProf(socket, (User) model.get(), writer, jwToken);
+                                    Platform.runLater(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            TwitterApplication.profOthersPage(stage, socket, writer, jwToken, (User) model.data, getUsername()).changeButton("Follow");
+                                        }
+                                    });
                                 } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                                    JavaFXUtil.getErrorMSg(model);
-                                    ConsoleImpl.openAccountMenu(socket, writer, jwToken);
+                                    String errorMessg = JavaFXUtil.getErrorMSg(model);
+                                    Platform.runLater(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            TwitterApplication.welcomePage(stage, socket, writer, jwToken).addAlert(errorMessg);
+                                        }
+                                    });
                                 } else {
-                                    JavaFXUtil.getErrorMSg(model);
-                                    ConsoleImpl.showOthersProf(socket, (User) model.get(), writer, jwToken);
+                                    String errorMessg = JavaFXUtil.getErrorMSg(model);
+                                    Platform.runLater(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            TwitterApplication.welcomePage(stage, socket, writer, jwToken).addAlert(errorMessg);
+                                        }
+                                    });
                                 }
                                 break;
                             case TYPE_BLOCK:
