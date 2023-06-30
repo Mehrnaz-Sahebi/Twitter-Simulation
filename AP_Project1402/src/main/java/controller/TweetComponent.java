@@ -60,6 +60,12 @@ public class TweetComponent extends AnchorPane{
     private TextArea tweet_text;
     private BorderPane image_pane;
     private ImageView image;
+    private VBox quote_vbox;
+    private HBox quote_hbox;
+    private TextArea original_tweet_text;
+    private Circle original_prof;
+    private Label original_name_label;
+    private Label original_username_label;
     private Tweet tweet;
 
 
@@ -91,6 +97,12 @@ public class TweetComponent extends AnchorPane{
         tweet_text = new TextArea();
         image_pane = new BorderPane();
         image = new ImageView();
+        quote_vbox = new VBox();
+        quote_hbox = new HBox();
+        original_tweet_text = new TextArea();
+        original_prof = new Circle();
+        original_name_label = new Label();
+        original_username_label = new Label();
         //container
         this.getChildren().add(first_layer_vbox);
         //first-layer
@@ -120,6 +132,14 @@ public class TweetComponent extends AnchorPane{
         fourth_layer_vbox.getChildren().add(tweet_text);
         if(tweet.getPhoto()!=null&&(new File(tweet.getPhoto())).exists()) {
             fourth_layer_vbox.getChildren().add(image_pane);
+        }
+        if(tweet instanceof QuoteTweet){
+            fourth_layer_vbox.getChildren().add(quote_vbox);
+            quote_vbox.getChildren().add(quote_hbox);
+            quote_vbox.getChildren().add(original_tweet_text);
+            quote_hbox.getChildren().add(original_prof);
+            quote_hbox.getChildren().add(original_name_label);
+            quote_hbox.getChildren().add(original_username_label);
         }
 
         //nodes
@@ -358,17 +378,31 @@ public class TweetComponent extends AnchorPane{
                      r_label.setText(r_label.getText() + " (You Retweeted)");
                  }
                  else {
+                     r_label.setText(r_label.getText() + " (@"+retweeter+" Retweeted)");
+                 }
+             }
+        }else if (tweet instanceof QuoteTweet) {
+             r_label.setText("@"+((QuoteTweet)tweet).getOriginalTweet().getAuthorUsername() + " Quoted");
+             if(((QuoteTweet)tweet).getOriginalTweet().getAuthorUsername().equals(myUsername)){
+                 r_label.setText("You Quoted");
+             }
+             for (String retweeter:tweet.getSpecials()) {
+                 if(retweeter.equals(myUsername)){
+                     r_label.setText(r_label.getText() + " (You Retweeted)");
+                 }
+                 else {
                      r_label.setText(r_label.getText() + " ("+retweeter+" Retweeted)");
                  }
              }
-        }else {
+         }
+         else {
              r_label.setText("");
              for (String retweeter:tweet.getSpecials()) {
                  if(retweeter.equals(myUsername)){
                      r_label.setText("You Retweeted");
                  }
                  else {
-                     r_label.setText(retweeter+" Retweeted");
+                     r_label.setText("@"+retweeter+" Retweeted");
                  }
              }
         }
@@ -401,6 +435,66 @@ public class TweetComponent extends AnchorPane{
             image.setPreserveRatio(true);
             File imageFile = new File(tweet.getPhoto());
             image.setImage(new Image(imageFile.getAbsolutePath()));
+        }
+        if(tweet instanceof QuoteTweet) {
+            Tweet originalTweet = ((QuoteTweet) tweet).getOriginalTweet();
+            //quote_vbox
+            quote_vbox.setStyle("-fx-border-color: #1a35e9;\n" +
+                    "-fx-border-radius: 10px;\n" +
+                    "-fx-background-color: #cae3e7;\n" +
+                    "-fx-background-radius: 10px");
+            VBox.setMargin(quote_vbox,new Insets(10,0,15,0));
+            quote_vbox.setPadding(new Insets(0,0,0,30));
+            quote_vbox.setMinWidth(USE_PREF_SIZE);
+            quote_vbox.setMinHeight(USE_COMPUTED_SIZE);
+            quote_vbox.setPrefWidth(600);
+            quote_vbox.setPrefHeight(202);
+            quote_vbox.setMaxWidth(USE_PREF_SIZE);
+            quote_vbox.setMaxHeight(USE_COMPUTED_SIZE);
+
+            //quote_hbox
+            quote_hbox.setPadding(new Insets(10,10,10,10));
+            quote_hbox.setSpacing(15);
+            quote_hbox.setMinWidth(USE_PREF_SIZE);
+            quote_hbox.setMinHeight(USE_PREF_SIZE);
+            quote_hbox.setPrefWidth(536);
+            quote_hbox.setPrefHeight(54);
+            quote_hbox.setMaxWidth(USE_PREF_SIZE);
+            quote_hbox.setMaxHeight(USE_PREF_SIZE);
+
+            //original_tweet_text
+            original_tweet_text.setText(originalTweet.getText());
+            original_tweet_text.setFont(Font.font("System",12));
+            original_tweet_text.setStyle("-fx-control-inner-background : #cae3e7");
+            original_tweet_text.setMinWidth(USE_PREF_SIZE);
+            original_tweet_text.setMinHeight(USE_PREF_SIZE);
+            original_tweet_text.setPrefWidth(402);
+            original_tweet_text.setPrefHeight(126);
+            original_tweet_text.setMaxWidth(USE_COMPUTED_SIZE);
+            original_tweet_text.setMaxHeight(USE_PREF_SIZE);
+            VBox.setMargin(original_tweet_text,new Insets(0,30,20,0));
+
+            //original_prof
+            original_prof.setRadius(14);
+            if (originalTweet.getProfile() != null && new File(originalTweet.getProfile()).exists()) {
+                Image image = new Image(tweet.getProfile());
+                original_prof.setFill(new ImagePattern(image));
+            } else {
+                //TODO this doesn't work
+//            File imageFile = new File(".//.//.//.//images//download2.png");
+//            Image image = new Image(imageFile.getAbsolutePath());
+//            profile_photo.setFill(new ImagePattern(image));
+            }
+
+            //original_name_label
+            original_name_label.setText(originalTweet.getAuthorName());
+            original_name_label.setFont(Font.font("System",14));
+            HBox.setMargin(original_name_label,new Insets(5,0,0,0));
+
+            //original_username_label
+            original_username_label.setText(originalTweet.getAuthorUsername());
+            original_username_label.setFont(Font.font("System",12));
+            HBox.setMargin(original_username_label,new Insets(8,0,0,0));
         }
         setTweet(tweet,myUsername,socket,writer,jwt);
     }
@@ -606,6 +700,7 @@ public class TweetComponent extends AnchorPane{
         quote_button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                TwitterApplication.addQuote((Stage) quote_button.getScene().getWindow(),socket,writer,jwt,tweet);
 
             }
         });

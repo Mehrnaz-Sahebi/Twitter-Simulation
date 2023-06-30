@@ -113,6 +113,14 @@ public class TwitterApplication extends Application {
         controller.start(tweet);
         return controller;
     }
+    public static AddQuoteController addQuote(Stage stage ,Socket socket , ObjectOutputStream writer, String jwt , Tweet tweet){
+        AddQuoteController controller = Util.changeScene(stage, "AddQuote.fxml", "Quote");
+        controller.setSocket(socket);
+        controller.setJwt(jwt);
+        controller.setWriter(writer);
+        controller.start(tweet);
+        return controller;
+    }
     public static UsersProfileController profPage(Stage stage ,Socket socket , ObjectOutputStream writer, String jwt, User user){
         FXMLLoader fxmlLoader = new FXMLLoader(TwitterApplication.class.getResource("UsersProfile.fxml"));
         Parent root = null;

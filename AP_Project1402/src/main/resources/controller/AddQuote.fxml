@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddQuoteController">
+   <content>
+      <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="745.0" prefWidth="963.0" styleClass="background" stylesheets="@style/AddTweet.css">
+         <children>
+            <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="54.0" prefWidth="963.0">
+               <children>
+                  <AnchorPane fx:id="return_button" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#goToHomePage" prefHeight="38.0" prefWidth="46.0">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="-20.0" right="5.0" top="7.0" />
+                     </HBox.margin>
+                     <children>
+                        <Line endX="37.466651916503906" endY="5.1999969482421875" layoutX="53.0" layoutY="14.0" startX="8.39999771118164" startY="5.19999885559082" stroke="#1a35e9" strokeWidth="5.0" />
+                        <Line endX="5.5999908447265625" endY="3.1999969482421875" layoutX="63.0" layoutY="24.0" startX="-4.099994659423828" startY="-4.8000030517578125" stroke="#1a35e9" strokeWidth="5.0" />
+                        <Line endX="45.90000534057617" endY="6.1999969482421875" layoutX="13.0" layoutY="13.0" startX="55.59998321533203" startY="-2.5999975204467773" stroke="#1a35e9" strokeWidth="5.0" />
+                     </children>
+                  </AnchorPane>
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" />
+               </padding>
+            </HBox>
+            <Line endX="953.0" startX="20.0" stroke="#1a35e9" />
+            <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-border-color: #1a35e9; -fx-border-radius: 10px; -fx-background-color: white; -fx-background-radius: 10px;">
+               <children>
+                  <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="54.0" prefWidth="838.0" spacing="15.0">
+                     <children>
+                        <Circle fx:id="profile" fill="DODGERBLUE" radius="16.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Label fx:id="name" text="Name">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets top="5.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="username" text="username">
+                           <HBox.margin>
+                              <Insets top="8.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </HBox>
+                  <TextArea fx:id="original_tweet_text_area" editable="false" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="125.0">
+                     <VBox.margin>
+                        <Insets bottom="20.0" right="30.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </TextArea>
+               </children>
+               <padding>
+                  <Insets left="30.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets bottom="20.0" left="40.0" right="40.0" top="30.0" />
+               </VBox.margin>
+            </VBox>
+            <HBox spacing="30.0">
+               <children>
+                  <TextArea fx:id="tweet_text_area" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="283.0" prefWidth="715.0" promptText="Write a Quote..." style="-fx-control-inner-background: #cae3e7;" styleClass="text-field" stylesheets="@style/AddTweet.css">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </TextArea>
+                  <VBox alignment="TOP_CENTER" spacing="15.0">
+                     <children>
+                        <Button fx:id="quote_button" defaultButton="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#quote" stylesheets="@style/AddTweet.css" text="Quote" />
+                        <Button fx:id="upload_image_button" mnemonicParsing="false" onAction="#uploadImage" prefHeight="34.0" prefWidth="166.0" stylesheets="@style/AddTweet.css" text="Upload Image" />
+                     </children>
+                     <padding>
+                        <Insets top="20.0" />
+                     </padding>
+                  </VBox>
+               </children>
+               <padding>
+                  <Insets bottom="20.0" left="30.0" right="20.0" top="20.0" />
+               </padding>
+            </HBox>
+            <Label fx:id="alert_label" alignment="TOP_LEFT" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textAlignment="CENTER" textFill="RED">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="30.0" />
+               </VBox.margin>
+            </Label>
+            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="271.0" prefWidth="963.0">
+               <VBox.margin>
+                  <Insets top="30.0" />
+               </VBox.margin>
+               <children>
+                  <ImageView fx:id="image" fitHeight="279.0" fitWidth="593.0" layoutX="183.0" layoutY="-7.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
+   </content>
+</ScrollPane>

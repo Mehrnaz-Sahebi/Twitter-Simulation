@@ -335,14 +335,25 @@ public class ListenerForFX implements Runnable {
                                 break;
                             case TYPE_QUOTE_TWEET:
                                 if (model.message == ResponseOrErrorType.SUCCESSFUL) {
-                                    ConsoleUtil.printTweetQuotedMessage();
-                                    ConsoleImpl.tweetPage(socket, writer, (Tweet) model.get(), jwToken);
+                                    System.out.println("quote");
+                                    SendMessage.write(socket, new SocketModel(Api.TYPE_LOADING_TIMELINE,getUsername(),jwToken), writer);
                                 } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                                    JavaFXUtil.getErrorMSg(model);
-                                    ConsoleImpl.openAccountMenu(socket, writer, jwToken);
+                                    String errorMessg = JavaFXUtil.getErrorMSg(model);
+                                    Platform.runLater(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            TwitterApplication.welcomePage(stage, socket, writer, jwToken).addAlert(errorMessg);
+                                        }
+                                    });
                                 } else {
-                                    JavaFXUtil.getErrorMSg(model);
-                                    ConsoleImpl.tweetPage(socket, writer, (Tweet) model.get(), jwToken);
+                                    String errorMessg = JavaFXUtil.getErrorMSg(model);
+                                    System.out.println(errorMessg);
+                                    Platform.runLater(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            TwitterApplication.addQuote(stage, socket, writer, jwToken,((QuoteTweet)model.data).getOriginalTweet()).addAlert(errorMessg);
+                                        }
+                                    });
                                 }
                                 break;
                             case TYPE_REPLY:
