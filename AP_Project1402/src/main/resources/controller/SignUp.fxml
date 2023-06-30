@@ -31,7 +31,7 @@
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Button fx:id="rightside_signUp_Btn" layoutX="140.0" layoutY="800.0" mnemonicParsing="false" onAction="#setSign_up_button" prefHeight="35.0" prefWidth="122.0" styleClass="login-button" stylesheets="@style/Login.css" text="Sign up">
+                  <Button fx:id="rightside_signUp_Btn" defaultButton="true" layoutX="140.0" layoutY="800.0" mnemonicParsing="false" onAction="#setSign_up_button" prefHeight="35.0" prefWidth="122.0" styleClass="login-button" stylesheets="@style/Login.css" text="Sign up">
                      <font>
                         <Font size="16.0" />
                      </font>

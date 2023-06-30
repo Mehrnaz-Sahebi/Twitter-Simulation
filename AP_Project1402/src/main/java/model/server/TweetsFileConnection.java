@@ -2,6 +2,7 @@ package model.server;
 import model.common.*;
 import model.database.*;
 import java.io.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -9,6 +10,14 @@ import java.util.HashSet;
 
 public class TweetsFileConnection {
     public static synchronized SocketModel addTweet(Tweet tweet) {
+        User user = null;
+        try {
+            user = (new UsersTable()).getUserFromDatabase(tweet.getAuthorUsername());
+        } catch (SQLException e) {
+            return new SocketModel(Api.TYPE_WRITING_TWEET, ResponseOrErrorType.UNSUCCESSFUL, false);
+        }
+        tweet.setAuthorName(user.getFirstName(), user.getLastName());
+        tweet.setProfile(user.getAvatar());
         File file = new File("tweets.bin");
         HashSet<Tweet> tweets = new HashSet<Tweet>();
         if (!file.exists()) {

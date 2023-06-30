@@ -216,7 +216,9 @@ public class ListenerForFX implements Runnable {
                                         }
                                     });
                                 } else {
+
                                     String errorMessg = JavaFXUtil.getErrorMSg(model);
+                                    System.out.println(errorMessg);
                                     Platform.runLater(new Runnable() {
                                         @Override
                                         public void run() {
@@ -244,6 +246,7 @@ public class ListenerForFX implements Runnable {
                                 } else {
                                     //TODO add alert
                                     String errorMessg = JavaFXUtil.getErrorMSg(model);
+                                    System.out.println(errorMessg);
                                     Platform.runLater(new Runnable() {
                                         @Override
                                         public void run() {
@@ -254,26 +257,34 @@ public class ListenerForFX implements Runnable {
                                 break;
                             case TYPE_UNLIKE:
                                 if (model.message == ResponseOrErrorType.SUCCESSFUL) {
-                                    ConsoleUtil.printTweetUnlikedMessage();
-                                    ConsoleImpl.tweetPage(socket, writer, (Tweet) model.get(), jwToken);
+                                    System.out.println("unlike");
+
                                 } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                                    JavaFXUtil.getErrorMSg(model);
-                                    ConsoleImpl.openAccountMenu(socket, writer, jwToken);
+                                    String errorMessg = JavaFXUtil.getErrorMSg(model);
+                                    Platform.runLater(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            TwitterApplication.welcomePage(stage, socket, writer, jwToken).addAlert(errorMessg);
+                                        }
+                                    });
                                 } else {
-                                    JavaFXUtil.getErrorMSg(model);
-                                    ConsoleImpl.tweetPage(socket, writer, (Tweet) model.get(), jwToken);
+                                    //TODO add alert
                                 }
                                 break;
                             case TYPE_LIKE:
                                 if (model.message == ResponseOrErrorType.SUCCESSFUL) {
-                                    ConsoleUtil.printTweetLikedMessage();
-                                    ConsoleImpl.tweetPage(socket, writer, (Tweet) model.get(), jwToken);
+                                    System.out.println("like");
+
                                 } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
-                                    JavaFXUtil.getErrorMSg(model);
-                                    ConsoleImpl.openAccountMenu(socket, writer, jwToken);
+                                    String errorMessg = JavaFXUtil.getErrorMSg(model);
+                                    Platform.runLater(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            TwitterApplication.welcomePage(stage, socket, writer, jwToken).addAlert(errorMessg);
+                                        }
+                                    });
                                 } else {
-                                    JavaFXUtil.getErrorMSg(model);
-                                    ConsoleImpl.tweetPage(socket, writer, (Tweet) model.get(), jwToken);
+                                    //TODO add alert
                                 }
                                 break;
                             case TYPE_UNDO_RETWEET:
