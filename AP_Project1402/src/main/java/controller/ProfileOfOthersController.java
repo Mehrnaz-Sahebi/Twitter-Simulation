@@ -185,7 +185,7 @@ public class ProfileOfOthersController {
 //        setBirthdate_Labl(user.getBirthDate());
 //        setRegisteration_date_labl(user.getSignUpDate());
         setNum_of_followers(user.getNumOfFollowers());
-        setNum_of_followings(user.getNumOfFollowings());
+       setNum_of_followings(user.getNumOfFollowings());
         setCircle_prof(user.getAvatar());
         setHeader_img(user.getHeader());
         setLink_hyper(user.getWebsite());
