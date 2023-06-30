@@ -2,16 +2,11 @@ package controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import model.client.SendMessage;
@@ -24,7 +19,6 @@ import org.json.JSONObject;
 
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.net.URL;
 import java.util.*;
 
 public class HomePageController {
@@ -54,7 +48,7 @@ public class HomePageController {
     private ObjectOutputStream writer;
     private String jwt;
     private ArrayList<Tweet> timeline;
-    private ArrayList<TweetWithoutImageComponent> timelineComponents;
+    private ArrayList<TweetComponent> timelineComponents;
     private static HomePageController homePageController;
 
     public void setSocket(Socket socket) {
@@ -119,9 +113,9 @@ public class HomePageController {
     public void setTimeline(ArrayList<Tweet> timeline){
         Collections.reverse(timeline);
         this.timeline=timeline;
-        timelineComponents = new ArrayList<TweetWithoutImageComponent>();
+        timelineComponents = new ArrayList<TweetComponent>();
         for (Tweet tweet: timeline) {
-            TweetWithoutImageComponent component = new TweetWithoutImageComponent(tweet,getUsername(),socket,writer,jwt);
+            TweetComponent component = new TweetComponent(tweet,getUsername(),socket,writer,jwt);
             timeline_vbox.getChildren().add(component);
             timelineComponents.add(component);
         }
@@ -131,7 +125,7 @@ public class HomePageController {
         //TODO profile
     }
     public void replaceTweet(Tweet newTweet){
-        for (TweetWithoutImageComponent component:timelineComponents) {
+        for (TweetComponent component:timelineComponents) {
             if(component.getTweet().getAuthorUsername().equals(newTweet.getAuthorUsername())&&component.getTweet().getDate().equals(newTweet.getDate())){
                 component.setTweet(newTweet,newTweet.getAuthorUsername(),socket,writer,jwt);
             }

@@ -1,18 +1,17 @@
 package controller;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
@@ -26,13 +25,11 @@ import model.common.*;
 import java.io.File;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.net.URL;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
-public class TweetWithoutImageComponent extends AnchorPane{
+public class TweetComponent extends AnchorPane{
 
 
 
@@ -60,10 +57,12 @@ public class TweetWithoutImageComponent extends AnchorPane{
     private Label username_label;
     private Label r_label;
     private TextArea tweet_text;
+    private BorderPane image_pane;
+    private ImageView image;
     private Tweet tweet;
 
 
-    public TweetWithoutImageComponent(Tweet tweet , String myUsername , Socket socket, ObjectOutputStream writer, String jwt) {
+    public TweetComponent(Tweet tweet , String myUsername , Socket socket, ObjectOutputStream writer, String jwt) {
         super();
         this.tweet = tweet;
         //making
@@ -89,6 +88,8 @@ public class TweetWithoutImageComponent extends AnchorPane{
         username_label = new Label();
         r_label = new Label();
         tweet_text = new TextArea();
+        image_pane = new BorderPane();
+        image = new ImageView();
         //container
         this.getChildren().add(first_layer_vbox);
         //first-layer
@@ -116,6 +117,11 @@ public class TweetWithoutImageComponent extends AnchorPane{
         fourth_layer_hbox.getChildren().add(username_label);
         fourth_layer_hbox.getChildren().add(r_label);
         fourth_layer_vbox.getChildren().add(tweet_text);
+        if(tweet.getPhoto()!=null&&(new File(tweet.getPhoto())).exists()) {
+            fourth_layer_vbox.getChildren().add(image_pane);
+            //fifth_layer
+            image_pane.getChildren().add(image);
+        }
 
         //nodes
         //AnchorPane
@@ -374,6 +380,18 @@ public class TweetWithoutImageComponent extends AnchorPane{
         tweet_text.setPrefHeight(125);
         tweet_text.setMaxWidth(704);
         tweet_text.setMinHeight(125);
+
+        //image_pane + image
+        if(tweet.getPhoto()!=null&&(new File(tweet.getPhoto())).exists()) {
+            image_pane.setCenter(image);
+            image_pane.setMinWidth(USE_PREF_SIZE);
+            image_pane.setMaxHeight(USE_COMPUTED_SIZE);
+            image_pane.setPrefWidth(USE_COMPUTED_SIZE);
+            image_pane.setPrefHeight(200);
+            image_pane.setMaxWidth(USE_PREF_SIZE);
+            image_pane.setMaxHeight(USE_COMPUTED_SIZE);
+            image.setImage(new Image(tweet.getPhoto()));
+        }
 
         setTweet(tweet,myUsername,socket,writer,jwt);
     }
