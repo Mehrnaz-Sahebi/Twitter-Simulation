@@ -3,6 +3,7 @@ package controller;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
@@ -13,11 +14,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.stage.Stage;
 import model.client.SendMessage;
 import model.common.Api;
 import model.common.SocketModel;
 import model.common.User;
 import model.common.Validate;
+import model.javafx_action.JavaFXImpl;
 
 import java.io.File;
 import java.io.ObjectOutputStream;
@@ -32,6 +35,7 @@ public class ProfileOfOthersController {
     private ObjectOutputStream writer;
     private String jwt;
     private User user;
+    private String usernameOfThisUser;
     private ProfileOfOthersController usersProfileController;
 
     public void setSocket(Socket socket) {
@@ -48,6 +52,10 @@ public class ProfileOfOthersController {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public void setUsernameOfThisUser(String usernameOfThisUser) {
+        this.usernameOfThisUser = usernameOfThisUser;
     }
 
     public void setUserProfController(ProfileOfOthersController controller){
@@ -107,7 +115,7 @@ public class ProfileOfOthersController {
 
     @FXML
     void follow(ActionEvent event) {
-
+        JavaFXImpl.follow(socket, jwt, writer, user);
     }
 
     @FXML
@@ -129,7 +137,7 @@ public class ProfileOfOthersController {
         Circle circle = new Circle();
         Image image = null;
         if (otherUser.getAvatar() == null || otherUser.getAvatar().equals("")){
-            image = new Image("AP_Project1402\\images\\download2.png");
+            image = new Image("images\\download2.png");
         }else {
             image = new Image(otherUser.getAvatar());
         }
@@ -155,7 +163,7 @@ public class ProfileOfOthersController {
 //    }
     @FXML
     void GoBack(ActionEvent event) {
-//        SendMessage.write(socket, new SocketModel(Api.TYPE_LOADING_TIMELINE,user.getUsername(),jwt), writer);
+        TwitterApplication.goSearchPage((Stage) (((Node) event.getSource()).getScene().getWindow()), socket, writer, jwt, usernameOfThisUser);
 
     }
 
@@ -221,7 +229,7 @@ public class ProfileOfOthersController {
             prof = new Image(imagefile.toURI().toString());
             circle_prof.setFill(new ImagePattern(prof));
         }else if (profUrl == null || profUrl.isBlank()){
-            File imagefile = new File("AP_Project1402\\images\\download2.png");
+            File imagefile = new File("images\\download2.png");
             prof = new Image(imagefile.toURI().toString());
             circle_prof.setFill(new ImagePattern(prof));
         }
@@ -257,6 +265,10 @@ public class ProfileOfOthersController {
         threadTask.start();
 
 
+    }
+
+    public void changeButton(String msg) {
+        un_follow_Btn.setText(msg);
     }
 
 }

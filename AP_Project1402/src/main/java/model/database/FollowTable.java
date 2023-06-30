@@ -51,8 +51,10 @@ public class FollowTable extends AbstractTable{
         statement.close();
     }
     public synchronized void firstFollowsSecond(String follower, String following) throws SQLException {
-        String query = "INSERT INTO " + TABLE_NAME +  " VALUES " + " ( '"+follower+"'" + " , '"+following+"')" ;
+        String query = " insert into follow_table (follower, following)" + " values (?, ?)" ;
         PreparedStatement statement = getConnection().prepareStatement(query);
+        statement.setString(1, follower);
+        statement.setString(2, following);
         ResultSet set = statement.executeQuery();
         set.close();
         statement.close();

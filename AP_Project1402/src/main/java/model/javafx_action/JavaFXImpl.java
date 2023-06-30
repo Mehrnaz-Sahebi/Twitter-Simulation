@@ -33,4 +33,7 @@ public class JavaFXImpl {
     public synchronized static void searchWord(Socket socket, String word, ObjectOutputStream writer){
         SendMessage.write(socket, new SocketModel(Api.TYPE_USER_SEARCH,word), writer);
     }
+    public synchronized static void follow(Socket socket, String jwt, ObjectOutputStream writer, User toFollow){
+        SendMessage.write(socket, new SocketModel(Api.TYPE_FOLLOW,toFollow, jwt), writer);
+    }
 }

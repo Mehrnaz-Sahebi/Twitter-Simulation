@@ -24,6 +24,7 @@ public class UserItemHboxSearch {
 //    private User user;
     private SearchController searchController;
     private User user;
+    private String usernameOfThisUser;
 
 //    public void setSocket(Socket socket) {
 //        this.socket = socket;
@@ -44,6 +45,9 @@ public class UserItemHboxSearch {
     public void setSearchProfController(SearchController controller){
         this.searchController = controller;
     }
+    public void setUsernameOfThisUser(String usernameOfThisUser) {
+        this.usernameOfThisUser = usernameOfThisUser;
+    }
 
     @FXML
     private Label name_Lbl;
@@ -60,7 +64,7 @@ public class UserItemHboxSearch {
 
     @FXML
     void GoToOtherUsersProf(ActionEvent event) {
-        TwitterApplication.profOthersPage((Stage) (((Node) event.getSource()).getScene().getWindow()), searchController.getSocket(), searchController.getWriter(), searchController.getJwt(), user);
+        TwitterApplication.profOthersPage((Stage) (((Node) event.getSource()).getScene().getWindow()), searchController.getSocket(), searchController.getWriter(), searchController.getJwt(), user, usernameOfThisUser);
     }
     public  void setData(User user){
         this.user = user;
@@ -69,7 +73,7 @@ public class UserItemHboxSearch {
             Image newImg = new Image(img.toURI().toString());
             profCircle.setFill(new ImagePattern(newImg));
         }else {
-            File img = new File("AP_Project1402\\images\\download2.png");
+            File img = new File("images\\download2.png");
             Image newImg = new Image(img.toURI().toString());
             profCircle.setFill(new ImagePattern(newImg));
         }
