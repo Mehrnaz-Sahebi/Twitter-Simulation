@@ -200,21 +200,28 @@ public class UsersProfileController {
         }
     }
     private void makeCircleProf(String username) {
-        User otherUser = Util.getUserFromDB(username, true);
-        Label userLabel = new Label();
-        userLabel.setText("@" + username + "\n" + otherUser.getFirstName() + " " + otherUser.getLastName());
-        Circle circle = new Circle();
-        Image image = null;
-        if (otherUser.getAvatar() == null || otherUser.getAvatar().equals("")){
-//            image = new Image("AP_Project1402//images//download2.png");
-            image = new Image("images\\download2.png");
-        }else {
-            image = new Image(otherUser.getAvatar());
+        try {
+            User otherUser = Util.getUserFromDB(username, true);
+            Label userLabel = new Label();
+            userLabel.setText("@" + username + "\n" + otherUser.getFirstName() + " " + otherUser.getLastName());
+            Circle circle = new Circle();
+            Image image = null;
+            if (otherUser.getAvatar() == null || otherUser.getAvatar().equals("") || !new File(otherUser.getAvatar()).exists()){
+                File imageFile = new File("AP_Project1402//images//download2.png");
+                image = new Image(imageFile.getAbsolutePath());
+//            image = new Image("images\\download2.png");
+            }else {
+                File imageFile = new File(otherUser.getAvatar());
+                image = new Image(imageFile.getAbsolutePath());
+            }
+            circle.setFill(new ImagePattern(image));
+            HBox hBox = new HBox();
+            hBox.getChildren().addAll(circle, userLabel);
+            showingAnchor_pane.getChildren().addAll(hBox);
+        } catch (Exception e){
+            e.printStackTrace();
         }
-        circle.setFill(new ImagePattern(image));
-        HBox hBox = new HBox();
-        hBox.getChildren().addAll(circle, userLabel);
-        showingAnchor_pane.getChildren().addAll(hBox);
+
     }
 
 
@@ -287,17 +294,23 @@ public class UsersProfileController {
     }
 
     public void setCircle_prof(String profUrl) {
-        Image prof = null;
-        if (profUrl != null && !profUrl.isBlank()){
-            File imagefile = new File(profUrl);
-            prof = new Image(imagefile.toURI().toString());
-            circle_prof.setFill(new ImagePattern(prof));
-        }else if (profUrl == null || profUrl.isBlank()){
-//            File imagefile = new File("AP_Project1402//images//download2.png");
-            File imagefile = new File("images\\download2.png");
-            prof = new Image(imagefile.toURI().toString());
-            circle_prof.setFill(new ImagePattern(prof));
+        try {
+            Image prof = null;
+            System.out.println(profUrl);
+            if (profUrl != null && !profUrl.isBlank() && new File(profUrl).exists()){
+                File imagefile = new File(profUrl);
+                prof = new Image(imagefile.getAbsolutePath());
+                circle_prof.setFill(new ImagePattern(prof));
+            }else{
+                File imagefile = new File("AP_Project1402//images//download2.png");
+//            File imagefile = new File("images\\download2.png");
+                prof = new Image(imagefile.getAbsolutePath());
+                circle_prof.setFill(new ImagePattern(prof));
+            }
+        } catch (Exception e){
+            e.printStackTrace();
         }
+
 
     }
 

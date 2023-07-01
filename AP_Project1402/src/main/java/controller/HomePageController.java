@@ -90,7 +90,8 @@ public class HomePageController {
     public String getJwt() {
         return jwt;
     }
-    public void setUser(User user){
+
+    public void setUser(User user) {
         this.user = user;
     }
 
@@ -106,7 +107,7 @@ public class HomePageController {
 
     @FXML
     public void goToProfile(ActionEvent event) {
-        JavaFXImpl.seeThisUserProf(getUsername(),socket,writer,jwt);
+        JavaFXImpl.seeThisUserProf(getUsername(), socket, writer, jwt);
     }
 
     @FXML
@@ -120,13 +121,13 @@ public class HomePageController {
 
     }
 
-    public void start(ArrayList<Tweet> timeline ) {
+    public void start(ArrayList<Tweet> timeline) {
         setTimeline(timeline);
         setProfile();
     }
 
     public void setTimeline(ArrayList<Tweet> timeline) {
-        if(timeline!=null) {
+        if (timeline != null) {
             timeline_vbox.getChildren().clear();
             Collections.reverse(timeline);
             this.timeline = timeline;
@@ -138,14 +139,14 @@ public class HomePageController {
             }
         }
     }
+
     @FXML
-    public void filter(){
+    public void filter() {
         timeline_vbox.getChildren().clear();
         String filterWord = filter_hashtag.getText();
-        if(filterWord == null || filterWord.equals(" ") ||filterWord.equals("")){
+        if (filterWord == null || filterWord.equals(" ") || filterWord.equals("")) {
             SendMessage.write(socket, new SocketModel(Api.TYPE_LOADING_TIMELINE, getUsername(), jwt), writer);
-        }
-        else {
+        } else {
             timelineComponents = new ArrayList<TweetComponent>();
             for (Tweet tweet : timeline) {
                 if (tweet.doesHaveHashtag(filterWord)) {
@@ -160,16 +161,14 @@ public class HomePageController {
     public void setProfile() {
         String avatar = user.getAvatar();
         username_label.setText(getUsername());
-        if (timeline.size() != 0) {
-            if (avatar!= null && new File(avatar).exists()) {
-                File imageFile = new File(avatar);
-                Image image = new Image(imageFile.getAbsolutePath());
-                profile_circle.setFill(new ImagePattern(image));
-            } else {
-                File imageFile = new File("AP_Project1402//images//download2.png");
-                Image image = new Image(imageFile.getAbsolutePath());
-                profile_circle.setFill(new ImagePattern(image));
-            }
+        if (avatar != null && new File(avatar).exists()) {
+            File imageFile = new File(avatar);
+            Image image = new Image(imageFile.getAbsolutePath());
+            profile_circle.setFill(new ImagePattern(image));
+        } else {
+            File imageFile = new File("AP_Project1402//images//download2.png");
+            Image image = new Image(imageFile.getAbsolutePath());
+            profile_circle.setFill(new ImagePattern(image));
         }
     }
 

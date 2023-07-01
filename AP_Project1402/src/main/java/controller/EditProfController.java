@@ -162,8 +162,8 @@ public class EditProfController implements Initializable {
     private Label header_alert;
     @FXML
     private Label avatar_alert;
-    private String header_path;
-    private String avatar_path;
+    private String header_path = null;
+    private String avatar_path = null;
 
 
     @FXML
@@ -360,9 +360,10 @@ public class EditProfController implements Initializable {
                 } catch (IOException e) {
                     addAvatarAlert("Couldn't save the photo. Try again.");
                 }
+                user.setAvatar(path);
             }
         }
-        user.setAvatar(path);
+
 
 
         String headerPath = null;
@@ -376,6 +377,7 @@ public class EditProfController implements Initializable {
                 } catch (IOException e) {
                     addAvatarAlert("Couldn't save the photo. Try again.");
                 }
+                user.setHeader(headerPath);
             }
         }
 
@@ -585,23 +587,23 @@ public class EditProfController implements Initializable {
 
 
     public void setCircle_prof(String profUrl) {
-        if (Validate.NotBlank(profUrl)){
+        if (Validate.NotBlank(profUrl)&&new File(profUrl).exists()){
             File imagefile = new File(profUrl);
-            Image prof = new Image(imagefile.toURI().toString());
+            Image prof = new Image(imagefile.getAbsolutePath());
             circle_prof.setFill(new ImagePattern(prof));
             profilePath_txt.setText(profUrl);
         }else {
-            File imagefile = new File("AP_Project1402\\images\\download2.png");
+            File imagefile = new File("AP_Project1402//images//download2.png");
 //            File imagefile = new File("images\\download2.png");
-            Image prof = new Image(imagefile.toURI().toString());
+            Image prof = new Image(imagefile.getAbsolutePath());
             circle_prof.setFill(new ImagePattern(prof));
         }
 
     }
     public void setHeader_prof(String profUrl) {
-        if (Validate.NotBlank(profUrl)){
+        if (Validate.NotBlank(profUrl) && new File(profUrl).exists()){
             File imagefile = new File(profUrl);
-            Image prof = new Image(imagefile.toURI().toString());
+            Image prof = new Image(imagefile.getAbsolutePath());
             header_imgview.setImage(prof);
             headerPath_txt.setText(profUrl);
         }

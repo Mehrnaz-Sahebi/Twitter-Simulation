@@ -223,8 +223,8 @@ public class SearchController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        File imagefile = new File("images\\download3.png");
-        Image image = new Image(imagefile.toURI().toString());
+        File imagefile = new File("AP_Project1402//images//download3.png");
+        Image image = new Image(imagefile.getAbsolutePath());
         circle_search.setFill(new ImagePattern(image));
 
     }
