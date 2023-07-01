@@ -49,4 +49,7 @@ public class JavaFXImpl {
     public static void sendMsg(Socket socket, String jwt, ObjectOutputStream writer, Message msg) {
         SendMessage.write(socket, new SocketModel(Api.TYPE_MESSAGE,msg, jwt), writer);
     }
+    public static void getMsg(Socket socket, String jwt, ObjectOutputStream writer, String username) {
+        SendMessage.write(socket, new SocketModel(Api.TYPE_GET_MESSAGE,username, jwt), writer);
+    }
 }

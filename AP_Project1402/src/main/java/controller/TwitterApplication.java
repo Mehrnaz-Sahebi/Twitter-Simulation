@@ -223,4 +223,25 @@ public class TwitterApplication extends Application {
     public static void setThisUser(User newUser){
         thisuser = newUser;
     }
+    public static MessageBoxCont goMessageBox(Stage stage , Socket socket , ObjectOutputStream writer, String jwt, String username){
+        FXMLLoader fxmlLoader = new FXMLLoader(TwitterApplication.class.getResource("MessageBox.fxml"));
+        Parent root;
+        try {
+            root = fxmlLoader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        MessageBoxCont controller = fxmlLoader.getController();
+        controller.setSocket(socket);
+        controller.setJwt(jwt);
+        controller.setWriter(writer);
+        controller.setSerchController(controller);
+        controller.prepare();
+        controller.setUser(username);
+        backScene = stage.getScene();
+        Scene scene = null;
+        scene = new Scene(root);
+        stage.setScene(scene);
+        return controller;
+    }
 }

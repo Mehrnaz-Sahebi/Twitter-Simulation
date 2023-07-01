@@ -482,6 +482,42 @@ public class ListenerForFX implements Runnable {
                                     });
                                 }
                                 break;
+                    case TYPE_MESSAGE:
+                        if (model.message == ResponseOrErrorType.SUCCESSFUL) {
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+//                                    TwitterApplication.profOthersPage(null, stage, socket, writer, jwToken, (User) model.data, getUsername()).changeBlockButton("Block");
+                                }
+                            });
+                        } else {
+                            String errorMessg = JavaFXUtil.getErrorMSg(model);
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    TwitterApplication.welcomePage(stage, socket, writer, jwToken).addAlert(errorMessg);
+                                }
+                            });
+                        }
+                        break;
+                    case TYPE_GET_MESSAGE:
+                        if (model.message == ResponseOrErrorType.SUCCESSFUL) {
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    TwitterApplication.goMessageBox(stage, socket, writer, jwToken, getUsername()).prepareScene((HashSet) model.data);
+                                }
+                            });
+                        } else {
+                            String errorMessg = JavaFXUtil.getErrorMSg(model);
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    TwitterApplication.welcomePage(stage, socket, writer, jwToken).addAlert(errorMessg);
+                                }
+                            });
+                        }
+                        break;
                         }
                 }
             }catch(ClassNotFoundException | ParseException | IOException e){

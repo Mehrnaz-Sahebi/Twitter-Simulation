@@ -222,6 +222,9 @@ public class ClientHandler implements Runnable {
                     case TYPE_MESSAGE -> {
 
                     }
+                    case TYPE_GET_MESSAGE -> {
+
+                    }
                 }
             }
 
