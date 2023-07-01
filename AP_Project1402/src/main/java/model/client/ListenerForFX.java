@@ -66,6 +66,7 @@ public class ListenerForFX implements Runnable {
                 switch (model.eventType) {
                     case TYPE_SIGNIN:
                         if (model.message == ResponseOrErrorType.SUCCESSFUL) {
+                            TwitterApplication.setThisUser((User) model.data);
                             this.jwToken = model.getJwToken();
                             SendMessage.write(socket, new SocketModel(Api.TYPE_LOADING_TIMELINE,getUsername(),jwToken), writer);
                         } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
@@ -90,6 +91,7 @@ public class ListenerForFX implements Runnable {
                     case TYPE_SIGNUP:
                         if (model.message == ResponseOrErrorType.SUCCESSFUL) {
                             this.jwToken = model.getJwToken();
+                            TwitterApplication.setThisUser((User) model.data);
                             SendMessage.write(socket, new SocketModel(Api.TYPE_LOADING_TIMELINE,getUsername(),jwToken), writer);
                         } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
                             String errorMessg = JavaFXUtil.getErrorMSg(model);
@@ -161,6 +163,7 @@ public class ListenerForFX implements Runnable {
                         break;
                     case TYPE_Update_PROF:
                         if (model.message == ResponseOrErrorType.SUCCESSFUL) {
+                            TwitterApplication.setThisUser((User) model.data);
                             Platform.runLater(new Runnable() {
                                 @Override
                                 public void run() {

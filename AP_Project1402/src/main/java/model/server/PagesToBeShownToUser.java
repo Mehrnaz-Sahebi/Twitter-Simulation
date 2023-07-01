@@ -12,7 +12,7 @@ public class PagesToBeShownToUser {
         T out = SQLConnection.getUsers().select(user);
 
         if (out instanceof UserToBeSigned) {
-            return new SocketModel(Api.TYPE_SIGNIN, user);
+            return new SocketModel(Api.TYPE_SIGNIN, (new UsersTable()).getUserFromDatabase(user.getUsername()));
         } else {
             return new SocketModel(Api.TYPE_SIGNIN, (ResponseOrErrorType) out, (Object) null);
         }
@@ -32,7 +32,7 @@ public class PagesToBeShownToUser {
         }
         if (table.insert(userModule)) {
             userModule.setUserDbId(table.getUserFromDatabase(userModule.getUsername()).getDatabaseId());
-            return new SocketModel(Api.TYPE_SIGNUP, ResponseOrErrorType.SUCCESSFUL, true);
+            return new SocketModel(Api.TYPE_SIGNUP, ResponseOrErrorType.SUCCESSFUL, table.getUserFromDatabase(userModule.getUsername()));
         } else {
             return new SocketModel(Api.TYPE_SIGNUP, ResponseOrErrorType.UNSUCCESSFUL, false);
         }

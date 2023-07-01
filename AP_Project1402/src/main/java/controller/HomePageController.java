@@ -113,9 +113,9 @@ public class HomePageController {
 
     }
 
-    public void start(ArrayList timeline) {
+    public void start(ArrayList<Tweet> timeline , String avatar) {
         setTimeline(timeline);
-        setProfile();
+        setProfile(avatar);
     }
 
     public void setTimeline(ArrayList<Tweet> timeline) {
@@ -129,11 +129,11 @@ public class HomePageController {
         }
     }
 
-    public void setProfile() {
+    public void setProfile(String avatar) {
         username_label.setText(getUsername());
         if (timeline.size() != 0) {
-            if (timeline.get(0).getProfile() != null && new File(timeline.get(0).getProfile()).exists()) {
-                File imageFile = new File(timeline.get(0).getProfile());
+            if (avatar!= null && new File(avatar).exists()) {
+                File imageFile = new File(avatar);
                 Image image = new Image(imageFile.getAbsolutePath());
                 profile_circle.setFill(new ImagePattern(image));
             } else {

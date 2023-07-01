@@ -96,7 +96,7 @@ public class TwitterApplication extends Application {
         controller.setJwt(jwt);
         controller.setWriter(writer);
         controller.setHomePageController(controller);
-        controller.start(timeline);
+        controller.start(timeline ,thisuser.getAvatar());
         return controller;
     }
     public static AddTweetController addTweet(Stage stage ,Socket socket , ObjectOutputStream writer, String jwt){
@@ -218,5 +218,8 @@ public class TwitterApplication extends Application {
 //        else if (goingPage.equals("Other")) {
 //            profOthersPage(
 //        }
+    }
+    public static void setThisUser(User newUser){
+        thisuser = newUser;
     }
 }
