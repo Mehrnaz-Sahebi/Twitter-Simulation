@@ -44,18 +44,34 @@ public class BlockTable extends AbstractTable {
         return userNames;
     }
     public synchronized void firstUnblockSecend(String blocker, String blocking) throws SQLException {
-        String query = "DELETE FROM " + TABLE_NAME +  " WHERE " + COLUMN_BLOCKER + " = '"+blocker+"'" + " AND "+ COLUMN_BLOCKING + " = '"+blocking+"'" ;
+//        String query = "DELETE FROM " + TABLE_NAME +  " WHERE " + COLUMN_BLOCKER + " = '"+blocker+"'" + " AND "+ COLUMN_BLOCKING + " = '"+blocking+"'" ;
+//        PreparedStatement statement = getConnection().prepareStatement(query);
+//        ResultSet set = statement.executeQuery();
+//        set.close();
+//        statement.close();
+
+        String query = " delete  from block_table where blocker = \"" + blocker +"\" AND blocking = \"" + blocking + "\"" ;
         PreparedStatement statement = getConnection().prepareStatement(query);
-        ResultSet set = statement.executeQuery();
-        set.close();
+        int set = statement.executeUpdate();
         statement.close();
     }
     public synchronized void firstBlocksSecend(String blocker, String blocking) throws SQLException {
-        String query = "INSERT INTO " + TABLE_NAME +  " VALUES " + " ( '"+blocker+"'" + " , '"+blocking+"')" ;
-        PreparedStatement statement = getConnection().prepareStatement(query);
-        ResultSet set = statement.executeQuery();
-        set.close();
-        statement.close();
+        String query = " insert into block_table (blocker , blocking)"
+                + " values (?, ?)";
+
+        // create the mysql insert preparedstatement
+        PreparedStatement preparedStmt = getConnection().prepareStatement(query);
+        preparedStmt.setString (1, blocker);
+        preparedStmt.setString (2, blocking);
+
+        // execute the preparedstatement
+        preparedStmt.execute();
+
+//        String query = "INSERT INTO " + TABLE_NAME +  " VALUES " + " ( '"+blocker+"'" + " , '"+blocking+"')" ;
+//        PreparedStatement statement = getConnection().prepareStatement(query);
+//        ResultSet set = statement.executeQuery();
+//        set.close();
+//        statement.close();
         FollowTable followTable = new FollowTable();
         followTable.firstUnfollowsSecond(blocking,blocker);
         followTable.firstUnfollowsSecond(blocker,blocking);

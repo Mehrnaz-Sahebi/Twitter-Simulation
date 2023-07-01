@@ -44,11 +44,10 @@ public class FollowTable extends AbstractTable{
         return userNames;
     }
     public synchronized void firstUnfollowsSecond(String follower, String following) throws SQLException {
-<<<<<<< HEAD
 //        //        String query = " DELETE FROM " + TABLE_NAME +  " WHERE " + COLUMN_FOLLOWER + " = '"+follower+"'" + " AND "+ COLUMN_FOLLOWING + " = '"+following+"'" ;
-=======
+
 //        String query = " DELETE FROM " + TABLE_NAME +  " WHERE " + COLUMN_FOLLOWER + " = '"+follower+"'" + " AND "+ COLUMN_FOLLOWING + " = '"+following+"'" ;
->>>>>>> e4f38261ef04c67fa15566c743c0d2d8f29107e4
+
         String query = " delete  from follow_table where follower = \"" + follower +"\" AND following = \"" + following + "\"" ;
         PreparedStatement statement = getConnection().prepareStatement(query);
         int set = statement.executeUpdate();
@@ -64,12 +63,8 @@ public class FollowTable extends AbstractTable{
         preparedStmt.setString (2, following);
 
         // execute the preparedstatement
-        preparedStmt.execute();
-<<<<<<< HEAD
-=======
+        preparedStmt.execute();}
 
->>>>>>> e4f38261ef04c67fa15566c743c0d2d8f29107e4
-    }
     // TODO duobtful about username , it shouldn't be int , i think
     public synchronized void updateUsername(int username, String newUsername) throws SQLException {
         String query1 = "UPDATE " + TABLE_NAME + " SET " + COLUMN_FOLLOWER + " = '"+newUsername+"'" + " WHERE "+ COLUMN_FOLLOWER + " = '"+username+"'";

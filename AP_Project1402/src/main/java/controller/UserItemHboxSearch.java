@@ -2,7 +2,9 @@ package controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -14,6 +16,7 @@ import model.common.Validate;
 import model.javafx_action.JavaFXImpl;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
@@ -96,6 +99,21 @@ private Socket socket;
 
     @FXML
     void GoToOtherUsersProf(ActionEvent event) {
+        if (searchController == null){
+            FXMLLoader fxmlLoader = new FXMLLoader(TwitterApplication.class.getResource("SearchPage.fxml"));
+            Parent root;
+            try {
+                root = fxmlLoader.load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            searchController = fxmlLoader.getController();
+            searchController.setSocket(socket);
+            searchController.setJwt(jwt);
+            searchController.setWriter(writer);
+            searchController.setSerchController(searchController);
+            searchController.setUser(usernameOfThisUser);
+        }
         TwitterApplication.profOthersPage((Stage) (((Node) event.getSource()).getScene().getWindow()), searchController.getSocket(), searchController.getWriter(), searchController.getJwt(), user, usernameOfThisUser);
     }
     public  void setData(User user){

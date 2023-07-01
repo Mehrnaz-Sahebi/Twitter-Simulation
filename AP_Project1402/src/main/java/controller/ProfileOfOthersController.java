@@ -3,6 +3,7 @@ package controller;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
@@ -20,11 +21,15 @@ import model.common.Api;
 import model.common.SocketModel;
 import model.common.User;
 import model.common.Validate;
+import model.database.SQLConnection;
 import model.javafx_action.JavaFXImpl;
+import model.server.PagesToBeShownToUser;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.Iterator;
 
@@ -93,6 +98,9 @@ public class ProfileOfOthersController {
     private Label alert_lbl;
 
     @FXML
+    private Label resultLbl;
+
+    @FXML
     private Circle circle_prof;
 
     @FXML
@@ -114,6 +122,10 @@ public class ProfileOfOthersController {
     private Button un_follow_Btn;
 
     @FXML
+    private Button block_Btn;
+
+
+    @FXML
     void follow(ActionEvent event) {
         if (un_follow_Btn.getText().equals("Follow")){
             JavaFXImpl.follow(socket, jwt, writer, user);
@@ -122,19 +134,92 @@ public class ProfileOfOthersController {
         }
 
     }
-
+    @FXML
+    void block(ActionEvent event) {
+        if (block_Btn.getText().equals("Block")){
+            JavaFXImpl.block(socket, jwt, writer, user);
+        }else if (block_Btn.getText().equals("UnBlock")){
+            JavaFXImpl.unBlock(socket, jwt, writer, user);
+        }
+    }
     @FXML
     void goToLink(ActionEvent event) {
 
     }
     @FXML
     void showFollowers(MouseEvent event) {
+        showingAnchor_pane.getChildren().clear();
+        try {
+            SQLConnection.getInstance().connect();
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        resultLbl.setText("Followers");
         Iterator<String> followersIt = user.getFollowers().iterator();
         while (followersIt.hasNext()){
-            makeCircleProf(followersIt.next());
+            SocketModel socketModel = PagesToBeShownToUser.goToTheUsersProfile(followersIt.next(), true);
+//            makeCircleProf(followersIt.next());
+            FXMLLoader fxmlLoader = new FXMLLoader(SearchController.class.getResource("userItemHboxSearch.fxml"));
+//                fxmlLoader.setLocation(getClass().getResource());
+
+
+            try {
+                User thatUser = (User) socketModel.get();
+                HBox hBox = fxmlLoader.load();
+                UserItemHboxSearch uis = fxmlLoader.getController();
+                uis.setJwt(jwt);
+                uis.setSocket(socket);
+                uis.setWriter(writer);
+                if (thatUser.getFollowers().contains(user.getUsername())){
+                    uis.setButtonsTxt("Following");
+                }else {
+                    uis.setButtonsTxt("Follow");
+                }
+
+                uis.setData(thatUser);
+                showingAnchor_pane.getChildren().add(hBox);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
+    @FXML
+    void showFollowings(MouseEvent event) {
+        showingAnchor_pane.getChildren().clear();
+        try {
+            SQLConnection.getInstance().connect();
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        resultLbl.setText("Followings");
+        Iterator<String> followersIt = user.getFollowings().iterator();
+        while (followersIt.hasNext()){
+            SocketModel socketModel = PagesToBeShownToUser.goToTheUsersProfile(followersIt.next(), true);
+//            makeCircleProf(followersIt.next());
+            FXMLLoader fxmlLoader = new FXMLLoader(SearchController.class.getResource("userItemHboxSearch.fxml"));
+//                fxmlLoader.setLocation(getClass().getResource());
 
+
+            try {
+                User thatUser = (User) socketModel.get();
+                HBox hBox = fxmlLoader.load();
+                UserItemHboxSearch uis = fxmlLoader.getController();
+                uis.setJwt(jwt);
+                uis.setSocket(socket);
+                uis.setWriter(writer);
+                if (thatUser.getFollowers().contains(user.getUsername())){
+                    uis.setButtonsTxt("Following");
+                }else {
+                    uis.setButtonsTxt("Follow");
+                }
+
+                uis.setData(thatUser);
+                showingAnchor_pane.getChildren().add(hBox);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
     private void makeCircleProf(String username) {
         User otherUser = Util.getUserFromDB(username, true);
         Label userLabel = new Label();
@@ -277,8 +362,11 @@ public class ProfileOfOthersController {
 
     }
 
-    public void changeButton(String msg) {
+    public void changeButton(String msg) {//follow button
         un_follow_Btn.setText(msg);
+    }
+    public void changeBlockButton(String msg) {
+        block_Btn.setText(msg);
     }
 
 }
