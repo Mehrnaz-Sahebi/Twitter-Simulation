@@ -106,6 +106,10 @@ public class HomePageController {
     public void goToSearch(ActionEvent event) {
         TwitterApplication.goSearchPage((Stage) ((Node) event.getSource()).getScene().getWindow(), socket, writer, jwt, getUsername());
     }
+    @FXML
+    void messages(ActionEvent event) {
+
+    }
 
     @FXML
     public void reload(ActionEvent event) {
