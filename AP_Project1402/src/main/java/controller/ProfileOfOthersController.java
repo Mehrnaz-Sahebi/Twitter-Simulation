@@ -127,11 +127,17 @@ public class ProfileOfOthersController {
 
     @FXML
     void follow(ActionEvent event) {
-        if (un_follow_Btn.getText().equals("Follow")){
-            JavaFXImpl.follow(socket, jwt, writer, user);
-        }else if (un_follow_Btn.getText().equals("Following")){
-            JavaFXImpl.unfollow(socket, jwt, writer, user);
+        if (block_Btn.getText().equals("UnBlock")){
+            resultLbl.setStyle( "-fx-text-fill: red");
+            resultLbl.setText("First unblock user");
+        }else {
+            if (un_follow_Btn.getText().equals("Follow")){
+                JavaFXImpl.follow(socket, jwt, writer, user);
+            }else if (un_follow_Btn.getText().equals("Following")){
+                JavaFXImpl.unfollow(socket, jwt, writer, user);
+            }
         }
+
 
     }
     @FXML
@@ -220,22 +226,22 @@ public class ProfileOfOthersController {
             }
         }
     }
-    private void makeCircleProf(String username) {
-        User otherUser = Util.getUserFromDB(username, true);
-        Label userLabel = new Label();
-        userLabel.setText("@" + username + "\n" + otherUser.getFirstName() + " " + otherUser.getLastName());
-        Circle circle = new Circle();
-        Image image = null;
-        if (otherUser.getAvatar() == null || otherUser.getAvatar().equals("")){
-            image = new Image("images\\download2.png");
-        }else {
-            image = new Image(otherUser.getAvatar());
-        }
-        circle.setFill(new ImagePattern(image));
-        HBox hBox = new HBox();
-        hBox.getChildren().addAll(circle, userLabel);
-        showingAnchor_pane.getChildren().addAll(hBox);
-    }
+//    private void makeCircleProf(String username) {
+//        User otherUser = Util.getUserFromDB(username, true);
+//        Label userLabel = new Label();
+//        userLabel.setText("@" + username + "\n" + otherUser.getFirstName() + " " + otherUser.getLastName());
+//        Circle circle = new Circle();
+//        Image image = null;
+//        if (otherUser.getAvatar() == null || otherUser.getAvatar().equals("")){
+//            image = new Image("images\\download2.png");
+//        }else {
+//            image = new Image(otherUser.getAvatar());
+//        }
+//        circle.setFill(new ImagePattern(image));
+//        HBox hBox = new HBox();
+//        hBox.getChildren().addAll(circle, userLabel);
+//        showingAnchor_pane.getChildren().addAll(hBox);
+//    }
 
 //    @FXML
 //    void showFollowings(MouseEvent event) {
@@ -262,6 +268,11 @@ public class ProfileOfOthersController {
             un_follow_Btn.setText("Following");
         }else {
             un_follow_Btn.setText("Follow");
+        }
+        if (user.getBlocker().contains(usernameOfThisUser)){
+            block_Btn.setText("UnBlock");
+        }else {
+            block_Btn.setText("Block");
         }
         setUsername_Lbl("@" + user.getUsername());
         setName_Lbl(user.getFirstName() + " " + user.getLastName());

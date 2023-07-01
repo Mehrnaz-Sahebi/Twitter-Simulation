@@ -66,12 +66,12 @@ public class LogInController {
         return logInController;
     }
 
-
+@FXML
     public void setSign_up_button(ActionEvent event) {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         TwitterApplication.signUpPage(stage, socket, writer, jwt);
     }
-
+@FXML
     public void setLog_in_button(ActionEvent event) {
         String userName = null, pass = null;
         boolean isAllowed = true;

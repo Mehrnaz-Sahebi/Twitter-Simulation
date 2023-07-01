@@ -196,6 +196,26 @@ public class PagesToBeShownToUser {
         }
         return new SocketModel(Api.TYPE_REPLY,ResponseOrErrorType.UNSUCCESSFUL_FILE);
     }
+    public static void setBlockingsOfUser(String username1 , String username2){
+
+        UsersTable out = SQLConnection.getUsers();
+        try {
+            User profileUser = out.getUserFromDatabase(username1);
+            profileUser.getBlockings().add(username2);
+        } catch (SQLException e) {
+            System.out.println("sql disconnected");
+        }
+    }
+    public static void setBlockersOfUser(String username1 , String username2){
+
+        UsersTable out = SQLConnection.getUsers();
+        try {
+            User profileUser = out.getUserFromDatabase(username2);
+            profileUser.getBlocker().add(username1);
+        } catch (SQLException e) {
+            System.out.println("sql disconnected");
+        }
+    }
     public static void setFollowingsOfUser(String username1 , String username2){
 
         UsersTable out = SQLConnection.getUsers();
@@ -239,6 +259,8 @@ public class PagesToBeShownToUser {
         BlockTable blockTable = new BlockTable();
         try {
             blockTable.firstBlocksSecend(username1,username2);
+            setBlockingsOfUser(username1, username2);
+            setBlockersOfUser(username2, username1);
             return goToTheUsersProfile(username2, true);
         }catch (SQLException e){
             return new SocketModel(null, ResponseOrErrorType.UNSUCCESSFUL, false);

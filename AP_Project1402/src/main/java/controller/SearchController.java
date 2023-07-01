@@ -176,18 +176,21 @@ public class SearchController implements Initializable {
 
                 try {
                     User thatUser = followersIt.next();
-                    HBox hBox = fxmlLoader.load();
-                    UserItemHboxSearch uis = fxmlLoader.getController();
-                    uis.setSearchProfController(searchController);
-                    uis.setUsernameOfThisUser(username);
-                    if (thatUser.getFollowers().contains(username)){
-                        uis.setButtonsTxt("Following");
-                    }else {
-                        uis.setButtonsTxt("Follow");
-                    }
+                    if (!thatUser.getUsername().equals(username)){
 
-                    uis.setData(thatUser);
-                    showingAnchor_pane.getChildren().add(hBox);
+                        HBox hBox = fxmlLoader.load();
+                        UserItemHboxSearch uis = fxmlLoader.getController();
+                        uis.setSearchProfController(searchController);
+                        uis.setUsernameOfThisUser(username);
+                        if (thatUser.getFollowers().contains(username)){
+                            uis.setButtonsTxt("Following");
+                        }else {
+                            uis.setButtonsTxt("Follow");
+                        }
+
+                        uis.setData(thatUser);
+                        showingAnchor_pane.getChildren().add(hBox);
+                    }
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

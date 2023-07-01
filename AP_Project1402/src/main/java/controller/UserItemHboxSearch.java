@@ -90,6 +90,7 @@ private Socket socket;
 
     @FXML
     void FollowUser(ActionEvent event) {
+        fillTheContr();
         if (followBtn.getText().equals("Follow")){
             JavaFXImpl.follow(searchController.getSocket(), searchController.getJwt(), searchController.getWriter(), user);
         }else if (followBtn.getText().equals("Following")){
@@ -97,8 +98,7 @@ private Socket socket;
         }
     }
 
-    @FXML
-    void GoToOtherUsersProf(ActionEvent event) {
+    private void fillTheContr() {
         if (searchController == null){
             FXMLLoader fxmlLoader = new FXMLLoader(TwitterApplication.class.getResource("SearchPage.fxml"));
             Parent root;
@@ -114,6 +114,11 @@ private Socket socket;
             searchController.setSerchController(searchController);
             searchController.setUser(usernameOfThisUser);
         }
+    }
+
+    @FXML
+    void GoToOtherUsersProf(ActionEvent event) {
+        fillTheContr();
         TwitterApplication.profOthersPage((Stage) (((Node) event.getSource()).getScene().getWindow()), searchController.getSocket(), searchController.getWriter(), searchController.getJwt(), user, usernameOfThisUser);
     }
     public  void setData(User user){
