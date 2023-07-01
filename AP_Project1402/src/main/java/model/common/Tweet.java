@@ -35,7 +35,7 @@ public class Tweet implements Serializable {
             String[] words = text.split(" ");
             for (String word : words) {
                 if (Character.toString(word.charAt(0)).equals("#")) {
-                    hashtags.add(word.substring(1, word.length()));
+                    hashtags.add(word);
                 }
             }
         }
@@ -193,6 +193,14 @@ public class Tweet implements Serializable {
 
     public void addSpecial(String username){
         specials.add(username);
+    }
+    public boolean doesHaveHashtag(String hashtag){
+        for (String word:hashtags) {
+            if(word.equals(hashtag)){
+                return true;
+            }
+        }
+        return false;
     }
 }
 

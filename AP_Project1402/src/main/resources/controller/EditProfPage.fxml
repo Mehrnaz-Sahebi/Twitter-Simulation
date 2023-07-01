@@ -279,12 +279,20 @@
                         <Insets top="5.0" />
                      </HBox.margin>
                   </Button>
+                  <Label fx:id="avatar_alert" textFill="RED">
+                     <HBox.margin>
+                        <Insets left="10.0" top="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="8.0" />
+                     </font>
+                  </Label>
                </children>
                <VBox.margin>
                   <Insets left="20.0" />
                </VBox.margin>
             </HBox>
-            <TextField fx:id="profilePath_txt" onAction="#editProfilePhoto" prefHeight="30.0" prefWidth="443.0" promptText="enter the path of image">
+            <TextField fx:id="profilePath_txt" editable="false" onAction="#editProfilePhoto" onMouseClicked="#uploadAvatar" prefHeight="30.0" prefWidth="443.0" promptText="enter the path of image">
                <font>
                   <Font name="MV Boli" size="12.0" />
                </font>
@@ -304,12 +312,20 @@
                         <Insets top="5.0" />
                      </HBox.margin>
                   </Button>
+                  <Label fx:id="header_alert" textFill="RED">
+                     <HBox.margin>
+                        <Insets left="10.0" top="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="8.0" />
+                     </font>
+                  </Label>
                </children>
                <VBox.margin>
                   <Insets left="20.0" />
                </VBox.margin>
             </HBox>
-            <TextField fx:id="headerPath_txt" prefHeight="26.0" prefWidth="546.0" promptText="enter the path of image">
+            <TextField fx:id="headerPath_txt" editable="false" onMouseClicked="#uploadHeader" prefHeight="26.0" prefWidth="546.0" promptText="enter the path of image">
                <font>
                   <Font name="MV Boli" size="12.0" />
                </font>

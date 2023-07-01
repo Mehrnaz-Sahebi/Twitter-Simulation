@@ -6,15 +6,14 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import model.client.SendMessage;
-import model.common.Api;
-import model.common.SocketModel;
-import model.common.Tweet;
+import model.common.*;
 import model.javafx_action.JavaFXImpl;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,11 +46,16 @@ public class HomePageController {
     private Label username_label;
     @FXML
     private Button reload_button;
+    @FXML
+    private Button filter_button;
+    @FXML
+    private TextField filter_hashtag;
     private Socket socket;
     private ObjectOutputStream writer;
     private String jwt;
     private ArrayList<Tweet> timeline;
     private ArrayList<TweetComponent> timelineComponents;
+    private User user;
     private static HomePageController homePageController;
 
     public void setSocket(Socket socket) {
@@ -87,6 +91,10 @@ public class HomePageController {
         return jwt;
     }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @FXML
     void Exit(ActionEvent event) {
         TwitterApplication.signInPage((Stage) ((Node) event.getSource()).getScene().getWindow(), socket, writer, jwt);
@@ -117,34 +125,54 @@ public class HomePageController {
 
     }
 
-    public void start(ArrayList timeline) {
+    public void start(ArrayList<Tweet> timeline) {
         setTimeline(timeline);
         setProfile();
     }
 
     public void setTimeline(ArrayList<Tweet> timeline) {
-        Collections.reverse(timeline);
-        this.timeline = timeline;
-        timelineComponents = new ArrayList<TweetComponent>();
-        for (Tweet tweet : timeline) {
-            TweetComponent component = new TweetComponent(tweet, getUsername(), socket, writer, jwt);
-            timeline_vbox.getChildren().add(component);
-            timelineComponents.add(component);
+        if (timeline != null) {
+            timeline_vbox.getChildren().clear();
+            Collections.reverse(timeline);
+            this.timeline = timeline;
+            timelineComponents = new ArrayList<TweetComponent>();
+            for (Tweet tweet : timeline) {
+                TweetComponent component = new TweetComponent(tweet, getUsername(), socket, writer, jwt);
+                timeline_vbox.getChildren().add(component);
+                timelineComponents.add(component);
+            }
+        }
+    }
+
+    @FXML
+    public void filter() {
+        timeline_vbox.getChildren().clear();
+        String filterWord = filter_hashtag.getText();
+        if (filterWord == null || filterWord.equals(" ") || filterWord.equals("")) {
+            SendMessage.write(socket, new SocketModel(Api.TYPE_LOADING_TIMELINE, getUsername(), jwt), writer);
+        } else {
+            timelineComponents = new ArrayList<TweetComponent>();
+            for (Tweet tweet : timeline) {
+                if (tweet.doesHaveHashtag(filterWord)) {
+                    TweetComponent component = new TweetComponent(tweet, getUsername(), socket, writer, jwt);
+                    timeline_vbox.getChildren().add(component);
+                    timelineComponents.add(component);
+                }
+            }
         }
     }
 
     public void setProfile() {
+        String avatar = user.getAvatar();
         username_label.setText(getUsername());
-        if (timeline.size() != 0) {
-            if (timeline.get(0).getProfile() != null && new File(timeline.get(0).getProfile()).exists()) {
-                File imageFile = new File(timeline.get(0).getProfile());
-                Image image = new Image(imageFile.getAbsolutePath());
-                profile_circle.setFill(new ImagePattern(image));
-            } else {
-                File imageFile = new File("AP_Project1402//images//download2.png");
-                Image image = new Image(imageFile.getAbsolutePath());
-                profile_circle.setFill(new ImagePattern(image));
-            }
+        if (avatar != null && new File(avatar).exists()) {
+            File imageFile = new File(avatar);
+            Image image = new Image(imageFile.getAbsolutePath());
+            profile_circle.setFill(new ImagePattern(image));
+        } else {
+            File imageFile = new File("AP_Project1402//images//download2.png");
+            Image image = new Image(imageFile.getAbsolutePath());
+            profile_circle.setFill(new ImagePattern(image));
         }
     }
 

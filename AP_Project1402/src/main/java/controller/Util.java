@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class Util {
+    public static final String DEFAULT = "";
     public static <T> T changeScene(Stage stage, String fxmlFile, String title){
         Parent root = null;
         FXMLLoader fxmlLoader = new FXMLLoader(Util.class.getResource(fxmlFile));

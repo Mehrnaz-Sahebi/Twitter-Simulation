@@ -48,7 +48,6 @@ public class ClientHandler implements Runnable {
                     case TYPE_SIGNUP -> {
                         UserToBeSigned user = (UserToBeSigned) model.get();
                         SocketModel res = PagesToBeShownToUser.signUpPage(user);
-                        res.data = user;
                         res.makeJwToken(user.getUsername(), secret);
                         write(res);
                     }
@@ -80,7 +79,7 @@ public class ClientHandler implements Runnable {
                     }
                     case TYPE_Update_PROF -> {
                         User user = (User) model.get();
-                        ResponseOrErrorType res = PagesToBeShownToUser.updateProfile(user);
+                        ResponseOrErrorType res = PagesToBeShownToUser.updateProfile(user,model.getUsername());
 
                         if (!model.checkJwToken(secret)) {
                             res = ResponseOrErrorType.INVALID_JWT;
