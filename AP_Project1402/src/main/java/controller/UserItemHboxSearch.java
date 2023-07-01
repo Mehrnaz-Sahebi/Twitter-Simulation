@@ -46,7 +46,11 @@ public class UserItemHboxSearch {
 private Socket socket;
     private ObjectOutputStream writer;
     private String jwt;
+    private String backPage;
 
+    public void setBackPage(String backPage) {
+        this.backPage = backPage;
+    }
     public void setSocket(Socket socket) {
         this.socket = socket;
     }
@@ -119,7 +123,7 @@ private Socket socket;
     @FXML
     void GoToOtherUsersProf(ActionEvent event) {
         fillTheContr();
-        TwitterApplication.profOthersPage((Stage) (((Node) event.getSource()).getScene().getWindow()), searchController.getSocket(), searchController.getWriter(), searchController.getJwt(), user, usernameOfThisUser);
+        TwitterApplication.profOthersPage(backPage, (Stage) (((Node) event.getSource()).getScene().getWindow()), searchController.getSocket(), searchController.getWriter(), searchController.getJwt(), user, usernameOfThisUser);
     }
     public  void setData(User user){
         this.user = user;

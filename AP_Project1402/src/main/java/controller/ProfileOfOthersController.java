@@ -41,10 +41,15 @@ public class ProfileOfOthersController {
     private String jwt;
     private User user;
     private String usernameOfThisUser;
+    private String backPage;
     private ProfileOfOthersController usersProfileController;
 
     public void setSocket(Socket socket) {
         this.socket = socket;
+    }
+
+    public void setBackPage(String backPage) {
+        this.backPage = backPage;
     }
 
     public void setWriter(ObjectOutputStream writer) {
@@ -181,7 +186,7 @@ public class ProfileOfOthersController {
                 }else {
                     uis.setButtonsTxt("Follow");
                 }
-
+//                uis.setBackPage("Other");
                 uis.setData(thatUser);
                 showingAnchor_pane.getChildren().add(hBox);
             } catch (IOException e) {
@@ -218,7 +223,7 @@ public class ProfileOfOthersController {
                 }else {
                     uis.setButtonsTxt("Follow");
                 }
-
+//                uis.setBackPage("Other");
                 uis.setData(thatUser);
                 showingAnchor_pane.getChildren().add(hBox);
             } catch (IOException e) {
@@ -259,7 +264,10 @@ public class ProfileOfOthersController {
 //    }
     @FXML
     void GoBack(ActionEvent event) {
-        TwitterApplication.goSearchPage((Stage) (((Node) event.getSource()).getScene().getWindow()), socket, writer, jwt, usernameOfThisUser);
+        if (backPage == null){
+            backPage = "Search";
+        }
+        TwitterApplication.goBack(backPage, (Stage) (((Node) event.getSource()).getScene().getWindow()), socket, writer, jwt, usernameOfThisUser);
 
     }
 
