@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
@@ -20,9 +21,15 @@
             <Label fx:id="username_label" maxHeight="1.7976931348623157E308" onMouseClicked="#goToProfile" styleClass="username_label" stylesheets="@style/HomePage.css" text="username" />
             <Button mnemonicParsing="false" onAction="#goToProfile" styleClass="search-button" stylesheets="@style/HomePage.css" text="Profile" />
             <Button mnemonicParsing="false" onAction="#messages" styleClass="search-button" stylesheets="@style/HomePage.css" text="Messages" />
+            <TextField fx:id="filter_hashtag">
+               <VBox.margin>
+                  <Insets top="55.0" />
+               </VBox.margin>
+            </TextField>
+            <Button fx:id="filter_button" layoutX="24.0" layoutY="200.0" mnemonicParsing="false" onAction="#filter" prefWidth="62.0" styleClass="search-button" stylesheets="@style/HomePage.css" text="Filter" />
             <Button fx:id="reload_button" layoutX="26.0" layoutY="600.0" mnemonicParsing="false" onAction="#reload" styleClass="search-button" stylesheets="@style/HomePage.css" text="Reload">
                <VBox.margin>
-                  <Insets top="230.0" />
+                  <Insets top="80.0" />
                </VBox.margin>
             </Button>
             <Button fx:id="search_button" mnemonicParsing="false" onAction="#goToSearch" styleClass="search-button" stylesheets="@style/HomePage.css" text="Search">
