@@ -1,6 +1,8 @@
 package controller;
 
 import javafx.scene.Node;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import model.client.*;
 import javafx.application.Platform;
@@ -15,13 +17,14 @@ import model.common.SocketModel;
 import model.common.Validate;
 import model.javafx_action.JavaFXImpl;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class LogInController {
+public class LogInController implements Initializable{
 
     @FXML
     private Label username_alert;
@@ -30,6 +33,9 @@ public class LogInController {
 
     @FXML
     private Label login_alert;
+
+    @FXML
+    private ImageView imgView;
 
     @FXML
     private Button side_signupBtn;
@@ -136,5 +142,12 @@ public class LogInController {
         });
         threadTask.start();
 
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        File newFile =new File("images\\popular-social-media-creative-Twitter-logo-png.png");
+        Image img = new Image(newFile.toURI().toString());
+        imgView.setImage(img);
     }
 }

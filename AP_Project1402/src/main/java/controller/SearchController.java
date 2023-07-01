@@ -187,7 +187,7 @@ public class SearchController implements Initializable {
                         }else {
                             uis.setButtonsTxt("Follow");
                         }
-
+                        uis.setBackPage("Search");
                         uis.setData(thatUser);
                         showingAnchor_pane.getChildren().add(hBox);
                     }

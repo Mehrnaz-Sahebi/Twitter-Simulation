@@ -21,6 +21,7 @@ import java.util.concurrent.Executors;
 
 public class TwitterApplication extends Application {
     static Scene backScene = null;
+    private static User thisuser = null;
     public TwitterApplication() {
 
     }
@@ -136,12 +137,13 @@ public class TwitterApplication extends Application {
         controller.setUserProfController(controller);
         controller.setUser(user);
         controller.prepareProf();
+        thisuser = user;
         Scene scene = null;
         scene = new Scene(root);
         stage.setScene(scene);
         return controller;
     }
-    public static ProfileOfOthersController profOthersPage(Stage stage ,Socket socket , ObjectOutputStream writer, String jwt, User user, String usernameThis){
+    public static ProfileOfOthersController profOthersPage(String back, Stage stage ,Socket socket , ObjectOutputStream writer, String jwt, User user, String usernameThis){
         FXMLLoader fxmlLoader = new FXMLLoader(TwitterApplication.class.getResource("OthersProfile.fxml"));
         Parent root = null;
         try {
@@ -156,6 +158,7 @@ public class TwitterApplication extends Application {
         controller.setUserProfController(controller);
         controller.setUser(user);
         controller.setUsernameOfThisUser(usernameThis);
+        controller.setBackPage(back);
         controller.prepareProf();
         Scene scene = null;
         scene = new Scene(root);
@@ -205,5 +208,15 @@ public class TwitterApplication extends Application {
         scene = new Scene(root);
         stage.setScene(scene);
         return controller;
+    }
+    public static void goBack(String goingPage, Stage stage, Socket socket , ObjectOutputStream writer, String jwt, String username){
+        if (goingPage.equals("Prof")){
+            goBackProfilePage(stage, socket, writer, jwt, thisuser);
+        } else if (goingPage.equals("Search")) {
+            goSearchPage(stage, socket, writer, jwt, username);
+        }
+//        else if (goingPage.equals("Other")) {
+//            profOthersPage(
+//        }
     }
 }

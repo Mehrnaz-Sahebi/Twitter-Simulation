@@ -395,7 +395,7 @@ public class ListenerForFX implements Runnable {
                                     Platform.runLater(new Runnable() {
                                         @Override
                                         public void run() {
-                                            TwitterApplication.profOthersPage(stage, socket, writer, jwToken, (User) model.data, getUsername()).changeButton("Following");
+                                            TwitterApplication.profOthersPage(null, stage, socket, writer, jwToken, (User) model.data, getUsername()).changeButton("Following");
                                         }
                                     });
 
@@ -422,7 +422,7 @@ public class ListenerForFX implements Runnable {
                                     Platform.runLater(new Runnable() {
                                         @Override
                                         public void run() {
-                                            TwitterApplication.profOthersPage(stage, socket, writer, jwToken, (User) model.data, getUsername()).changeButton("Follow");
+                                            TwitterApplication.profOthersPage(null, stage, socket, writer, jwToken, (User) model.data, getUsername()).changeButton("Follow");
                                         }
                                     });
                                 } else if (model.message == ResponseOrErrorType.INVALID_JWT) {
@@ -448,7 +448,7 @@ public class ListenerForFX implements Runnable {
                                     Platform.runLater(new Runnable() {
                                         @Override
                                         public void run() {
-                                            TwitterApplication.profOthersPage(stage, socket, writer, jwToken, (User) model.data, getUsername()).changeBlockButton("UnBlock");
+                                            TwitterApplication.profOthersPage(null, stage, socket, writer, jwToken, (User) model.data, getUsername()).changeBlockButton("UnBlock");
                                         }
                                     });
                                 }else {
@@ -466,7 +466,7 @@ public class ListenerForFX implements Runnable {
                                     Platform.runLater(new Runnable() {
                                         @Override
                                         public void run() {
-                                            TwitterApplication.profOthersPage(stage, socket, writer, jwToken, (User) model.data, getUsername()).changeBlockButton("Block");
+                                            TwitterApplication.profOthersPage(null, stage, socket, writer, jwToken, (User) model.data, getUsername()).changeBlockButton("Block");
                                         }
                                     });
                                 } else {

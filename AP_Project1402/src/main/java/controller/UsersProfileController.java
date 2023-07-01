@@ -158,7 +158,7 @@ public class UsersProfileController {
                 }else {
                     uis.setButtonsTxt("Follow");
                 }
-
+                uis.setBackPage("Prof");
                 uis.setData(thatUser);
                 showingAnchor_pane.getChildren().add(hBox);
             } catch (IOException e) {
@@ -191,7 +191,7 @@ public class UsersProfileController {
                 }else {
                     uis.setButtonsTxt("Follow");
                 }
-
+                uis.setBackPage("Prof");
                 uis.setData(thatUser);
                 showingAnchor_pane.getChildren().add(hBox);
             } catch (IOException e) {
