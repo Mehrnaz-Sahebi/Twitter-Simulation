@@ -220,16 +220,22 @@ public class ClientHandler implements Runnable {
 
                     }
                     case TYPE_MESSAGE -> {
-
+                        Message message = (Message) model.get();
+                        SocketModel res = MessagesFileConnection.addMessage(message);
+                        write(res);
                     }
                     case TYPE_GET_MESSAGE -> {
-
+                        String usernsme = (String) model.get();
+                        SocketModel res = MessagesFileConnection.findMessagesFor(usernsme);
+                        write(res);
                     }
                 }
             }
 
         } catch (IOException | ClassNotFoundException | SQLException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 

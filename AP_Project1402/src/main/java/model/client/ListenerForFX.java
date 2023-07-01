@@ -487,6 +487,7 @@ public class ListenerForFX implements Runnable {
                             Platform.runLater(new Runnable() {
                                 @Override
                                 public void run() {
+                                    //nothing
 //                                    TwitterApplication.profOthersPage(null, stage, socket, writer, jwToken, (User) model.data, getUsername()).changeBlockButton("Block");
                                 }
                             });
@@ -505,7 +506,7 @@ public class ListenerForFX implements Runnable {
                             Platform.runLater(new Runnable() {
                                 @Override
                                 public void run() {
-                                    TwitterApplication.goMessageBox(stage, socket, writer, jwToken, getUsername()).prepareScene((HashSet) model.data);
+                                    TwitterApplication.goMessageBox(stage, socket, writer, jwToken, getUsername()).prepareScene((HashSet<Message>) model.data);
                                 }
                             });
                         } else {

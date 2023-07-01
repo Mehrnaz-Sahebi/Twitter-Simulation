@@ -116,7 +116,7 @@ public class HomePageController {
     }
     @FXML
     void messages(ActionEvent event) {
-
+        TwitterApplication.goMessageBox((Stage) ((Node) event.getSource()).getScene().getWindow(), socket, writer, jwt, getUsername());
     }
 
     @FXML
@@ -170,7 +170,7 @@ public class HomePageController {
             Image image = new Image(imageFile.getAbsolutePath());
             profile_circle.setFill(new ImagePattern(image));
         } else {
-            File imageFile = new File("AP_Project1402//images//download2.png");
+            File imageFile = new File("images//download2.png");
             Image image = new Image(imageFile.getAbsolutePath());
             profile_circle.setFill(new ImagePattern(image));
         }

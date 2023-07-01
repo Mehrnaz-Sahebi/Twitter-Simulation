@@ -1,6 +1,8 @@
 package model.common;
 
-public class Message {
+import java.io.Serializable;
+
+public class Message implements Serializable {
     private String senderUsername;
     private String msg;
     private String toWhom;
