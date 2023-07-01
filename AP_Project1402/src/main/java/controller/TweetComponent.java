@@ -322,13 +322,13 @@ public class TweetComponent extends AnchorPane{
         //profile_photo
         profile_photo.setRadius(16);
         if(tweet.getProfile()!=null && new File(tweet.getProfile()).exists()){
-            Image image = new Image(tweet.getProfile());
+            File imageFile = new File(tweet.getProfile());
+            Image image = new Image(imageFile.getAbsolutePath());
             profile_photo.setFill(new ImagePattern(image));
         } else {
-            //TODO this doesn't work
-//            File imageFile = new File(".//.//.//.//images//download2.png");
-//            Image image = new Image(imageFile.getAbsolutePath());
-//            profile_photo.setFill(new ImagePattern(image));
+            File imageFile = new File("AP_Project1402//images//download2.png");
+            Image image = new Image(imageFile.getAbsolutePath());
+            profile_photo.setFill(new ImagePattern(image));
         }
 
         //name_label
@@ -382,8 +382,8 @@ public class TweetComponent extends AnchorPane{
                  }
              }
         }else if (tweet instanceof QuoteTweet) {
-             r_label.setText("@"+((QuoteTweet)tweet).getOriginalTweet().getAuthorUsername() + " Quoted");
-             if(((QuoteTweet)tweet).getOriginalTweet().getAuthorUsername().equals(myUsername)){
+             r_label.setText("@"+tweet.getAuthorUsername() + " Quoted");
+             if(tweet.getAuthorUsername().equals(myUsername)){
                  r_label.setText("You Quoted");
              }
              for (String retweeter:tweet.getSpecials()) {
@@ -476,14 +476,14 @@ public class TweetComponent extends AnchorPane{
 
             //original_prof
             original_prof.setRadius(14);
-            if (originalTweet.getProfile() != null && new File(originalTweet.getProfile()).exists()) {
-                Image image = new Image(tweet.getProfile());
+            if(originalTweet.getProfile()!=null && new File(originalTweet.getProfile()).exists()){
+                File imageFile = new File(originalTweet.getProfile());
+                Image image = new Image(imageFile.getAbsolutePath());
                 original_prof.setFill(new ImagePattern(image));
             } else {
-                //TODO this doesn't work
-//            File imageFile = new File(".//.//.//.//images//download2.png");
-//            Image image = new Image(imageFile.getAbsolutePath());
-//            profile_photo.setFill(new ImagePattern(image));
+                File imageFile = new File("AP_Project1402//images//download2.png");
+                Image image = new Image(imageFile.getAbsolutePath());
+                original_prof.setFill(new ImagePattern(image));
             }
 
             //original_name_label

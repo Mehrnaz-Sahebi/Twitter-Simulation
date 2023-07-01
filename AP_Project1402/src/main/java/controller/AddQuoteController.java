@@ -10,6 +10,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -20,6 +21,10 @@ import model.javafx_action.JavaFXImpl;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
+import javax.imageio.stream.FileImageInputStream;
+import javax.imageio.stream.ImageInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -29,6 +34,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
 
 public class AddQuoteController {
@@ -97,28 +103,32 @@ public class AddQuoteController {
 
     @FXML
     void quote(ActionEvent event) throws IOException {
-        QuoteTweet quoteTweet = null;
-        String tweetText = tweet_text_area.getText();
-        String newImageFileName = getUsername();
-        String newImageFilePath = "AP_Project1402//images//"+newImageFileName+".png";
-        if(image.getImage()!=null){
-            File checkFile = new File(newImageFilePath);
-            int i = 1;
-            while(checkFile.exists()){
-                newImageFileName =newImageFileName + i;
-                newImageFilePath = "AP_Project1402//images//"+newImageFileName+".png";
-                checkFile = new File(newImageFilePath);
-                i++;
-            }
-            File newImageFile = new File(newImageFilePath);
-            Files.copy(new File(imagePath).toPath(),newImageFile.toPath(),StandardCopyOption.REPLACE_EXISTING);
-            quoteTweet = new QuoteTweet(getUsername(),tweet_text_area.getText(),newImageFilePath,originalTweet);
-                    }
-        else {
-            quoteTweet = new QuoteTweet(getUsername(),tweet_text_area.getText(),null,originalTweet);
+        if(tweet_text_area.getText().length()>280){
+            addAlert("The text shouldn't be contained of more than 280 characters.");
         }
+        else {
+            QuoteTweet quoteTweet = null;
+            String tweetText = tweet_text_area.getText();
+            String newImageFileName = getUsername();
+            String newImageFilePath = "AP_Project1402//images//" + newImageFileName + ".png";
+            if (image.getImage() != null) {
+                File checkFile = new File(newImageFilePath);
+                int i = 1;
+                while (checkFile.exists()) {
+                    newImageFileName = newImageFileName + i;
+                    newImageFilePath = "AP_Project1402//images//" + newImageFileName + ".png";
+                    checkFile = new File(newImageFilePath);
+                    i++;
+                }
+                File newImageFile = new File(newImageFilePath);
+                Files.copy(new File(imagePath).toPath(), newImageFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                quoteTweet = new QuoteTweet(getUsername(), tweet_text_area.getText(), newImageFilePath, originalTweet);
+            } else {
+                quoteTweet = new QuoteTweet(getUsername(), tweet_text_area.getText(), null, originalTweet);
+            }
 
-        SendMessage.write(socket,new SocketModel(Api.TYPE_QUOTE_TWEET,quoteTweet),writer);
+            SendMessage.write(socket, new SocketModel(Api.TYPE_QUOTE_TWEET, quoteTweet), writer);
+        }
     }
 
 
@@ -129,13 +139,25 @@ public class AddQuoteController {
         File file = fil_chooser.showOpenDialog((Stage) upload_image_button.getScene().getWindow());
 
         if (file != null) {
-            imagePath = file.getAbsolutePath();
+            if(checkSize(file)){
+                imagePath = file.getAbsolutePath();
+                image.setImage(new Image(imagePath));
+            } else {
+                addAlert("The image can't be larger than 1600*900");
+            }
         }
-        image.setImage(new Image(imagePath));
     }
     public void start(Tweet tweet){
         originalTweet = tweet;
-        //TODO set prof
+        if(originalTweet.getProfile()!=null && new File(originalTweet.getProfile()).exists()){
+            File imageFile = new File(originalTweet.getProfile());
+            Image image = new Image(imageFile.getAbsolutePath());
+            profile.setFill(new ImagePattern(image));
+        } else {
+            File imageFile = new File("AP_Project1402//images//download2.png");
+            Image image = new Image(imageFile.getAbsolutePath());
+            profile.setFill(new ImagePattern(image));
+        }
         name.setText(tweet.getAuthorName());
         String dateToShow = null;
         Date now = new Date();
@@ -193,5 +215,29 @@ public class AddQuoteController {
             }
         });
         threadTask.start();
+    }
+    public boolean checkSize (File imgFile) {
+        int pos = imgFile.getName().lastIndexOf(".");
+        if (pos == -1)
+            addAlert("No extension for file: " + imgFile.getAbsolutePath());
+        String suffix = imgFile.getName().substring(pos + 1);
+        Iterator<ImageReader> iter = ImageIO.getImageReadersBySuffix(suffix);
+        while(iter.hasNext()) {
+            ImageReader reader = iter.next();
+            try {
+                ImageInputStream stream = new FileImageInputStream(imgFile);
+                reader.setInput(stream);
+                int width = reader.getWidth(reader.getMinIndex());
+                int height = reader.getHeight(reader.getMinIndex());
+                if(width>1600||height>900){
+                    return false;
+                }
+            } catch (IOException e) {
+                addAlert("Error reading: " + imgFile.getAbsolutePath());
+            } finally {
+                reader.dispose();
+            }
+        }
+        return true;
     }
 }
