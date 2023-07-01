@@ -4,10 +4,12 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -17,10 +19,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import model.client.SendMessage;
-import model.common.Api;
-import model.common.SocketModel;
-import model.common.User;
-import model.common.Validate;
+import model.common.*;
 import model.database.SQLConnection;
 import model.javafx_action.JavaFXImpl;
 import model.server.PagesToBeShownToUser;
@@ -29,11 +28,13 @@ import java.io.File;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.net.URL;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.ResourceBundle;
 
-public class ProfileOfOthersController {
+public class ProfileOfOthersController implements Initializable {
 
 
     private Socket socket;
@@ -119,6 +120,13 @@ public class ProfileOfOthersController {
 
     @FXML
     private Label num_of_tweets;
+    @FXML
+    private Label msgLbl;
+
+    @FXML
+    private TextField sendMsgField;
+    @FXML
+    private Button sendBtn;
 
     @FXML
     private VBox showingAnchor_pane;
@@ -271,6 +279,21 @@ public class ProfileOfOthersController {
 
     }
 
+    @FXML
+    void sendMsg(ActionEvent event) {
+        msgLbl.setVisible(true);
+        msgLbl.setText("Write Message");
+        sendMsgField.setVisible(true);
+        sendBtn.setVisible(true);
+    }
+
+    @FXML
+    void send(ActionEvent event) {
+        String msg = sendMsgField.getText();
+        Message message = new Message(usernameOfThisUser, msg, user.getUsername());
+        JavaFXImpl.sendMsg(socket, jwt, writer, message);
+    }
+
     public void prepareProf() {
         if (user.getFollowers().contains(usernameOfThisUser)){
             un_follow_Btn.setText("Following");
@@ -388,5 +411,11 @@ public class ProfileOfOthersController {
         block_Btn.setText(msg);
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        msgLbl.setVisible(false);
+        sendMsgField.setVisible(false);
+        sendBtn.setVisible(false);
+    }
 }
 

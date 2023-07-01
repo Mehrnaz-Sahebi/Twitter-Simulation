@@ -219,6 +219,9 @@ public class ClientHandler implements Runnable {
                     case TYPE_OFFLINE_REQUEST -> {
 
                     }
+                    case TYPE_MESSAGE -> {
+
+                    }
                 }
             }
 

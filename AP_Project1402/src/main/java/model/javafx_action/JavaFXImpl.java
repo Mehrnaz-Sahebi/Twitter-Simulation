@@ -46,4 +46,7 @@ public class JavaFXImpl {
     public static void unBlock(Socket socket, String jwt, ObjectOutputStream writer, User toUnBlock) {
         SendMessage.write(socket, new SocketModel(Api.TYPE_UNBLOCK,toUnBlock, jwt), writer);
     }
+    public static void sendMsg(Socket socket, String jwt, ObjectOutputStream writer, Message msg) {
+        SendMessage.write(socket, new SocketModel(Api.TYPE_MESSAGE,msg, jwt), writer);
+    }
 }
