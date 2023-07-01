@@ -11,6 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.common.Countries;
 import model.common.ResponseOrErrorType;
@@ -18,12 +19,21 @@ import model.common.User;
 import model.common.Validate;
 import model.javafx_action.JavaFXImpl;
 
+import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
+import javax.imageio.stream.FileImageInputStream;
+import javax.imageio.stream.ImageInputStream;
 import java.io.File;
+import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.ResourceBundle;
 import java.util.zip.InflaterInputStream;
 
@@ -148,6 +158,9 @@ public class EditProfController implements Initializable {
     private TextField email_Txt;
     @FXML
     private TextField location_Txt;
+    private Label header_alert;
+    private Label avatar_alert;
+
 
     @FXML
     void EditBirthdate(MouseEvent event) {
@@ -332,17 +345,31 @@ public class EditProfController implements Initializable {
         }
 
         String path = null;
-        try {
-            path = profilePath_txt.getText();
-            user.setAvatar(path);
-        }catch (NullPointerException ignored){
+        if(profilePath_txt.getText()!=null && !profilePath_txt.getText().equals("")){
+            if(new File(profilePath_txt.getText()).exists()){
+                path = "AP_Project1402//images//avatar-images//" + username + ".png";
+                File newImageFile = new File(path);
+                try {
+                    Files.copy(new File(profilePath_txt.getText()).toPath(), newImageFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                } catch (IOException e) {
+                    addAvatarAlert("Couldn't save the photo. Try again.");
+                }
+            }
         }
+        user.setAvatar(path);
+
 
         String headerPath = null;
-        try {
-            headerPath = headerPath_txt.getText();
-            user.setHeader(headerPath);
-        }catch (NullPointerException ignored){
+        if(headerPath_txt.getText()!=null && !headerPath_txt.getText().equals("")){
+            if(new File(headerPath_txt.getText()).exists()){
+                path = "AP_Project1402//images//header-images" + username + ".png";
+                File newImageFile = new File(path);
+                try {
+                    Files.copy(new File(headerPath_txt.getText()).toPath(), newImageFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                } catch (IOException e) {
+                    addAvatarAlert("Couldn't save the photo. Try again.");
+                }
+            }
         }
 
 
@@ -578,5 +605,129 @@ public class EditProfController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         chiceBox.getItems().addAll(Countries.countries);
+    }
+
+
+    //images stuff
+    @FXML
+    public void uploadHeader(){
+        FileChooser fil_chooser = new FileChooser();
+
+        File file = fil_chooser.showOpenDialog((Stage) header_alert.getScene().getWindow());
+
+        if (file != null) {
+            if (checkHeaderSize(file)) {
+                headerPath_txt.setText(file.getAbsolutePath());
+            } else {
+                addHeaderAlert("The image should be 1500*500 not larger than 2MB");
+            }
+        }
+    }
+    public void uploadAvatar(){
+        FileChooser fil_chooser = new FileChooser();
+
+        File file = fil_chooser.showOpenDialog((Stage) header_alert.getScene().getWindow());
+
+        if (file != null) {
+            if (checkHeaderSize(file)) {
+                profilePath_txt.setText(file.getAbsolutePath());
+            } else {
+                addHeaderAlert("The image should be 400*400 not larger than 1MB");
+            }
+        }
+    }
+    public void addHeaderAlert(String alert) {
+        header_alert.setText(alert);
+        Thread threadTask = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        header_alert.setText("");
+                    }
+                });
+            }
+        });
+        threadTask.start();
+    }
+    public void addAvatarAlert(String alert) {
+        avatar_alert.setText(alert);
+        Thread threadTask = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        avatar_alert.setText("");
+                    }
+                });
+            }
+        });
+        threadTask.start();
+    }
+    public boolean checkHeaderSize (File imgFile) {
+        int pos = imgFile.getName().lastIndexOf(".");
+        if (pos == -1)
+            addHeaderAlert("No extension for file: " + imgFile.getAbsolutePath());
+        String suffix = imgFile.getName().substring(pos + 1);
+        Iterator<ImageReader> iter = ImageIO.getImageReadersBySuffix(suffix);
+        while(iter.hasNext()) {
+            ImageReader reader = iter.next();
+            try {
+                ImageInputStream stream = new FileImageInputStream(imgFile);
+                reader.setInput(stream);
+                int width = reader.getWidth(reader.getMinIndex());
+                int height = reader.getHeight(reader.getMinIndex());
+                if(width>1500||height>500){
+                    return false;
+                }
+                if(Files.size(Paths.get(imgFile.getAbsolutePath()))/Math.pow(2,20)>2 ){
+                    return false;
+                }
+            } catch (IOException e) {
+                addHeaderAlert("Error reading: " + imgFile.getAbsolutePath());
+            } finally {
+                reader.dispose();
+            }
+        }
+        return true;
+    }
+    public boolean checkAvatarSize (File imgFile) {
+        int pos = imgFile.getName().lastIndexOf(".");
+        if (pos == -1)
+            addAvatarAlert("No extension for file: " + imgFile.getAbsolutePath());
+        String suffix = imgFile.getName().substring(pos + 1);
+        Iterator<ImageReader> iter = ImageIO.getImageReadersBySuffix(suffix);
+        while(iter.hasNext()) {
+            ImageReader reader = iter.next();
+            try {
+                ImageInputStream stream = new FileImageInputStream(imgFile);
+                reader.setInput(stream);
+                int width = reader.getWidth(reader.getMinIndex());
+                int height = reader.getHeight(reader.getMinIndex());
+                if(width>400||height>400){
+                    return false;
+                }
+                if(Files.size(Paths.get(imgFile.getAbsolutePath()))/Math.pow(2,20)>1 ){
+                    return false;
+                }
+            } catch (IOException e) {
+                addAvatarAlert("Error reading: " + imgFile.getAbsolutePath());
+            } finally {
+                reader.dispose();
+            }
+        }
+        return true;
     }
 }
