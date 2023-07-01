@@ -96,7 +96,8 @@ public class TwitterApplication extends Application {
         controller.setJwt(jwt);
         controller.setWriter(writer);
         controller.setHomePageController(controller);
-        controller.start(timeline ,thisuser.getAvatar());
+        controller.setUser(thisuser);
+        controller.start(timeline );
         return controller;
     }
     public static AddTweetController addTweet(Stage stage ,Socket socket , ObjectOutputStream writer, String jwt){

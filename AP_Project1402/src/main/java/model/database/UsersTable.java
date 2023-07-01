@@ -40,8 +40,8 @@ public class UsersTable extends AbstractTable {
                 COLUMN_LASTNAME + " VARCHAR(40),  " +
                 COLUMN_EMAIL + " VARCHAR(40),  " +
                 COLUMN_PHONE_NUMBER + " VARCHAR(20),  " +
-                COLUMN_AVATAR + " VARCHAR(20),  " +
-                COLUMN_HEADER + " VARCHAR(20),  " +
+                COLUMN_AVATAR + " VARCHAR(200),  " +
+                COLUMN_HEADER + " VARCHAR(200),  " +
                 COLUMN_BIO + " VARCHAR(160),  " +
                 COLUMN_REGION + " VARCHAR(40),  " +
                 COLUMN_BIRTHDATE + " VARCHAR(20),  " +

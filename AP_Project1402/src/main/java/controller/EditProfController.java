@@ -162,6 +162,8 @@ public class EditProfController implements Initializable {
     private Label header_alert;
     @FXML
     private Label avatar_alert;
+    private String header_path;
+    private String avatar_path;
 
 
     @FXML
@@ -348,13 +350,13 @@ public class EditProfController implements Initializable {
         }
 
         String path = null;
-        if(profilePath_txt.getText()!=null && !profilePath_txt.getText().equals("")){
-            if(new File(profilePath_txt.getText()).exists()){
+        if(avatar_path!=null && !avatar_path.equals("")){
+            if(new File(avatar_path).exists()){
                 path = "AP_Project1402//images//avatar-images//" + username + ".png";
 //                path = "images//avatar-images//" + username + ".png";
                 File newImageFile = new File(path);
                 try {
-                    Files.copy(new File(profilePath_txt.getText()).toPath(), newImageFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                    Files.copy(new File(avatar_path).toPath(), newImageFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
                 } catch (IOException e) {
                     addAvatarAlert("Couldn't save the photo. Try again.");
                 }
@@ -364,13 +366,13 @@ public class EditProfController implements Initializable {
 
 
         String headerPath = null;
-        if(headerPath_txt.getText()!=null && !headerPath_txt.getText().equals("")){
-            if(new File(headerPath_txt.getText()).exists()){
+        if(header_path!=null && !header_path.equals("")){
+            if(new File(header_path).exists()){
                 path = "AP_Project1402//images//header-images" + username + ".png";
 //                path = "images//header-images" + username + ".png";
                 File newImageFile = new File(path);
                 try {
-                    Files.copy(new File(headerPath_txt.getText()).toPath(), newImageFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                    Files.copy(new File(header_path).toPath(), newImageFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
                 } catch (IOException e) {
                     addAvatarAlert("Couldn't save the photo. Try again.");
                 }
@@ -622,10 +624,9 @@ public class EditProfController implements Initializable {
         File file = fil_chooser.showOpenDialog((Stage) circle_prof.getScene().getWindow());
 
         if (file != null) {
-
             if (checkHeaderSize(file)) {
-
-                headerPath_txt.setText(file.getAbsolutePath());
+                header_path = file.getAbsolutePath();
+                headerPath_txt.setText(header_path);
             } else {
                 addHeaderAlert("The image should be 1500*500 not larger than 2MB");
             }
@@ -637,10 +638,9 @@ public class EditProfController implements Initializable {
         File file = fil_chooser.showOpenDialog((Stage) circle_prof.getScene().getWindow());
 
         if (file != null) {
-            System.out.println("file!=null");
-            if (checkHeaderSize(file)) {
-                System.out.println("check");
-                profilePath_txt.setText(file.getAbsolutePath());
+            if (checkAvatarSize(file)) {
+                avatar_path = file.getAbsolutePath();
+                profilePath_txt.setText(avatar_path);
             } else {
                 addAvatarAlert("The image should be 400*400 not larger than 1MB");
             }
@@ -699,10 +699,10 @@ public class EditProfController implements Initializable {
                 reader.setInput(stream);
                 int width = reader.getWidth(reader.getMinIndex());
                 int height = reader.getHeight(reader.getMinIndex());
-                if(width!=1500&&height!=500){
+                if(width!=1500 || height!=500){
                     return false;
                 }
-                if(Files.size(Paths.get(imgFile.getAbsolutePath()))/Math.pow(2,20)>2 ){
+                if(Files.size(imgFile.toPath())/Math.pow(2,20)>2){
                     return false;
                 }
             } catch (IOException e) {
@@ -726,11 +726,13 @@ public class EditProfController implements Initializable {
                 reader.setInput(stream);
                 int width = reader.getWidth(reader.getMinIndex());
                 int height = reader.getHeight(reader.getMinIndex());
-                if(width!=400&&height!=400){
+                System.out.println(width );
+                System.out.println(height);
+                if(width!=400 || height!=400){
                     System.out.println("pix");
                     return false;
                 }
-                if(Files.size(Paths.get(imgFile.getAbsolutePath()))/Math.pow(2,20)>1 ){
+                if(Files.size(imgFile.toPath())/Math.pow(2,20)>1 ){
                     System.out.println("size");
                     return false;
                 }

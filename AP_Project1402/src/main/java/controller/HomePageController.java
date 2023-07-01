@@ -15,6 +15,7 @@ import model.client.SendMessage;
 import model.common.Api;
 import model.common.SocketModel;
 import model.common.Tweet;
+import model.common.User;
 import model.javafx_action.JavaFXImpl;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,6 +53,7 @@ public class HomePageController {
     private String jwt;
     private ArrayList<Tweet> timeline;
     private ArrayList<TweetComponent> timelineComponents;
+    private User user;
     private static HomePageController homePageController;
 
     public void setSocket(Socket socket) {
@@ -86,6 +88,9 @@ public class HomePageController {
     public String getJwt() {
         return jwt;
     }
+    public void setUser(User user){
+        this.user = user;
+    }
 
     @FXML
     void Exit(ActionEvent event) {
@@ -99,7 +104,7 @@ public class HomePageController {
 
     @FXML
     public void goToProfile(ActionEvent event) {
-        JavaFXImpl.seeThisUserProf(getUsername(), socket, writer, jwt);
+        JavaFXImpl.seeThisUserProf(getUsername(),socket,writer,jwt);
     }
 
     @FXML
@@ -113,9 +118,9 @@ public class HomePageController {
 
     }
 
-    public void start(ArrayList<Tweet> timeline , String avatar) {
+    public void start(ArrayList<Tweet> timeline ) {
         setTimeline(timeline);
-        setProfile(avatar);
+        setProfile();
     }
 
     public void setTimeline(ArrayList<Tweet> timeline) {
@@ -129,7 +134,8 @@ public class HomePageController {
         }
     }
 
-    public void setProfile(String avatar) {
+    public void setProfile() {
+        String avatar = user.getAvatar();
         username_label.setText(getUsername());
         if (timeline.size() != 0) {
             if (avatar!= null && new File(avatar).exists()) {

@@ -283,6 +283,9 @@
                      <HBox.margin>
                         <Insets left="10.0" top="10.0" />
                      </HBox.margin>
+                     <font>
+                        <Font size="8.0" />
+                     </font>
                   </Label>
                </children>
                <VBox.margin>
@@ -313,6 +316,9 @@
                      <HBox.margin>
                         <Insets left="10.0" top="10.0" />
                      </HBox.margin>
+                     <font>
+                        <Font size="8.0" />
+                     </font>
                   </Label>
                </children>
                <VBox.margin>
