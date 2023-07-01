@@ -6,7 +6,9 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import model.client.SendMessage;
@@ -17,6 +19,7 @@ import model.javafx_action.JavaFXImpl;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.*;
@@ -83,13 +86,15 @@ public class HomePageController {
     public String getJwt() {
         return jwt;
     }
+
     @FXML
     void Exit(ActionEvent event) {
-        TwitterApplication.signInPage((Stage)((Node) event.getSource()).getScene().getWindow(), socket, writer, jwt);
+        TwitterApplication.signInPage((Stage) ((Node) event.getSource()).getScene().getWindow(), socket, writer, jwt);
     }
+
     @FXML
     public void goToAddTweet(ActionEvent event) {
-        TwitterApplication.addTweet((Stage) add_tweet_button.getScene().getWindow(),socket,writer,jwt);
+        TwitterApplication.addTweet((Stage) add_tweet_button.getScene().getWindow(), socket, writer, jwt);
     }
 
     @FXML
@@ -101,38 +106,54 @@ public class HomePageController {
     public void goToSearch(ActionEvent event) {
         TwitterApplication.goSearchPage((Stage) ((Node) event.getSource()).getScene().getWindow(), socket, writer, jwt, getUsername());
     }
+
     @FXML
-    public void reload(ActionEvent event){
-        SendMessage.write(socket, new SocketModel(Api.TYPE_LOADING_TIMELINE,getUsername(),jwt), writer);
+    public void reload(ActionEvent event) {
+        SendMessage.write(socket, new SocketModel(Api.TYPE_LOADING_TIMELINE, getUsername(), jwt), writer);
 
     }
-    public void start(ArrayList timeline){
+
+    public void start(ArrayList timeline) {
         setTimeline(timeline);
         setProfile();
     }
-    public void setTimeline(ArrayList<Tweet> timeline){
+
+    public void setTimeline(ArrayList<Tweet> timeline) {
         Collections.reverse(timeline);
-        this.timeline=timeline;
+        this.timeline = timeline;
         timelineComponents = new ArrayList<TweetComponent>();
-        for (Tweet tweet: timeline) {
-            TweetComponent component = new TweetComponent(tweet,getUsername(),socket,writer,jwt);
+        for (Tweet tweet : timeline) {
+            TweetComponent component = new TweetComponent(tweet, getUsername(), socket, writer, jwt);
             timeline_vbox.getChildren().add(component);
             timelineComponents.add(component);
         }
     }
-    public void setProfile(){
+
+    public void setProfile() {
         username_label.setText(getUsername());
-        //TODO profile
-    }
-    public void replaceTweet(Tweet newTweet){
-        for (TweetComponent component:timelineComponents) {
-            if(component.getTweet().getAuthorUsername().equals(newTweet.getAuthorUsername())&&component.getTweet().getDate().equals(newTweet.getDate())){
-                component.setTweet(newTweet,newTweet.getAuthorUsername(),socket,writer,jwt);
+        if (timeline.size() != 0) {
+            if (timeline.get(0).getProfile() != null && new File(timeline.get(0).getProfile()).exists()) {
+                File imageFile = new File(timeline.get(0).getProfile());
+                Image image = new Image(imageFile.getAbsolutePath());
+                profile_circle.setFill(new ImagePattern(image));
+            } else {
+                File imageFile = new File("AP_Project1402//images//download2.png");
+                Image image = new Image(imageFile.getAbsolutePath());
+                profile_circle.setFill(new ImagePattern(image));
             }
         }
     }
-    public String getUsername(){
-        if(jwt ==null){
+
+    public void replaceTweet(Tweet newTweet) {
+        for (TweetComponent component : timelineComponents) {
+            if (component.getTweet().getAuthorUsername().equals(newTweet.getAuthorUsername()) && component.getTweet().getDate().equals(newTweet.getDate())) {
+                component.setTweet(newTweet, newTweet.getAuthorUsername(), socket, writer, jwt);
+            }
+        }
+    }
+
+    public String getUsername() {
+        if (jwt == null) {
             return null;
         }
         String[] parts = jwt.split("\\.");
@@ -145,6 +166,7 @@ public class HomePageController {
         }
         return null;
     }
+
     private static String decode(String encodedString) {
         return new String(Base64.getUrlDecoder().decode(encodedString));
     }

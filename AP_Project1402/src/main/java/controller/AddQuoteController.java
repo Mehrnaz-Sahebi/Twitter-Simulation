@@ -10,6 +10,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -135,7 +136,15 @@ public class AddQuoteController {
     }
     public void start(Tweet tweet){
         originalTweet = tweet;
-        //TODO set prof
+        if(originalTweet.getProfile()!=null && new File(originalTweet.getProfile()).exists()){
+            File imageFile = new File(originalTweet.getProfile());
+            Image image = new Image(imageFile.getAbsolutePath());
+            profile.setFill(new ImagePattern(image));
+        } else {
+            File imageFile = new File("AP_Project1402//images//download2.png");
+            Image image = new Image(imageFile.getAbsolutePath());
+            profile.setFill(new ImagePattern(image));
+        }
         name.setText(tweet.getAuthorName());
         String dateToShow = null;
         Date now = new Date();

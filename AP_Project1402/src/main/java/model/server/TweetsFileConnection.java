@@ -178,6 +178,14 @@ public class TweetsFileConnection {
                 break;
             }
         }
+        User user = null;
+        try {
+            user = (new UsersTable()).getUserFromDatabase(reply.getAuthorUsername());
+        } catch (SQLException e) {
+            return false;
+        }
+        reply.setAuthorName(user.getFirstName(), user.getLastName());
+        reply.setProfile(user.getAvatar());
         tweets.add(reply);
         try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("tweets.bin"))) {
             for (Tweet loopTweet : tweets) {
@@ -271,6 +279,14 @@ public class TweetsFileConnection {
                 break;
             }
         }
+        User user = null;
+        try {
+            user = (new UsersTable()).getUserFromDatabase(quoteTweet.getAuthorUsername());
+        } catch (SQLException e) {
+            return false;
+        }
+        quoteTweet.setAuthorName(user.getFirstName(), user.getLastName());
+        quoteTweet.setProfile(user.getAvatar());
         tweets.add(quoteTweet);
         try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("tweets.bin"))) {
             for (Tweet loopTweet : tweets) {
@@ -360,5 +376,36 @@ public class TweetsFileConnection {
         }
         System.out.println("size"+sortedTweets.size());
         return sortedTweets;
+    }
+    public static boolean updateProfile(String username, String newUsername, String newFirstName,String newLastName, String newProfilePhoto){
+        HashSet<Tweet> tweets = new HashSet<Tweet>();
+        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("tweets.bin"))) {
+            while (true) {
+                try {
+                    tweets.add((Tweet) inputStream.readObject());
+                } catch (EOFException e) {
+                    break;
+                }
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            return false;
+        }
+        for (Tweet loopTweet : tweets) {
+            if (loopTweet.getAuthorUsername().equals(username)) {
+                loopTweet.setProfile(newProfilePhoto);
+                loopTweet.setAuthorName(newFirstName,newLastName);
+                loopTweet.setAuthorUsername(newUsername);
+                break;
+            }
+        }
+        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("tweets.bin"))) {
+            for (Tweet loopTweet : tweets) {
+                outputStream.writeObject(loopTweet);
+            }
+            outputStream.flush();
+        } catch (IOException e) {
+            return false;
+        }
+        return true;
     }
 }
