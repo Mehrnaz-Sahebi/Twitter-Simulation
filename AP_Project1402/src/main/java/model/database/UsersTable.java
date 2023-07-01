@@ -304,7 +304,8 @@ public class UsersTable extends AbstractTable {
             FollowTable followTable = SQLConnection.getFollowTable();
             user.setFollowers(followTable.getFollowers(user.getUsername()));
             user.setFollowings(followTable.getFollowings(user.getUsername()));
-            user.setBlackList(SQLConnection.getBlockTable().getBlockings(user.getUsername()));
+            user.setBlockings(SQLConnection.getBlockTable().getBlockings(user.getUsername()));
+            user.setBlocker(SQLConnection.getBlockTable().getBlockers(user.getUsername()));
             user.setDatabaseId(set.getInt("id"));
             users.add(user);
             }
@@ -412,7 +413,7 @@ public class UsersTable extends AbstractTable {
         FollowTable followTable = SQLConnection.getFollowTable();
         user.setFollowers(followTable.getFollowers(username));
         user.setFollowings(followTable.getFollowings(username));
-        user.setBlackList(SQLConnection.getBlockTable().getBlockings(username));
+        user.setBlockings(SQLConnection.getBlockTable().getBlockings(username));
         user.setDatabaseId(set.getInt("id"));
         return user;
     }

@@ -90,8 +90,6 @@ public class EditProfController implements Initializable {
     private Button Back_btn;
     @FXML
     private TextField profilePath_txt;
-    @FXML
-    private TextField loca_txt;
 
     @FXML
     private TextField headerPath_txt;
@@ -351,21 +349,35 @@ public class EditProfController implements Initializable {
         String email = null;
         try {
             email = email_Txt.getText();
+            if (Validate.validateEmail(email) != ResponseOrErrorType.SUCCESSFUL) {
+                alert_Lbl.setText("Invalid Email");
+                isAllowedToEdit = false;
+                throw new NullPointerException();
+            }
             user.setEmail(email);
         }catch (NullPointerException e){
-            alert_Lbl.setText(alert_Lbl.getText() + "\n" + "*Alert* :" + "enter email");
+            alert_Lbl.setText(alert_Lbl.getText() + "\n" + "*Alert* :" + "enter valid email");
             isAllowedToEdit = false;
         }
 
         String phone = null;
         try {
             phone = phone_Txt.getText();
+            if (phone.length()!=11 ) {
+                alert_Lbl.setText("Invalid phone number");
+                isAllowedToEdit = false;
+                try {
+                    Integer.parseInt(phone);
+                }catch (NumberFormatException e){
+                    phone_Txt.setText("Invalid phone number");
+                    isAllowedToEdit = false;
+                }
+            }
             user.setPhoneNumber(phone);
         }catch (NullPointerException e){
             alert_Lbl.setText(alert_Lbl.getText() + "\n" + "*Alert* :" + "enter phone-number");
             isAllowedToEdit = false;
         }
-
         String region = null;
         try {
             region = chiceBox.getValue();
@@ -477,6 +489,7 @@ public class EditProfController implements Initializable {
         setName_Lbl(user.getFirstName() + " " + user.getLastName());
         setBio_labl(user.getBio());
         setCountry_Labl(user.getRegionOrCountry());
+        setLocation_Labl(user.getLocation());
         setCircle_prof(user.getAvatar());
         setEmail_lbl(user.getEmail());
         setPhonenumber_lbl(user.getPhoneNumber());
@@ -487,7 +500,9 @@ public class EditProfController implements Initializable {
 
 
     public void setBio_labl(String bio_labl) {
-        bio_txt.setText(bio_labl);
+        if (Validate.NotBlank(bio_labl) && !bio_labl.equals("null")){
+            bio_txt.setText(bio_labl);
+        }
     }
 
     public void setBirthdate_Labl(Date birthdate_Labl) {//TODO , comented in order to prevent error
@@ -509,10 +524,10 @@ public class EditProfController implements Initializable {
 
     public void setLocation_Labl(String location_Labl) {
         try {
-            String rest = region_lbl.getText();
-            region_lbl.setText(rest + location_Labl);
+            String rest = location_Txt.getText();
+            location_Txt.setText(rest + location_Labl);
         }catch (NullPointerException e){
-            region_lbl.setText(location_Labl);
+            location_Txt.setText(location_Labl);
         }
 
     }

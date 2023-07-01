@@ -176,7 +176,7 @@
    <center>
       <VBox prefHeight="579.0" prefWidth="442.0" style="-fx-background-color: #cae3e7;" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="resultLbl" prefHeight="31.0" prefWidth="398.0" styleClass="head-label" stylesheets="@style/Login.css" text="Will be developed, if there is enough time">
+            <Label fx:id="resultLbl" prefHeight="31.0" prefWidth="398.0" styleClass="head-label" stylesheets="@style/Login.css">
                <VBox.margin>
                   <Insets left="15.0" top="20.0" />
                </VBox.margin>

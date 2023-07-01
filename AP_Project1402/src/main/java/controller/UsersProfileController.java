@@ -244,7 +244,9 @@ public class UsersProfileController {
 
 
     public void setBio_labl(String bio_labl) {
-        Bio_labl.setText(bio_labl);
+        if (Validate.NotBlank(bio_labl) && !bio_labl.equals("null")){
+            Bio_labl.setText(bio_labl);
+        }
     }
 
    public void setBirthdate_Labl(Date birthdate) {

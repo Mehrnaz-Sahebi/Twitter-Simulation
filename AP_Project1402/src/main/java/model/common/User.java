@@ -34,7 +34,8 @@ public class User implements Serializable {
     private HashSet<String> followings = new HashSet<>();
     private int numOfFollowings;
     private HashSet<String> followers = new HashSet<>();
-    private HashSet<String> blackList = new HashSet<>();
+    private HashSet<String> blocker = new HashSet<>();
+    private HashSet<String> blockings = new HashSet<>();
     private int numOfFollowers;
     private int numberOfTweets;
     private boolean toShowLocInProf = false;
@@ -60,6 +61,22 @@ public class User implements Serializable {
     }
     public void setDatabaseId(int databaseId) {
         this.databaseId = databaseId;
+    }
+
+    public void setBlocker(HashSet<String> blocker) {
+        this.blocker = blocker;
+    }
+
+    public void setBlockings(HashSet<String> blockings) {
+        this.blockings = blockings;
+    }
+
+    public HashSet<String> getBlocker() {
+        return blocker;
+    }
+
+    public HashSet<String> getBlockings() {
+        return blockings;
     }
 
     public int getDatabaseId() {
@@ -218,13 +235,6 @@ public class User implements Serializable {
         this.followers = followers;
     }
 
-    public HashSet<String> getBlackList() {
-        return blackList;
-    }
-
-    public void setBlackList(HashSet<String> blackList) {
-        this.blackList = blackList;
-    }
 
     //methods
     public void tweet(Tweet tweet){
@@ -271,7 +281,7 @@ public class User implements Serializable {
         return false;
     }
     public boolean doesBlock(String username){
-        for (String str:blackList) {
+        for (String str:blockings) {
             if(str.equals(username)){
                 return true;
             }

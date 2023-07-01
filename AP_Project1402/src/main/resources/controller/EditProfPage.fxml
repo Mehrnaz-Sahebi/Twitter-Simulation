@@ -175,7 +175,7 @@
                   </Label>
                </children>
             </HBox>
-            <Label fx:id="alert_Lbl" prefHeight="47.0" prefWidth="422.0" text="-&gt;" textFill="#f822ff">
+            <Label fx:id="alert_Lbl" prefHeight="80.0" prefWidth="422.0" text="-&gt;" textFill="#f822ff">
                <font>
                   <Font size="20.0" />
                </font>
