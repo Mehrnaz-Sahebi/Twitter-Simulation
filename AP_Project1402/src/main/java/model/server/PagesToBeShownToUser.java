@@ -38,7 +38,7 @@ public class PagesToBeShownToUser {
         }
     }
 
-    public static ResponseOrErrorType updateProfile(User thisUser) {
+    public static ResponseOrErrorType updateProfile(User thisUser, String oldUsername) {
         if(SafeRunning.safe(() -> {
             UsersTable out = SQLConnection.getUsers();
             out.updateUsername(thisUser.getDatabaseId(), thisUser.getUsername());
@@ -54,7 +54,7 @@ public class PagesToBeShownToUser {
             out.updatePassword(thisUser.getDatabaseId(), thisUser.getPassword());
             out.updatePhoneNumber(thisUser.getDatabaseId(), thisUser.getPhoneNumber());
             out.updateRegion(thisUser.getDatabaseId(), thisUser.getRegionOrCountry());
-//            TweetsFileConnection.updateProfile(thisUser.getDatabaseId(),thisUser.getUsername(), thisUser.getFirstName(),thisUser.getLastName(),thisUser.getAvatar());
+            TweetsFileConnection.updateProfile(oldUsername,thisUser.getUsername(), thisUser.getFirstName(),thisUser.getLastName(),thisUser.getAvatar());
         })){
             return ResponseOrErrorType.SUCCESSFUL;
         }else {

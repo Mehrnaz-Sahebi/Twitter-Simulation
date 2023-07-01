@@ -115,7 +115,7 @@ public class AddQuoteController {
                 File checkFile = new File(newImageFilePath);
                 int i = 1;
                 while (checkFile.exists()) {
-                    newImageFileName = newImageFileName + i;
+                    newImageFileName = getUsername() + i;
                     newImageFilePath = "AP_Project1402//images//tweet-images//" + newImageFileName + ".png";
                     checkFile = new File(newImageFilePath);
                     i++;
