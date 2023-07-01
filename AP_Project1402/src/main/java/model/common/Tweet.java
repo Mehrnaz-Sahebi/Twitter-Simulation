@@ -194,5 +194,13 @@ public class Tweet implements Serializable {
     public void addSpecial(String username){
         specials.add(username);
     }
+    public boolean doesHaveHashtag(String hashtag){
+        for (String word:hashtags) {
+            if(word.equals(hashtag)){
+                return true;
+            }
+        }
+        return false;
+    }
 }
 
