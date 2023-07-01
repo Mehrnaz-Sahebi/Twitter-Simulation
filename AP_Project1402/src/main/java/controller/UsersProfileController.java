@@ -135,6 +135,7 @@ public class UsersProfileController {
 
     @FXML
     void showFollowers(MouseEvent event) throws SQLException, ClassNotFoundException {
+        showingAnchor_pane.getChildren().clear();
         SQLConnection.getInstance().connect();
         resultLbl.setText("Followers");
         Iterator<String> followersIt = user.getFollowers().iterator();
@@ -167,6 +168,7 @@ public class UsersProfileController {
     }
     @FXML
     void showFollowings(MouseEvent event) throws SQLException, ClassNotFoundException {
+        showingAnchor_pane.getChildren().clear();
         SQLConnection.getInstance().connect();
         resultLbl.setText("Followings");
         Iterator<String> followersIt = user.getFollowings().iterator();

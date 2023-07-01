@@ -40,4 +40,10 @@ public class JavaFXImpl {
     public static void unfollow(Socket socket, String jwt, ObjectOutputStream writer, User toUnFollow) {
         SendMessage.write(socket, new SocketModel(Api.TYPE_UNFOLLOW,toUnFollow, jwt), writer);
     }
+    public static void block(Socket socket, String jwt, ObjectOutputStream writer, User toBlock) {
+        SendMessage.write(socket, new SocketModel(Api.TYPE_BLOCK,toBlock, jwt), writer);
+    }
+    public static void unBlock(Socket socket, String jwt, ObjectOutputStream writer, User toUnBlock) {
+        SendMessage.write(socket, new SocketModel(Api.TYPE_UNBLOCK,toUnBlock, jwt), writer);
+    }
 }

@@ -202,6 +202,7 @@ public class ClientHandler implements Runnable {
                     case TYPE_BLOCK -> {
                         User user = (User) model.get();
                         SocketModel res = PagesToBeShownToUser.firstBlocksSecond(model.getUsername(), user.getUsername());
+                        res.eventType = Api.TYPE_BLOCK;
                         if (!model.checkJwToken(secret)) {
                             res.setMessage(ResponseOrErrorType.INVALID_JWT);
                         }
@@ -210,6 +211,7 @@ public class ClientHandler implements Runnable {
                     case TYPE_UNBLOCK -> {
                         User user = (User) model.get();
                         SocketModel res = PagesToBeShownToUser.firstUnBlocksSecond(model.getUsername(), user.getUsername());
+                        res.eventType = Api.TYPE_UNBLOCK;
                         if (!model.checkJwToken(secret)) {
                             res.setMessage(ResponseOrErrorType.INVALID_JWT);
                         }

@@ -55,13 +55,13 @@ public class FollowTable extends AbstractTable{
 
         // create the mysql insert preparedstatement
         PreparedStatement preparedStmt = getConnection().prepareStatement(query);
-        preparedStmt.setString (1, follower);
-        preparedStmt.setString (2, following);
+        preparedStmt.setString(1, follower);
+        preparedStmt.setString(2, following);
 
         // execute the preparedstatement
         preparedStmt.execute();
-
     }
+
     // TODO duobtful about username , it shouldn't be int , i think
     public synchronized void updateUsername(int username, String newUsername) throws SQLException {
         String query1 = "UPDATE " + TABLE_NAME + " SET " + COLUMN_FOLLOWER + " = '"+newUsername+"'" + " WHERE "+ COLUMN_FOLLOWER + " = '"+username+"'";
