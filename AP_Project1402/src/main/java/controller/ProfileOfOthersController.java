@@ -290,7 +290,7 @@ public class ProfileOfOthersController implements Initializable {
     @FXML
     void send(ActionEvent event) {
         String msg = sendMsgField.getText();
-        Message message = new Message(usernameOfThisUser, msg, user.getUsername());
+        Message message = new Message(usernameOfThisUser, msg, user.getUsername(), user.getAvatar());
         JavaFXImpl.sendMsg(socket, jwt, writer, message);
     }
 
@@ -363,11 +363,11 @@ public class ProfileOfOthersController implements Initializable {
         Image prof = null;
         if (profUrl != null && !profUrl.isBlank()){
             File imagefile = new File(profUrl);
-            prof = new Image(imagefile.toURI().toString());
+            prof = new Image(imagefile.getAbsolutePath());
             circle_prof.setFill(new ImagePattern(prof));
         }else if (profUrl == null || profUrl.isBlank()){
-            File imagefile = new File("images\\download2.png");
-            prof = new Image(imagefile.toURI().toString());
+            File imagefile = new File("AP_Project1402//images//download2.png");
+            prof = new Image(imagefile.getAbsolutePath());
             circle_prof.setFill(new ImagePattern(prof));
         }
 

@@ -369,9 +369,9 @@ public class EditProfController implements Initializable {
         String headerPath = null;
         if(header_path!=null && !header_path.equals("")){
             if(new File(header_path).exists()){
-                path = "AP_Project1402//images//header-images" + username + ".png";
+                headerPath = "AP_Project1402//images//header-images//" + username + ".png";
 //                path = "images//header-images" + username + ".png";
-                File newImageFile = new File(path);
+                File newImageFile = new File(headerPath);
                 try {
                     Files.copy(new File(header_path).toPath(), newImageFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
                 } catch (IOException e) {

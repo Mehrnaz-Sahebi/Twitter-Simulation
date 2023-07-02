@@ -237,7 +237,7 @@ public class TwitterApplication extends Application {
         controller.setWriter(writer);
         controller.setSerchController(controller);
         controller.setUser(username);
-        controller.prepare();
+//        controller.prepare();
         backScene = stage.getScene();
         Scene scene = null;
         scene = new Scene(root);

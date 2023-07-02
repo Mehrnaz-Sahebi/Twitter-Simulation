@@ -5,7 +5,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import model.client.SendMessage;
+import model.common.Api;
 import model.common.Message;
+import model.common.SocketModel;
 import model.common.User;
 import model.javafx_action.JavaFXImpl;
 
@@ -59,12 +62,13 @@ public class MessageBoxCont {
 
     @FXML
     void GoBack(ActionEvent event) {
+        SendMessage.write(socket, new SocketModel(Api.TYPE_LOADING_TIMELINE,username,jwt), writer);
 
     }
 
-    public void prepare(){
-        JavaFXImpl.getMsg(socket,jwt,writer, username);
-    }
+//    public void prepare(){
+//        JavaFXImpl.getMsg(socket,jwt,writer, username);
+//    }
 
     public void prepareScene(HashSet<Message> messageInfos){
         if (messageInfos.isEmpty()){
@@ -91,7 +95,7 @@ public class MessageBoxCont {
 //                            uis.setButtonsTxt("Follow");
 //                        }
 //                       TODO uis.setBackPage("");
-                        uis.prepare(message.getMsg());
+                        uis.prepare(message);
                         showingAnchor_pane.getChildren().add(hBox);
 
                 } catch (IOException e) {

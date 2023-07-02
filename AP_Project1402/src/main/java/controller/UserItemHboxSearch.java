@@ -127,13 +127,13 @@ private Socket socket;
     }
     public  void setData(User user){
         this.user = user;
-        if (Validate.NotBlank(user.getAvatar())){
+        if (Validate.NotBlank(user.getAvatar()) && new File(user.getAvatar()).exists()){
             File img = new File(user.getAvatar());
-            Image newImg = new Image(img.toURI().toString());
+            Image newImg = new Image(img.getAbsolutePath());
             profCircle.setFill(new ImagePattern(newImg));
         }else {
-            File img = new File("images\\download2.png");
-            Image newImg = new Image(img.toURI().toString());
+            File img = new File("AP_Project1402//images//download2.png");
+            Image newImg = new Image(img.getAbsolutePath());
             profCircle.setFill(new ImagePattern(newImg));
         }
 

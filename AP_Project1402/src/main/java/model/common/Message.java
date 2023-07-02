@@ -5,12 +5,18 @@ import java.io.Serializable;
 public class Message implements Serializable {
     private String senderUsername;
     private String msg;
+    private String avtar;
     private String toWhom;
 
-    public Message(String senderUsername, String msg, String toWhom) {
+    public Message(String senderUsername, String msg, String toWhom, String avatar) {
         this.senderUsername = senderUsername;
         this.msg = msg;
         this.toWhom = toWhom;
+        this.avtar = avatar;
+    }
+
+    public String getAvtar() {
+        return avtar;
     }
 
     public String getSenderUsername() {
@@ -35,5 +41,9 @@ public class Message implements Serializable {
 
     public void setToWhom(String toWhom) {
         this.toWhom = toWhom;
+    }
+
+    public void setAvtar(String avtar) {
+        this.avtar = avtar;
     }
 }

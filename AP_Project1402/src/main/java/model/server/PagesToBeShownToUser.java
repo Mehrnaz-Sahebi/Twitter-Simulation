@@ -55,6 +55,8 @@ public class PagesToBeShownToUser {
             out.updatePhoneNumber(thisUser.getDatabaseId(), thisUser.getPhoneNumber());
             out.updateRegion(thisUser.getDatabaseId(), thisUser.getRegionOrCountry());
             TweetsFileConnection.updateProfile(oldUsername,thisUser.getUsername(), thisUser.getFirstName(),thisUser.getLastName(),thisUser.getAvatar());
+            MessagesFileConnection.updateProfile(oldUsername,thisUser.getUsername(),thisUser.getAvatar());
+
         })){
             return ResponseOrErrorType.SUCCESSFUL;
         }else {

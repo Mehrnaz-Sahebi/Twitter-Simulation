@@ -58,6 +58,39 @@ public class MessagesFileConnection {
                 }
             }
         };
-        return new SocketModel(Api.TYPE_OFFLINE_REQUEST, ResponseOrErrorType.SUCCESSFUL, messagesForUsername);
+        return new SocketModel(Api.TYPE_GET_MESSAGE, ResponseOrErrorType.SUCCESSFUL, messagesForUsername);
+    }
+
+    public static boolean updateProfile(String username, String newUsername,String newProfilePhoto){
+        HashSet<Message> messages = new HashSet<Message>();
+        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(ADDRESS))) {
+            while (true) {
+                try {
+                    messages.add((Message) inputStream.readObject());
+                } catch (EOFException e) {
+                    break;
+                }
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            return false;
+        }
+        for (Message loopMessage : messages) {
+            if (loopMessage.getToWhom().equals(username)) {
+                loopMessage.setToWhom(newUsername);
+            }
+            if(loopMessage.getSenderUsername().equals(username)){
+                loopMessage.setSenderUsername(newUsername);
+                loopMessage.setAvtar(newProfilePhoto);
+            }
+        }
+        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("messages.bin"))) {
+            for (Message loopMessage : messages) {
+                outputStream.writeObject(loopMessage);
+            }
+            outputStream.flush();
+        } catch (IOException e) {
+            return false;
+        }
+        return true;
     }
 }

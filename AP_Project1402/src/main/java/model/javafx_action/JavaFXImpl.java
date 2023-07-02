@@ -37,19 +37,19 @@ public class JavaFXImpl {
         SendMessage.write(socket, new SocketModel(Api.TYPE_FOLLOW,toFollow, jwt), writer);
     }
 
-    public static void unfollow(Socket socket, String jwt, ObjectOutputStream writer, User toUnFollow) {
+    public synchronized static void unfollow(Socket socket, String jwt, ObjectOutputStream writer, User toUnFollow) {
         SendMessage.write(socket, new SocketModel(Api.TYPE_UNFOLLOW,toUnFollow, jwt), writer);
     }
-    public static void block(Socket socket, String jwt, ObjectOutputStream writer, User toBlock) {
+    public synchronized static void block(Socket socket, String jwt, ObjectOutputStream writer, User toBlock) {
         SendMessage.write(socket, new SocketModel(Api.TYPE_BLOCK,toBlock, jwt), writer);
     }
-    public static void unBlock(Socket socket, String jwt, ObjectOutputStream writer, User toUnBlock) {
+    public synchronized static void unBlock(Socket socket, String jwt, ObjectOutputStream writer, User toUnBlock) {
         SendMessage.write(socket, new SocketModel(Api.TYPE_UNBLOCK,toUnBlock, jwt), writer);
     }
-    public static void sendMsg(Socket socket, String jwt, ObjectOutputStream writer, Message msg) {
+    public synchronized static void sendMsg(Socket socket, String jwt, ObjectOutputStream writer, Message msg) {
         SendMessage.write(socket, new SocketModel(Api.TYPE_MESSAGE,msg, jwt), writer);
     }
-    public static void getMsg(Socket socket, String jwt, ObjectOutputStream writer, String username) {
+    public synchronized static void getMsg(Socket socket, String jwt, ObjectOutputStream writer, String username) {
         SendMessage.write(socket, new SocketModel(Api.TYPE_GET_MESSAGE,username, jwt), writer);
     }
 }

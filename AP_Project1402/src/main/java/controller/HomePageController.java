@@ -116,7 +116,8 @@ public class HomePageController {
     }
     @FXML
     void messages(ActionEvent event) {
-        TwitterApplication.goMessageBox((Stage) ((Node) event.getSource()).getScene().getWindow(), socket, writer, jwt, getUsername());
+//        TwitterApplication.goMessageBox((Stage) ((Node) event.getSource()).getScene().getWindow(), socket, writer, jwt, getUsername());
+        JavaFXImpl.getMsg(socket,jwt,writer, getUsername());
     }
 
     @FXML
@@ -154,7 +155,7 @@ public class HomePageController {
             timelineComponents = new ArrayList<TweetComponent>();
             for (Tweet tweet : timeline) {
                 if (tweet.doesHaveHashtag(filterWord)) {
-                    TweetComponent component = new TweetComponent(tweet, getUsername(), socket, writer, jwt);
+                    TweetComponent component = new TweetComponent(tweet, user.getUsername(), socket, writer, jwt);
                     timeline_vbox.getChildren().add(component);
                     timelineComponents.add(component);
                 }
@@ -170,7 +171,7 @@ public class HomePageController {
             Image image = new Image(imageFile.getAbsolutePath());
             profile_circle.setFill(new ImagePattern(image));
         } else {
-            File imageFile = new File("images//download2.png");
+            File imageFile = new File("AP_Project1402//images//download2.png");
             Image image = new Image(imageFile.getAbsolutePath());
             profile_circle.setFill(new ImagePattern(image));
         }
@@ -179,7 +180,7 @@ public class HomePageController {
     public void replaceTweet(Tweet newTweet) {
         for (TweetComponent component : timelineComponents) {
             if (component.getTweet().getAuthorUsername().equals(newTweet.getAuthorUsername()) && component.getTweet().getDate().equals(newTweet.getDate())) {
-                component.setTweet(newTweet, newTweet.getAuthorUsername(), socket, writer, jwt);
+                component.setTweet(newTweet, getUsername(), socket, writer, jwt);
             }
         }
     }

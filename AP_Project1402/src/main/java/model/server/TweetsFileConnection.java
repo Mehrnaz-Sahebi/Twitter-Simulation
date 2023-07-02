@@ -395,7 +395,6 @@ public class TweetsFileConnection {
                 loopTweet.setProfile(newProfilePhoto);
                 loopTweet.setAuthorName(newFirstName,newLastName);
                 loopTweet.setAuthorUsername(newUsername);
-                break;
             }
         }
         try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("tweets.bin"))) {

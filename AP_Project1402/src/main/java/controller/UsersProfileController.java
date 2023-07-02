@@ -267,9 +267,9 @@ public class UsersProfileController {
         Link_hyper.setText(link_hyper);
     }
     public void setHeader_img(String img) {
-        if (Validate.NotBlank(img)){
+        if (img!=null && !img.equals("") && new File(img).exists()){
             File imagefile = new File(img);
-            Image image = new Image(imagefile.toURI().toString());
+            Image image = new Image(imagefile.getAbsolutePath());
             header_imgView.setImage(image);
         }
 
