@@ -33,9 +33,6 @@ import java.util.concurrent.TimeUnit;
 public class TweetComponent extends AnchorPane{
 
 
-
-
-
     private VBox first_layer_vbox;
     private HBox second_layer_hbox1;
     private HBox second_layer_hbox2;
